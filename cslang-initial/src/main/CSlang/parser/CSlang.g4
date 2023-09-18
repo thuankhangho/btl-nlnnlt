@@ -9,53 +9,139 @@ options{
 	language=Python3;
 }
 
-program: ID EOF ; // grammar rule
+program: constant EOF ; // grammar rule
 
-ID: [a-z]+; // token
+// ID: [a-z]+; // token
 
-BREAK : 'break';
+constant: 'int' | 'float' | 'bool' | 'string';
 
-CONTINUE : 'continue';
+IDENTIFIER: [A-Za-z_]+ ([A-Za-z_0-9])* | '@'[A-Za-z_0-9]+;
 
-IF : 'if';
+//Keywords
 
-ELSE : 'else';
+KEYWORDS: 'break' | 
+'continue' | 
+'if' | 
+'else' | 
+'for' | 
+'true' |
+'false' | 
+'int' | 
+'float' | 
+'bool' | 
+'string' | 
+'return' | 
+'null' |  
+'class' | 
+'constructor' | 
+'var' | 
+'self' | 
+'new' | 
+'void' | 
+'const' | 
+'func';
 
-FOR : 'for';
+// BREAK : 'break';
 
-TRUE : 'true';
+// CONTINUE : 'continue';
 
-FALSE : 'false';
+// IF : 'if';
 
-INT : 'int';
+// ELSE : 'else';
 
-FLOAT : 'float';
+// FOR : 'for';
 
-BOOL : 'bool';
+// TRUE : 'true';
 
-STRING : 'string';
+// FALSE : 'false';
 
-RETURN : 'return';
+// INT : 'int';
 
-NULL : 'null';
+// FLOAT : 'float';
 
-CLASS : 'class';
+// BOOL : 'bool';
 
-CONSTRUCTOR : 'constructor';
+// STRING : 'string';
 
-VAR : 'var';
+// RETURN : 'return';
 
-SELF : 'self';
+// NULL : 'null';
 
-NEW : 'new';
+// CLASS : 'class';
 
-VOID : 'void';
+// CONSTRUCTOR : 'constructor';
 
-CONST : 'const';
+// VAR : 'var';
 
-FUNC : 'func';
+// SELF : 'self';
 
-WS : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
+// NEW : 'new';
+
+// VOID : 'void';
+
+// CONST : 'const';
+
+// FUNC : 'func';
+
+//Operators
+OPERATORS: '+' | 
+'-' | 
+'*' | 
+'/' | 
+'\\' | 
+'!' | 
+'&&' | 
+'||' | 
+'==' | 
+'=' | 
+'!=' | 
+'<' | 
+'<=' | 
+'>' | 
+'>=' | 
+':=' | 
+'^' | 
+'%';
+// PLUS: '+';
+
+// MINUS: '-';
+
+// MULTIPLY: '*';
+
+// DIVIDE_FLOAT: '/';
+
+// DIVIDE_INT: '\\';
+
+// DIFF: '!';
+
+// AND: '&&';
+
+// OR: '||';
+
+// EQUAL: '==';
+
+// DECLARE: '=';
+
+// NEQ: '!=';
+
+// LE: '<';
+
+// LEQ: '<=';
+
+// GE: '>';
+
+// GEQ: '>=';
+
+// ASSIGN: ':=';
+
+// XOR: '^';
+
+// MOD: '%';
+
+//Separators
+SEPARATORS: '(' | ')' | '[' | ']' | '.' | ',' | ';' | ':' | '{' | '}';
+
+WS : [ \t\r\n\b\f]+ -> skip ; // skip spaces, tabs, newlines
 
 ERROR_CHAR: . {raise ErrorToken(self.text)};
 UNCLOSE_STRING: .;
