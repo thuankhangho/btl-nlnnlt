@@ -13,7 +13,7 @@ options{
 
 program: classdecl+ EOF ;
 
-classdecl: CLASS superpart? IDENTIFIER LCB memberlist RCB;
+classdecl: CLASS superpart? ID LCB memberlist RCB;
 
 memberlist: member memberlist | ;
 
@@ -29,7 +29,7 @@ typ: BOOL | INT | FLOAT | STRING;
 
 attlist: IDENTIFIER CM attlist CM exp | IDENTIFIER COLON typ DECLARE exp;
 //id comma comma expr
-//id comma id : type = expr
+//id : type = expr
 
 attributelist: IDENTIFIER CM attributelist | IDENTIFIER;
 
@@ -39,9 +39,9 @@ parameterlist: parameterprime | ;
 
 parameterprime: parameterpart1 | parameterpart2;
 
-parameterpart1: (IDENTIFIER COLON typ) CM parameterprime | (IDENTIFIER COLON typ);
+parameterpart1: (IDENTIFIER COLON typ) CM parameterpart1 | (IDENTIFIER COLON typ);
 
-parameterpart2: (identifierlist COLON typ) CM identifierlist | (identifierlist COLON typ);
+parameterpart2: (identifierlist COLON typ) CM parameterpart2 | (identifierlist COLON typ);
 
 identifierlist: identifierprime | ;
 
@@ -86,17 +86,17 @@ exp3: exp3 adding exp4 | exp4;
 
 exp4: exp4 multiplying exp5 | exp5;
 
-exp5: DIFF exp6 | exp6;
+exp5: DIFF exp5 | exp6;
 
-exp6: MINUS exp7 | exp7;
+exp6: MINUS exp6 | exp7;
 
-exp7: exp8 LSB RSB | exp8;
+exp7: exp8 LSB exp RSB | exp8;
 
 exp8: exp8 DOT exp9 | exp9;
 
 exp9: exp10 DOT exp10 | exp10;
 
-exp10: NEW exp11 | exp11;
+exp10: NEW exp10 LRB explist RRB| exp11;
 
 exp11: literal;
 
@@ -290,7 +290,7 @@ RCB: '}';
 //Literals
 INTLIT: '0' | [1-9][0-9]*;
 
-FLOATLIT: INTLIT DEC | INTLIT DEC EXP;
+FLOATLIT: INTLIT DEC | INTLIT DEC? EXP;
 
 fragment DEC: '.'?[0-9]+;
 
@@ -300,7 +300,7 @@ BOOLLIT: TRUE | FALSE;
 
 fragment ESCAPESEQ: '\\b' | '\\f' | '\\r' | '\\n' | '\\t' | '\\"' | '\\\\';
 
-fragment CHAR_LIT: ~["\\\r\n'] | ESCAPESEQ | '\'"';
+fragment CHAR_LIT: ~["\\\r\n'EOF] | ESCAPESEQ | '\'"';
 
 STRINGLIT: '"' CHAR_LIT* '"' {self.text = self.text[1:-1]};
 
