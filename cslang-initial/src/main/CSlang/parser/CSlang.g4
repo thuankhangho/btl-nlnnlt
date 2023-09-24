@@ -1,8 +1,8 @@
-/** Student ID: 2011357 */
+/* Student ID: 2011357 */
 grammar CSlang;
 
 @lexer::header {
-from lexererr import *
+	from lexererr import *
 }
 
 options{
@@ -13,133 +13,173 @@ program: constant EOF ; // grammar rule
 
 // ID: [a-z]+; // token
 
-constant: 'int' | 'float' | 'bool' | 'string';
+constant: INT | FLOAT | BOOL | STRING;
 
-IDENTIFIER: [A-Za-z_]+ ([A-Za-z_0-9])* | '@'[A-Za-z_0-9]+;
+classdecl: CLASS superpart? IDENTIFIER memberlist;
+
+memberlist: LCB memberprime RCB;
+
+memberprime: (member memberlist | member);
+
+superpart: IDENTIFIER '<-';
+
+member: attribute | method;
+
+attribute: (CONST | VAR) attributename;
+
+attributename: ;
+
+method: ;
 
 //Keywords
 
-KEYWORDS: 'break' | 
-'continue' | 
-'if' | 
-'else' | 
-'for' | 
-'true' |
-'false' | 
-'int' | 
-'float' | 
-'bool' | 
-'string' | 
-'return' | 
-'null' |  
-'class' | 
-'constructor' | 
-'var' | 
-'self' | 
-'new' | 
-'void' | 
-'const' | 
-'func';
+// KEYWORDS: 'break' | 
+// 'continue' | 
+// 'if' | 
+// 'else' | 
+// 'for' | 
+// 'true' |
+// 'false' | 
+// 'int' | 
+// 'float' | 
+// 'bool' | 
+// 'string' | 
+// 'return' | 
+// 'null' |  
+// 'class' | 
+// 'constructor' | 
+// 'var' | 
+// 'self' | 
+// 'new' | 
+// 'void' | 
+// 'const' | 
+// 'func';
 
-// BREAK : 'break';
+BREAK : 'break';
 
-// CONTINUE : 'continue';
+CONTINUE : 'continue';
 
-// IF : 'if';
+IF : 'if';
 
-// ELSE : 'else';
+ELSE : 'else';
 
-// FOR : 'for';
+FOR : 'for';
 
-// TRUE : 'true';
+TRUE : 'true';
 
-// FALSE : 'false';
+FALSE : 'false';
 
-// INT : 'int';
+INT : 'int';
 
-// FLOAT : 'float';
+FLOAT : 'float';
 
-// BOOL : 'bool';
+BOOL : 'bool';
 
-// STRING : 'string';
+STRING : 'string';
 
-// RETURN : 'return';
+RETURN : 'return';
 
-// NULL : 'null';
+NULL : 'null';
 
-// CLASS : 'class';
+CLASS : 'class';
 
-// CONSTRUCTOR : 'constructor';
+CONSTRUCTOR : 'constructor';
 
-// VAR : 'var';
+VAR : 'var';
 
-// SELF : 'self';
+SELF : 'self';
 
-// NEW : 'new';
+NEW : 'new';
 
-// VOID : 'void';
+VOID : 'void';
 
-// CONST : 'const';
+CONST : 'const';
 
-// FUNC : 'func';
+FUNC : 'func';
 
 //Operators
-OPERATORS: '+' | 
-'-' | 
-'*' | 
-'/' | 
-'\\' | 
-'!' | 
-'&&' | 
-'||' | 
-'==' | 
-'=' | 
-'!=' | 
-'<' | 
-'<=' | 
-'>' | 
-'>=' | 
-':=' | 
-'^' | 
-'%';
-// PLUS: '+';
+// OPERATORS: '+' | 
+// '-' | 
+// '*' | 
+// '/' | 
+// '\\' | 
+// '!' | 
+// '&&' | 
+// '||' | 
+// '==' | 
+// '=' | 
+// '!=' | 
+// '<' | 
+// '<=' | 
+// '>' | 
+// '>=' | 
+// ':=' | 
+// '^' | 
+// '%';
+PLUS: '+';
 
-// MINUS: '-';
+MINUS: '-';
 
-// MULTIPLY: '*';
+MULTIPLY: '*';
 
-// DIVIDE_FLOAT: '/';
+DIVIDE_FLOAT: '/';
 
-// DIVIDE_INT: '\\';
+DIVIDE_INT: '\\';
 
-// DIFF: '!';
+DIFF: '!';
 
-// AND: '&&';
+AND: '&&';
 
-// OR: '||';
+OR: '||';
 
-// EQUAL: '==';
+EQUAL: '==';
 
-// DECLARE: '=';
+DECLARE: '=';
 
-// NEQ: '!=';
+NEQ: '!=';
 
-// LE: '<';
+LE: '<';
 
-// LEQ: '<=';
+LEQ: '<=';
 
-// GE: '>';
+GE: '>';
 
-// GEQ: '>=';
+GEQ: '>=';
 
-// ASSIGN: ':=';
+ASSIGN: ':=';
 
-// XOR: '^';
+XOR: '^';
 
-// MOD: '%';
+MOD: '%';
 
 //Separators
-SEPARATORS: '(' | ')' | '[' | ']' | '.' | ',' | ';' | ':' | '{' | '}';
+// SEPARATORS: '(' | ')' | '[' | ']' | '.' | ',' | ';' | ':' | '{' | '}';
+
+LRB: '(';
+RRB: ')';
+LSB: '[';
+RSB: ']';
+DOT: '.';
+CM: ',';
+SM: ';';
+COLON: ':';
+LCB: '{';
+RCB: '}';
+
+
+// INT: [0-9]+;
+
+// FLOAT: INT DEC | INT DEC EXP;
+
+// fragment DEC: '.'?[0-9]+;
+
+// fragment EXP: [Ee][+-][0-9]+;
+
+// BOOL: 'true'|'false';
+
+IDENTIFIER: [A-Za-z_]+ ([A-Za-z_0-9])* | '@'[A-Za-z_0-9]+;
+
+// COMMENT: '//'.?'\n' | '/*'.?'*/' -> skip;
 
 WS : [ \t\r\n\b\f]+ -> skip ; // skip spaces, tabs, newlines
 

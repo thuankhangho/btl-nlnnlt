@@ -11,9 +11,10 @@ else:
 
 def serializedATN():
     with StringIO() as buf:
-        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\7")
-        buf.write("\b\4\2\t\2\3\2\3\2\3\2\3\2\2\2\3\2\2\2\2\6\2\4\3\2\2\2")
-        buf.write("\4\5\7\3\2\2\5\6\7\2\2\3\6\3\3\2\2\2\2")
+        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\20")
+        buf.write("\f\4\2\t\2\4\3\t\3\3\2\3\2\3\2\3\3\3\3\3\3\2\2\4\2\4\2")
+        buf.write("\3\3\2\3\6\2\t\2\6\3\2\2\2\4\t\3\2\2\2\6\7\5\4\3\2\7\b")
+        buf.write("\7\2\2\3\b\3\3\2\2\2\t\n\t\2\2\2\n\5\3\2\2\2\2")
         return buf.getvalue()
 
 
@@ -27,21 +28,33 @@ class CSlangParser ( Parser ):
 
     sharedContextCache = PredictionContextCache()
 
-    literalNames = [  ]
+    literalNames = [ "<INVALID>", "'int'", "'float'", "'bool'", "'string'" ]
 
-    symbolicNames = [ "<INVALID>", "ID", "WS", "ERROR_CHAR", "UNCLOSE_STRING", 
-                      "ILLEGAL_ESCAPE" ]
+    symbolicNames = [ "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
+                      "<INVALID>", "KEYWORDS", "OPERATORS", "SEPARATORS", 
+                      "INT", "FLOAT", "IDENTIFIER", "WS", "ERROR_CHAR", 
+                      "UNCLOSE_STRING", "ILLEGAL_ESCAPE" ]
 
     RULE_program = 0
+    RULE_constant = 1
 
-    ruleNames =  [ "program" ]
+    ruleNames =  [ "program", "constant" ]
 
     EOF = Token.EOF
-    ID=1
-    WS=2
-    ERROR_CHAR=3
-    UNCLOSE_STRING=4
-    ILLEGAL_ESCAPE=5
+    T__0=1
+    T__1=2
+    T__2=3
+    T__3=4
+    KEYWORDS=5
+    OPERATORS=6
+    SEPARATORS=7
+    INT=8
+    FLOAT=9
+    IDENTIFIER=10
+    WS=11
+    ERROR_CHAR=12
+    UNCLOSE_STRING=13
+    ILLEGAL_ESCAPE=14
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
@@ -59,8 +72,9 @@ class CSlangParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def ID(self):
-            return self.getToken(CSlangParser.ID, 0)
+        def constant(self):
+            return self.getTypedRuleContext(CSlangParser.ConstantContext,0)
+
 
         def EOF(self):
             return self.getToken(CSlangParser.EOF, 0)
@@ -83,10 +97,53 @@ class CSlangParser ( Parser ):
         self.enterRule(localctx, 0, self.RULE_program)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 2
-            self.match(CSlangParser.ID)
-            self.state = 3
+            self.state = 4
+            self.constant()
+            self.state = 5
             self.match(CSlangParser.EOF)
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class ConstantContext(ParserRuleContext):
+        __slots__ = 'parser'
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+
+        def getRuleIndex(self):
+            return CSlangParser.RULE_constant
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitConstant" ):
+                return visitor.visitConstant(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+
+
+    def constant(self):
+
+        localctx = CSlangParser.ConstantContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 2, self.RULE_constant)
+        self._la = 0 # Token type
+        try:
+            self.enterOuterAlt(localctx, 1)
+            self.state = 7
+            _la = self._input.LA(1)
+            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << CSlangParser.T__0) | (1 << CSlangParser.T__1) | (1 << CSlangParser.T__2) | (1 << CSlangParser.T__3))) != 0)):
+                self._errHandler.recoverInline(self)
+            else:
+                self._errHandler.reportMatch(self)
+                self.consume()
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)

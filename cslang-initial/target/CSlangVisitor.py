@@ -14,5 +14,10 @@ class CSlangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by CSlangParser#constant.
+    def visitConstant(self, ctx:CSlangParser.ConstantContext):
+        return self.visitChildren(ctx)
+
+
 
 del CSlangParser
