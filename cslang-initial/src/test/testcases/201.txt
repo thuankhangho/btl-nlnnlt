@@ -1,1 +1,3 @@
-program
+class Program {
+      func constructor() {
+        }}
