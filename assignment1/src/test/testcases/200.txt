@@ -1,1 +1,1 @@
-class A{var delta: int = 3;}
+class A{ }

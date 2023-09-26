@@ -8,46 +8,53 @@ options{
 	language=Python3;
 }
 
-program: classdecl+ EOF ;
+program: decllist EOF ;
 
 //Parser
+
+decllist: decl decllist | ;
+
+decl: classdecl | methoddecl | attributedecl;
+
+identifier: ID | ATIDENTIFIER | SELF;
+
 classdecl: CLASS superpart? ID LCB memberlist RCB;
 
 memberlist: member memberlist | ;
 
-member: attribute | method;
+member: attributedecl | methoddecl;
 
-attribute: attributewithdeclare | attributenodeclare;
+attributedecl: attributewithdeclare | attributenodeclare;
 
-attributenodeclare: (CONST | VAR) attributelist COLON typ SM;
+attributenodeclare: (CONST | VAR) attributelist COLON (typ | VOID) SM;
 
 attributewithdeclare: (CONST | VAR) attlist SM;
 
 typ: BOOL | INT | FLOAT | STRING;
 
-attlist: IDENTIFIER CM attlist CM exp | IDENTIFIER COLON typ DECLARE exp;
+attlist: identifier CM attlist CM exp | identifier COLON typ DECLARE exp;
 //id comma comma expr
 //id : type = expr
 
-attributelist: IDENTIFIER CM attributelist | IDENTIFIER;
+attributelist: identifier CM attributelist | identifier;
 
-method: FUNC (ID | ATIDENTIFIER) LRB parameterlist RRB COLON typ blockstate;
+methoddecl: FUNC (ID | ATIDENTIFIER) LRB parameterlist RRB COLON (typ | VOID) blockstate;
 
 parameterlist: parameterprime | ;
 
 parameterprime: parameterpart1 | parameterpart2;
 
-parameterpart1: (IDENTIFIER COLON typ) CM parameterpart1 | (IDENTIFIER COLON typ);
+parameterpart1: (ID COLON typ) CM parameterpart1 | (ID COLON typ);
 
 parameterpart2: (identifierlist COLON typ) CM parameterpart2 | (identifierlist COLON typ);
 
 identifierlist: identifierprime | ;
 
-identifierprime: IDENTIFIER CM identifierprime | IDENTIFIER;
+identifierprime: ID CM identifierprime | ID;
 
 constructor: FUNC CONSTRUCTOR LRB parameterlist RRB blockstate;
 
-superpart: IDENTIFIER '<-';
+superpart: ID '<-';
 
 literal: INTLIT | FLOATLIT | boolit | STRINGLIT | arraylit;
 
@@ -59,7 +66,7 @@ literallist: (INTLIT | FLOATLIT | boolit | STRINGLIT) CM literallist | (INTLIT |
 
 arraydecl: LSB ARRAYSIZE RSB typ;
 
-objdecl: NEW IDENTIFIER LRB RRB;
+objdecl: NEW ID LRB RRB;
 
 //Expressions
 explist: exp CM explist | exp;
@@ -101,9 +108,9 @@ exp10: NEW exp10 LRB explist RRB| exp11;
 exp11: literal;
 
 //Statements
-varstate: VAR (attributelist COLON typ SM|attlist SM);
+varstate: VAR (attributelist COLON typ SM | attlist SM);
 
-constate: CONST (attributelist COLON typ SM|attlist SM);
+constate: CONST (attributelist COLON typ SM | attlist SM);
 
 assignstate: exp ASSIGN exp SM;
 
@@ -115,33 +122,24 @@ breakstate: BREAK SM;
 
 continuestate: CONTINUE SM;
 
-returnstate: RETURN (exp) SM;
+returnstate: RETURN (exp | identifier)? SM;
 
-instanceattributestate: exp DOT IDENTIFIER SM;
+instanceattributestate: exp DOT identifier SM;
 
-staticattributestate: (IDENTIFIER DOT)? ATIDENTIFIER SM;
+staticattributestate: (ID DOT)? ATIDENTIFIER SM;
 
-instancemethodstate: exp DOT IDENTIFIER (nullableexplist);
+instancemethodstate: exp DOT identifier (nullableexplist);
 
-staticmethodstate: (IDENTIFIER DOT)? ATIDENTIFIER (nullableexplist);
+staticmethodstate: (ID DOT)? ATIDENTIFIER (nullableexplist);
 
 // createobjectstate: NEW IDENTIFIER LRB nullableexplist RRB;
 
 blockstate: LCB stmtlist RCB;
 
-stmtlist: noatstmt stmtlist | ;
+stmtlist: stmt stmtlist | ;
 
-noatstmt: noatstmtnodeclare | noatstmtwithdeclare;
-
-noatstmtnodeclare: (CONST | VAR) attributelist1 COLON typ SM;
-
-noatstmtwithdeclare: (CONST | VAR) attlist1 SM;
-
-attlist1: ID CM attlist CM exp | ID COLON typ DECLARE exp;
-//id comma comma expr
-//id comma id : type = expr
-
-attributelist1: ID CM attributelist | ID;
+stmt: varstate | constate | assignstate | ifstate | forstate | breakstate | continuestate
+| returnstate | instanceattributestate | staticattributestate | instancemethodstate | staticmethodstate;
 
 //Lexer
 BREAK : 'break';
@@ -254,8 +252,6 @@ STRINGLIT: '"' CHAR_LIT* '"' {self.text = self.text[1:-1]};
 BLOCKCMT: '//*' .? '*//' -> skip;
 
 LINECMT: '///' .*? ('\n'|EOF) -> skip;
-
-IDENTIFIER: [A-Za-z_] ([A-Za-z_0-9])* | '@'[A-Za-z_0-9]+ | SELF;
 
 ID: [A-Za-z_] [A-Za-z_0-9]*;
 

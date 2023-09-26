@@ -14,6 +14,21 @@ class CSlangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by CSlangParser#decllist.
+    def visitDecllist(self, ctx:CSlangParser.DecllistContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CSlangParser#decl.
+    def visitDecl(self, ctx:CSlangParser.DeclContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CSlangParser#identifier.
+    def visitIdentifier(self, ctx:CSlangParser.IdentifierContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by CSlangParser#classdecl.
     def visitClassdecl(self, ctx:CSlangParser.ClassdeclContext):
         return self.visitChildren(ctx)
@@ -29,8 +44,8 @@ class CSlangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by CSlangParser#attribute.
-    def visitAttribute(self, ctx:CSlangParser.AttributeContext):
+    # Visit a parse tree produced by CSlangParser#attributedecl.
+    def visitAttributedecl(self, ctx:CSlangParser.AttributedeclContext):
         return self.visitChildren(ctx)
 
 
@@ -59,8 +74,8 @@ class CSlangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by CSlangParser#method.
-    def visitMethod(self, ctx:CSlangParser.MethodContext):
+    # Visit a parse tree produced by CSlangParser#methoddecl.
+    def visitMethoddecl(self, ctx:CSlangParser.MethoddeclContext):
         return self.visitChildren(ctx)
 
 
@@ -299,28 +314,8 @@ class CSlangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by CSlangParser#noatstmt.
-    def visitNoatstmt(self, ctx:CSlangParser.NoatstmtContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by CSlangParser#noatstmtnodeclare.
-    def visitNoatstmtnodeclare(self, ctx:CSlangParser.NoatstmtnodeclareContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by CSlangParser#noatstmtwithdeclare.
-    def visitNoatstmtwithdeclare(self, ctx:CSlangParser.NoatstmtwithdeclareContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by CSlangParser#attlist1.
-    def visitAttlist1(self, ctx:CSlangParser.Attlist1Context):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by CSlangParser#attributelist1.
-    def visitAttributelist1(self, ctx:CSlangParser.Attributelist1Context):
+    # Visit a parse tree produced by CSlangParser#stmt.
+    def visitStmt(self, ctx:CSlangParser.StmtContext):
         return self.visitChildren(ctx)
 
 
