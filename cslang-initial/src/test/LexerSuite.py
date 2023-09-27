@@ -14,4 +14,8 @@ class LexerSuite(unittest.TestCase):
     def test_1(self):
         input = """func constructor"""
         expected = "func,constructor,<EOF>"
-        self.assertTrue(TestLexer.test(input, expected, 102))
+        self.assertTrue(TestLexer.test(input, expected, 103))
+    def test_1(self):
+        input = """func constructor"""
+        expected = "func,constructor,<EOF>"
+        self.assertTrue(TestLexer.test(input, expected, 104))

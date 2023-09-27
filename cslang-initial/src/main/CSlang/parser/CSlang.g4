@@ -288,7 +288,7 @@ LCB: '{';
 RCB: '}';
 
 //Literals
-INTLIT: '0' | [1-9][0-9]*;
+INTLIT: [0-9]+;
 
 FLOATLIT: INTLIT DEC | INTLIT DEC? EXP;
 
@@ -300,7 +300,7 @@ BOOLLIT: TRUE | FALSE;
 
 fragment ESCAPESEQ: '\\b' | '\\f' | '\\r' | '\\n' | '\\t' | '\\"' | '\\\\';
 
-fragment CHAR_LIT: ~["\\\r\n'EOF] | ESCAPESEQ | '\'"';
+fragment CHAR_LIT: ~["'EOF] | ESCAPESEQ | '\'"';
 
 STRINGLIT: '"' CHAR_LIT* '"' {self.text = self.text[1:-1]};
 
