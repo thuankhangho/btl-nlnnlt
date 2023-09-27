@@ -256,7 +256,7 @@ class CSlangLexer(Lexer):
     DIVIDE_INT = 27
     AND = 28
     OR = 29
-    EQUAL = 30
+    EQ = 30
     ASSIGN = 31
     NEQ = 32
     LEQ = 33
@@ -307,7 +307,7 @@ class CSlangLexer(Lexer):
             "BREAK", "CONTINUE", "IF", "ELSE", "FOR", "TRUE", "FALSE", "INT", 
             "FLOAT", "BOOL", "STRING", "RETURN", "NULL", "CLASS", "CONSTRUCTOR", 
             "VAR", "SELF", "NEW", "VOID", "CONST", "FUNC", "PLUS", "MINUS", 
-            "MULTIPLY", "DIVIDE_FLOAT", "DIVIDE_INT", "AND", "OR", "EQUAL", 
+            "MULTIPLY", "DIVIDE_FLOAT", "DIVIDE_INT", "AND", "OR", "EQ", 
             "ASSIGN", "NEQ", "LEQ", "GEQ", "DIFF", "DECLARE", "LE", "GE", 
             "CONCAT", "MOD", "LRB", "RRB", "LSB", "RSB", "DOT", "CM", "SM", 
             "COLON", "LCB", "RCB", "INTLIT", "FLOATLIT", "STRINGLIT", "BLOCKCMT", 
@@ -318,7 +318,7 @@ class CSlangLexer(Lexer):
                   "FALSE", "INT", "FLOAT", "BOOL", "STRING", "RETURN", "NULL", 
                   "CLASS", "CONSTRUCTOR", "VAR", "SELF", "NEW", "VOID", 
                   "CONST", "FUNC", "PLUS", "MINUS", "MULTIPLY", "DIVIDE_FLOAT", 
-                  "DIVIDE_INT", "AND", "OR", "EQUAL", "ASSIGN", "NEQ", "LEQ", 
+                  "DIVIDE_INT", "AND", "OR", "EQ", "ASSIGN", "NEQ", "LEQ", 
                   "GEQ", "DIFF", "DECLARE", "LE", "GE", "CONCAT", "MOD", 
                   "LRB", "RRB", "LSB", "RSB", "DOT", "CM", "SM", "COLON", 
                   "LCB", "RCB", "INTLIT", "FLOATLIT", "STRINGLIT", "BLOCKCMT", 

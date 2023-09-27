@@ -149,6 +149,31 @@ class CSlangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by CSlangParser#allexp.
+    def visitAllexp(self, ctx:CSlangParser.AllexpContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CSlangParser#instanceattributestate.
+    def visitInstanceattributestate(self, ctx:CSlangParser.InstanceattributestateContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CSlangParser#staticattributestate.
+    def visitStaticattributestate(self, ctx:CSlangParser.StaticattributestateContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CSlangParser#instancemethodstate.
+    def visitInstancemethodstate(self, ctx:CSlangParser.InstancemethodstateContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CSlangParser#staticmethodstate.
+    def visitStaticmethodstate(self, ctx:CSlangParser.StaticmethodstateContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by CSlangParser#explist.
     def visitExplist(self, ctx:CSlangParser.ExplistContext):
         return self.visitChildren(ctx)
@@ -284,23 +309,13 @@ class CSlangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by CSlangParser#instanceattributestate.
-    def visitInstanceattributestate(self, ctx:CSlangParser.InstanceattributestateContext):
+    # Visit a parse tree produced by CSlangParser#methodinvoke.
+    def visitMethodinvoke(self, ctx:CSlangParser.MethodinvokeContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by CSlangParser#staticattributestate.
-    def visitStaticattributestate(self, ctx:CSlangParser.StaticattributestateContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by CSlangParser#instancemethodstate.
-    def visitInstancemethodstate(self, ctx:CSlangParser.InstancemethodstateContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by CSlangParser#staticmethodstate.
-    def visitStaticmethodstate(self, ctx:CSlangParser.StaticmethodstateContext):
+    # Visit a parse tree produced by CSlangParser#createobjectstate.
+    def visitCreateobjectstate(self, ctx:CSlangParser.CreateobjectstateContext):
         return self.visitChildren(ctx)
 
 

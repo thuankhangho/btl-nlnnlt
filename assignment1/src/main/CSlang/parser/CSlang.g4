@@ -16,7 +16,7 @@ decllist: decl decllist | ;
 
 decl: classdecl | methoddecl | attributedecl;
 
-identifier: ID | ATIDENTIFIER | SELF;
+identifier: ID | ATIDENTIFIER;
 
 classdecl: CLASS superpart? ID LCB memberlist RCB;
 
@@ -69,13 +69,21 @@ arraydecl: LSB ARRAYSIZE RSB typ;
 objdecl: NEW ID LRB RRB;
 
 //Expressions
+instanceattributestate: exp DOT identifier;
+
+staticattributestate: (ID DOT)? ATIDENTIFIER;
+
+instancemethodstate: exp DOT identifier LRB nullableexplist RRB;
+
+staticmethodstate: (ID DOT)? ATIDENTIFIER LRB nullableexplist RRB;
+
 explist: exp CM explist | exp;
 
 nullableexplist: expprime |;
 
 expprime: exp CM expprime | exp;
 
-relational: EQUAL | NEQ | LE | GE | LEQ | GEQ;
+relational: EQ | NEQ | LE | GE | LEQ | GEQ;
 
 logical: AND | OR;
 
@@ -105,7 +113,7 @@ exp9: exp10 DOT exp10 | exp10;
 
 exp10: NEW exp10 LRB explist RRB| exp11;
 
-exp11: literal;
+exp11: literal | identifier;
 
 //Statements
 varstate: VAR (attributelist COLON typ SM | attlist SM);
@@ -124,13 +132,7 @@ continuestate: CONTINUE SM;
 
 returnstate: RETURN (exp | identifier)? SM;
 
-instanceattributestate: exp DOT identifier SM;
-
-staticattributestate: (ID DOT)? ATIDENTIFIER SM;
-
-instancemethodstate: exp DOT identifier (nullableexplist);
-
-staticmethodstate: (ID DOT)? ATIDENTIFIER (nullableexplist);
+methodinvoke: (instancemethodstate | staticmethodstate) SM;
 
 // createobjectstate: NEW IDENTIFIER LRB nullableexplist RRB;
 
@@ -139,7 +141,7 @@ blockstate: LCB stmtlist RCB;
 stmtlist: stmt stmtlist | ;
 
 stmt: varstate | constate | assignstate | ifstate | forstate | breakstate | continuestate
-| returnstate | instanceattributestate | staticattributestate | instancemethodstate | staticmethodstate;
+| returnstate | methodinvoke;
 
 //Lexer
 BREAK : 'break';
@@ -199,7 +201,7 @@ AND: '&&';
 
 OR: '||';
 
-EQUAL: '==';
+EQ: '==';
 
 ASSIGN: ':=';
 
