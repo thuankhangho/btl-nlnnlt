@@ -144,16 +144,6 @@ class CSlangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by CSlangParser#objdecl.
-    def visitObjdecl(self, ctx:CSlangParser.ObjdeclContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by CSlangParser#allexp.
-    def visitAllexp(self, ctx:CSlangParser.AllexpContext):
-        return self.visitChildren(ctx)
-
-
     # Visit a parse tree produced by CSlangParser#instanceattributestate.
     def visitInstanceattributestate(self, ctx:CSlangParser.InstanceattributestateContext):
         return self.visitChildren(ctx)
@@ -311,11 +301,6 @@ class CSlangVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by CSlangParser#methodinvoke.
     def visitMethodinvoke(self, ctx:CSlangParser.MethodinvokeContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by CSlangParser#createobjectstate.
-    def visitCreateobjectstate(self, ctx:CSlangParser.CreateobjectstateContext):
         return self.visitChildren(ctx)
 
 

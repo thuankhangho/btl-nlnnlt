@@ -3,10 +3,6 @@ from TestUtils import TestLexer
 
 
 class LexerSuite(unittest.TestCase):
-
-    # def test_lowercase_identifier(self):
-    #     """test identifiers"""
-    #     self.assertTrue(TestLexer.test("abc", "abc,<EOF>", 101))
     def test_0(self):
         input = "123"
         expected = "123,<EOF>"

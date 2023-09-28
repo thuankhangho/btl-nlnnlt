@@ -14,7 +14,7 @@ program: decllist EOF ;
 
 decllist: decl decllist | ;
 
-decl: classdecl | methoddecl | attributedecl;
+decl: classdecl;
 
 identifier: ID | ATIDENTIFIER;
 
@@ -26,7 +26,7 @@ member: attributedecl | methoddecl;
 
 attributedecl: attributewithdeclare | attributenodeclare;
 
-attributenodeclare: (CONST | VAR) attributelist COLON (typ | VOID) SM;
+attributenodeclare: (CONST | VAR) attributelist COLON typ SM;
 
 attributewithdeclare: (CONST | VAR) attlist SM;
 
@@ -66,7 +66,7 @@ literallist: (INTLIT | FLOATLIT | boolit | STRINGLIT) CM literallist | (INTLIT |
 
 arraydecl: LSB ARRAYSIZE RSB typ;
 
-objdecl: NEW ID LRB RRB;
+//objdecl: NEW ID LRB RRB;
 
 //Expressions
 instanceattributestate: exp DOT identifier;
@@ -107,13 +107,13 @@ exp6: MINUS exp6 | exp7;
 
 exp7: exp8 LSB exp RSB | exp8;
 
-exp8: exp8 DOT exp9 | exp9;
+exp8: /*exp8 DOT exp9 | exp9;*/ exp8 DOT ID | exp8 DOT ID LRB explist RRB | exp9;
 
-exp9: exp10 DOT exp10 | exp10;
+exp9: ((ID | SELF) DOT)? ATIDENTIFIER | ((ID | SELF) DOT)? ATIDENTIFIER LRB explist RRB | exp10;
 
-exp10: NEW exp10 LRB explist RRB| exp11;
+exp10: NEW identifier LRB explist RRB | exp11;
 
-exp11: literal | identifier;
+exp11: literal | identifier | SELF;
 
 //Statements
 varstate: VAR (attributelist COLON typ SM | attlist SM);
@@ -251,7 +251,7 @@ FLOATLIT: INTLIT DEC | INTLIT DEC? EXP;
 
 STRINGLIT: '"' CHAR_LIT* '"' {self.text = self.text[1:-1]};
 
-BLOCKCMT: '//*' .? '*//' -> skip;
+BLOCKCMT: '//*' .*? '*//' -> skip;
 
 LINECMT: '///' .*? ('\n'|EOF) -> skip;
 
@@ -272,5 +272,5 @@ fragment CHAR_LIT: ~['"\\\r\nEOF] | ESCAPESEQ | '\\"';
 WS : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
 
 UNCLOSED_STRING: '"' CHAR_LIT* {self.text = self.text[1:]; raise UncloseString(self.text)};
-ILLEGAL_ESCAPE: ( '"' ('\\'[bfrnt\\'] | ~[\n\r\\"])* ('\\'(~[bfrnt'\\]))) {self.text = self.text[1:]; raise IllegalEscape(self.text)};
+ILLEGAL_ESCAPE: '"' ('\\'[bfrnt\\'] | ~[\n\r\\"])* ('\\'(~[bfrnt'\\])) {self.text = self.text[1:]; raise IllegalEscape(self.text)};
 ERROR_CHAR: . {raise ErrorToken(self.text)};
