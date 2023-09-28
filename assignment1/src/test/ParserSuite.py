@@ -53,3 +53,12 @@ class ParserSuite(unittest.TestCase):
                 }"""
         expect = "Error on line 2 col 16: string"
         self.assertTrue(TestParser.test(input, expect, 205))
+    def test_5(self):
+        input = """class Program <- test{
+            var a : [12]int;
+            func @fact(n: bool):void {
+                a[3] :=1;
+            }
+        }"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 206))
