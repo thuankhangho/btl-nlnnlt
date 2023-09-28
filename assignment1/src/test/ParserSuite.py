@@ -47,3 +47,9 @@ class ParserSuite(unittest.TestCase):
         }"""
         expect = "successful"
         self.assertTrue(TestParser.test(input, expect, 204))
+    def test_5(self):
+        input = """class Program {
+                string := "Hello " ^ "World!";
+                }"""
+        expect = "Error on line 2 col 16: string"
+        self.assertTrue(TestParser.test(input, expect, 205))

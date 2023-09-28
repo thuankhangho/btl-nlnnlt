@@ -113,7 +113,9 @@ exp9: ((ID | SELF) DOT)? ATIDENTIFIER | ((ID | SELF) DOT)? ATIDENTIFIER LRB expl
 
 exp10: NEW identifier LRB explist RRB | exp11;
 
-exp11: literal | identifier | SELF;
+exp11: LRB exp RRB | exp12;
+
+exp12: literal | identifier | SELF;
 
 //Statements
 varstate: VAR (attributelist COLON typ SM | attlist SM);
