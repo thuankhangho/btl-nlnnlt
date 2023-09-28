@@ -43,8 +43,7 @@ class ParserSuite(unittest.TestCase):
         self.assertTrue(TestParser.test(input, expect, 203))
     def test_4(self):
         input = """func @fact(n: int):int {
-            if n == 0 {return 1;}
-            else {return n * @fact(n - 1);}
+            var a: [12]int;
         }"""
         expect = "successful"
         self.assertTrue(TestParser.test(input, expect, 204))

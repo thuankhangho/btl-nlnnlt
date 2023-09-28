@@ -66,7 +66,7 @@ literallist: (INTLIT | FLOATLIT | boolit | STRINGLIT) CM literallist | (INTLIT |
 
 arraydecl: LSB ARRAYSIZE RSB typ;
 
-//objdecl: NEW ID LRB RRB;
+objdecl: NEW ID LRB RRB;
 
 //Expressions
 instanceattributestate: exp DOT identifier;
@@ -107,7 +107,7 @@ exp6: MINUS exp6 | exp7;
 
 exp7: exp8 LSB exp RSB | exp8;
 
-exp8: /*exp8 DOT exp9 | exp9;*/ exp8 DOT ID | exp8 DOT ID LRB explist RRB | exp9;
+exp8:  exp8 DOT ID | exp8 DOT ID LRB explist RRB | exp9;
 
 exp9: ((ID | SELF) DOT)? ATIDENTIFIER | ((ID | SELF) DOT)? ATIDENTIFIER LRB explist RRB | exp10;
 
@@ -124,7 +124,7 @@ assignstate: exp ASSIGN exp SM;
 
 ifstate: IF blockstate? exp blockstate (ELSE blockstate)?;
 
-forstate: FOR assignstate exp SM blockstate;
+forstate: FOR assignstate exp1 SM blockstate;
 
 breakstate: BREAK SM;
 
