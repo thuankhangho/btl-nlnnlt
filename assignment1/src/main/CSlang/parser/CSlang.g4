@@ -26,19 +26,17 @@ member: attributedecl | methoddecl;
 
 attributedecl: attributewithdeclare | attributenodeclare;
 
-attributenodeclare: (CONST | VAR) attributelist COLON typ SM;
+attributenodeclare: (CONST | VAR) attributelist COLON (typ | arraydecl) SM;
 
 attributewithdeclare: (CONST | VAR) attlist SM;
 
-typ: BOOL | INT | FLOAT | STRING;
-
-attlist: identifier CM attlist CM exp | identifier COLON typ DECLARE exp;
+attlist: identifier CM attlist CM exp | identifier COLON (typ | arraydecl) DECLARE exp;
 //id comma comma expr
 //id : type = expr
 
 attributelist: identifier CM attributelist | identifier;
 
-methoddecl: FUNC (ID | ATIDENTIFIER) LRB parameterlist RRB COLON (typ | VOID) blockstate;
+methoddecl: FUNC (ID | ATIDENTIFIER) LRB parameterlist RRB COLON (typ | VOID | arraydecl) blockstate;
 
 parameterlist: parameterprime | ;
 
@@ -60,18 +58,18 @@ literal: INTLIT | FLOATLIT | boolit | STRINGLIT | arraylit;
 
 boolit: TRUE | FALSE;
 
-arraylit: LSB literallist RSB;
-
 literallist: (INTLIT | FLOATLIT | boolit | STRINGLIT) CM literallist | (INTLIT | FLOATLIT | boolit | STRINGLIT);
 
-arraydecl: LSB ARRAYSIZE RSB typ;
+arraydecl: LSB INTLIT RSB typ;
+
+typ: BOOL | INT | FLOAT | STRING | ID;
 
 //objdecl: NEW ID LRB RRB;
 
 //Expressions
-instanceattributestate: exp DOT identifier;
+// instanceattributestate: exp DOT identifier;
 
-staticattributestate: (ID DOT)? ATIDENTIFIER;
+// staticattributestate: (ID DOT)? ATIDENTIFIER;
 
 instancemethodstate: exp DOT identifier LRB nullableexplist RRB;
 
@@ -107,41 +105,43 @@ exp6: MINUS exp6 | exp7;
 
 exp7: exp8 LSB exp RSB | exp8;
 
-exp8: /*exp8 DOT exp9 | exp9;*/ exp8 DOT ID | exp8 DOT ID LRB explist RRB | exp9;
+exp8: exp8 DOT ID (LRB explist RRB)? | exp9;
 
-exp9: ((ID | SELF) DOT)? ATIDENTIFIER | ((ID | SELF) DOT)? ATIDENTIFIER LRB explist RRB | exp10;
+exp9: (ID DOT)? ATIDENTIFIER | (ID DOT)? ATIDENTIFIER LRB nullableexplist RRB | exp10;
 
 exp10: NEW identifier LRB explist RRB | exp11;
 
 exp11: literal | identifier | SELF;
 
 //Statements
-varstate: VAR (attributelist COLON typ SM | attlist SM);
+// varstate: VAR (attributelist COLON typ SM | attlist SM);
 
-constate: CONST (attributelist COLON typ SM | attlist SM);
+// constate: CONST (attributelist COLON typ SM | attlist SM);
 
 assignstate: exp ASSIGN exp SM;
 
 ifstate: IF blockstate? exp blockstate (ELSE blockstate)?;
 
-forstate: FOR assignstate exp SM blockstate;
+forstate: FOR assignstate (exp SM) (exp ASSIGN exp) blockstate;
 
 breakstate: BREAK SM;
 
 continuestate: CONTINUE SM;
 
-returnstate: RETURN (exp | identifier)? SM;
+returnstate: RETURN exp? SM;
 
 methodinvoke: (instancemethodstate | staticmethodstate) SM;
 
-// createobjectstate: NEW IDENTIFIER LRB nullableexplist RRB;
+createobjectstate: NEW ID LRB nullableexplist RRB;
 
 blockstate: LCB stmtlist RCB;
 
 stmtlist: stmt stmtlist | ;
 
-stmt: varstate | constate | assignstate | ifstate | forstate | breakstate | continuestate
-| returnstate | methodinvoke;
+stmt: attributedecl | assignstate | ifstate | forstate | breakstate | continuestate
+| returnstate | methodinvoke | blockstate;
+
+arraylit: LSB literallist RSB;
 
 //Lexer
 BREAK : 'break';
@@ -251,15 +251,13 @@ FLOATLIT: INTLIT DEC | INTLIT DEC? EXP;
 
 STRINGLIT: '"' CHAR_LIT* '"' {self.text = self.text[1:-1]};
 
-BLOCKCMT: '//*' .*? '*//' -> skip;
+BLOCKCMT: '/*' .*? '*/' -> skip;
 
-LINECMT: '///' .*? ('\n'|EOF) -> skip;
+LINECMT: '//' .*? ('\n'|EOF) -> skip;
 
 ID: [A-Za-z_] [A-Za-z_0-9]*;
 
 ATIDENTIFIER: '@' [A-Za-z_0-9]+;
-
-ARRAYSIZE: [1-9][0-9]*;
 
 fragment DEC: '.'?[0-9]+;
 

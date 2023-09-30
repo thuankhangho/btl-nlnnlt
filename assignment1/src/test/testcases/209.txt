@@ -1,0 +1,1 @@
+class Program {func @main():int {func @foo():int {return 1;} @foo();}}

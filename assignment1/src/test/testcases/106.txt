@@ -1,1 +1,2 @@
-He asked me: "Where is John?"
+/* This is a block comment so // has no meaning here */
+//This is a line comment so /* has no meaning here

@@ -59,11 +59,6 @@ class CSlangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by CSlangParser#typ.
-    def visitTyp(self, ctx:CSlangParser.TypContext):
-        return self.visitChildren(ctx)
-
-
     # Visit a parse tree produced by CSlangParser#attlist.
     def visitAttlist(self, ctx:CSlangParser.AttlistContext):
         return self.visitChildren(ctx)
@@ -129,11 +124,6 @@ class CSlangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by CSlangParser#arraylit.
-    def visitArraylit(self, ctx:CSlangParser.ArraylitContext):
-        return self.visitChildren(ctx)
-
-
     # Visit a parse tree produced by CSlangParser#literallist.
     def visitLiterallist(self, ctx:CSlangParser.LiterallistContext):
         return self.visitChildren(ctx)
@@ -144,13 +134,8 @@ class CSlangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by CSlangParser#instanceattributestate.
-    def visitInstanceattributestate(self, ctx:CSlangParser.InstanceattributestateContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by CSlangParser#staticattributestate.
-    def visitStaticattributestate(self, ctx:CSlangParser.StaticattributestateContext):
+    # Visit a parse tree produced by CSlangParser#typ.
+    def visitTyp(self, ctx:CSlangParser.TypContext):
         return self.visitChildren(ctx)
 
 
@@ -259,16 +244,6 @@ class CSlangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by CSlangParser#varstate.
-    def visitVarstate(self, ctx:CSlangParser.VarstateContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by CSlangParser#constate.
-    def visitConstate(self, ctx:CSlangParser.ConstateContext):
-        return self.visitChildren(ctx)
-
-
     # Visit a parse tree produced by CSlangParser#assignstate.
     def visitAssignstate(self, ctx:CSlangParser.AssignstateContext):
         return self.visitChildren(ctx)
@@ -304,6 +279,11 @@ class CSlangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by CSlangParser#createobjectstate.
+    def visitCreateobjectstate(self, ctx:CSlangParser.CreateobjectstateContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by CSlangParser#blockstate.
     def visitBlockstate(self, ctx:CSlangParser.BlockstateContext):
         return self.visitChildren(ctx)
@@ -316,6 +296,11 @@ class CSlangVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by CSlangParser#stmt.
     def visitStmt(self, ctx:CSlangParser.StmtContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CSlangParser#arraylit.
+    def visitArraylit(self, ctx:CSlangParser.ArraylitContext):
         return self.visitChildren(ctx)
 
 

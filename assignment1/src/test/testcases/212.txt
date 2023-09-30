@@ -1,0 +1,3 @@
+class Program {
+            var a: [3]int = [2,"why not",false];
+            }

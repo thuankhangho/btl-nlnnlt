@@ -1,1 +1,1 @@
-print \"Hello, World!\",<EOF>
+a,:=,5,;,<EOF>
