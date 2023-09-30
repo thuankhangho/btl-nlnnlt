@@ -30,10 +30,50 @@ class LexerSuite(unittest.TestCase):
         input = "/* This is a block comment so // has no meaning here */\n//This is a line comment so /* has no meaning here"
         expected = "<EOF>"
         self.assertTrue(TestLexer.test(input, expected, 106))
-    # def test_0(self):
-    #     input = "123"
-    #     expected = "123,<EOF>"
-    #     self.assertTrue(TestLexer.test(input, expected, 100))
+    def test_identifier_7(self):
+        input = "@a123"
+        expected = "@a123,<EOF>"
+        self.assertTrue(TestLexer.test(input, expected, 107))
+    def test_identifier_8(self):
+        input = "@_"
+        expected = "@_,<EOF>"
+        self.assertTrue(TestLexer.test(input, expected, 108))
+    def test_identifier_9(self):
+        input = "__main__"
+        expected = "__main__,<EOF>"
+        self.assertTrue(TestLexer.test(input, expected, 109))
+    def test_identifier_10(self):
+        input = "a\r"
+        expected = "a,<EOF>"
+        self.assertTrue(TestLexer.test(input, expected, 110))
+    def test_keyword_operator_separator_11(self):
+        input = "const"
+        expected = "const,<EOF>"
+        self.assertTrue(TestLexer.test(input, expected, 111))
+    def test_keyword_operator_separator_12(self):
+        input = "^"
+        expected = "^,<EOF>"
+        self.assertTrue(TestLexer.test(input, expected, 112))
+    def test_keyword_operator_separator_13(self):
+        input = "%"
+        expected = "%,<EOF>"
+        self.assertTrue(TestLexer.test(input, expected, 113))
+    def test_keyword_operator_separator_14(self):
+        input = "}"
+        expected = "},<EOF>"
+        self.assertTrue(TestLexer.test(input, expected, 114))
+    def test_keyword_operator_separator_15(self):
+        input = "."
+        expected = ".,<EOF>"
+        self.assertTrue(TestLexer.test(input, expected, 115))
+    # def test_keyword_operator_separator_16(self):
+    #     input = "[\"a\",\"b\",\"c\"]"
+    #     expected = ".,<EOF>"
+    #     self.assertTrue(TestLexer.test(input, expected, 116))
+    def test_keyword_operator_separator_17(self):
+        input = "\"Valid: \\n \\\""
+        expected = "<EOF>"
+        self.assertTrue(TestLexer.test(input, expected, 117))
     # def test_1(self):
     #     input = "\"123\k Hi\""
     #     expected = "Illegal Escape In String: 123\k"

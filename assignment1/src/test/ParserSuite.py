@@ -169,5 +169,22 @@ class ParserSuite(unittest.TestCase):
             func @main():void{
             a[1],a[2] := [1,2] ,[2,3];
             }}"""
-        expect = "successful"
+        expect = "Error on line 4 col 16: ,"
         self.assertTrue(TestParser.test(input, expect, 213))
+    def test_14(self):
+        input = """class Program{
+        func @fact(n: int):int {
+            if n == 0 {return 1;}
+            else {return n * @fact(n - 1);}
+        }
+        func  @inc( n, delta: int):void {
+            n := n + delta;
+            return n;
+        }
+        func @main():int {
+            var delta: int = @fact(3);
+            @inc(self.x, delta);
+            io.@writeInt(self.x);
+        }}"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 214))

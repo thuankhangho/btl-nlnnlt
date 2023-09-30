@@ -263,7 +263,7 @@ ATIDENTIFIER: '@' [A-Za-z_0-9]+;
 
 fragment DEC: '.'?[0-9]+;
 
-fragment EXP: [Ee][+-][0-9]+;
+fragment EXP: [Ee][+-]?[0-9]+;
 
 fragment ESCAPESEQ: '\\b' | '\\f' | '\\r' | '\\n' | '\\t' | '\\"' | '\\\\';
 
