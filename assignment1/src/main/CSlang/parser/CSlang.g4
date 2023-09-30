@@ -64,7 +64,7 @@ arraydecl: LSB INTLIT RSB typ;
 
 typ: BOOL | INT | FLOAT | STRING | ID;
 
-//objdecl: NEW ID LRB RRB;
+objdecl: NEW ID LRB RRB;
 
 //Expressions
 // instanceattributestate: exp DOT identifier;
@@ -111,7 +111,9 @@ exp9: (ID DOT)? ATIDENTIFIER | (ID DOT)? ATIDENTIFIER LRB nullableexplist RRB | 
 
 exp10: NEW identifier LRB explist RRB | exp11;
 
-exp11: literal | identifier | SELF;
+exp11: LRB exp RRB | exp12;
+
+exp12: literal | identifier | SELF;
 
 //Statements
 // varstate: VAR (attributelist COLON typ SM | attlist SM);
