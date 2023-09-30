@@ -1,0 +1,42 @@
+class Program {
+                func HorrorScene():void {
+                    if {
+                    You.@location := "balcony"; 
+                    io.@writeStr("Welcome to our house!");
+                    }
+                    You.goDown("floor4")
+                    {
+                        if You.goDown("floor3")
+                        {
+                            if You.goDown("floor2")
+                            {
+                                if You.goDown("floor1") 
+                                {
+                                    io.@writeStr("You seriously shouldnt go to the basement");
+                                    if You.goDown("basement")
+                                    {
+                                        io.@writeStr("Hey there Valak!");
+                                    }
+                                    else{
+                                        You.goUp();
+                                    }
+                                }
+                                else{
+                                    You.goUp();
+                                }
+                            }
+                            else
+                            {
+                                You.goUp();
+                            }
+                        }
+                        else
+                        {
+                            You.goUp();
+                        }
+                    }
+                    else{
+                        You.goUp();
+                    }                      
+                }
+            }

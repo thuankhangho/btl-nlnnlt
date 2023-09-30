@@ -154,11 +154,6 @@ class CSlangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by CSlangParser#explist.
-    def visitExplist(self, ctx:CSlangParser.ExplistContext):
-        return self.visitChildren(ctx)
-
-
     # Visit a parse tree produced by CSlangParser#nullableexplist.
     def visitNullableexplist(self, ctx:CSlangParser.NullableexplistContext):
         return self.visitChildren(ctx)
