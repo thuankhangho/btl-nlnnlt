@@ -1,16 +1,7 @@
+# Student ID: 2011357
+# Name: Ho Thuan Khang
 import unittest
 from TestUtils import TestParser
-
-# Parser testcases:
-# 1 -> 5:
-# 6 -> 10:
-# 11 -> 15:
-# 16 -> 30: 
-# 31 -> 35: 
-# 36 -> 50: 
-# 50 -> 55: 
-# 56 -> 100: random
-
 
 class ParserSuite(unittest.TestCase):
     def test_0(self):
@@ -221,7 +212,7 @@ class ParserSuite(unittest.TestCase):
         Shape.@t.t[3].t[3].a := 2;
     }
 }"""
-        expect = "successful"
+        expect = "Error on line 2 col 29: ."
         self.assertTrue(TestParser.test(input, expect, 217))
     def test_18(self):
         input = """class Program {
@@ -304,11 +295,121 @@ class ParserSuite(unittest.TestCase):
                 }"""
         expect = "successful"
         self.assertTrue(TestParser.test(input, expect, 220))
-    # def test_10(self):
-    #     input = "class Program {func @main():int {@isSth := !a.x[1] && b [2];}}"
-    #     expected = "Illegal Escape In String: dkjoiue\s"
-    #     self.assertTrue(TestLexer.test(input, expected, 110))
-    # def test_11(self):
-    #     input = "class Program {func @main():int {@text := !(a && b);}}"
-    #     expected = "Illegal Escape In String: dkjoiue\s"
-    #     self.assertTrue(TestLexer.test(input, expected, 111))
+    def test_21(self):
+        input = """class A {func @fact(n: int):int {
+            if (i % 5 != 2) && (12 == 2) {return;}
+        }}"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 221))
+    def test_22(self):
+        input = """class Program {
+            func @how(): void {
+                if (i % 5 != 2 && true) {return;}
+                }
+            }"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 222))
+    def test_23(self):
+        input = """class A{
+            var a: [3]int = [[a,b,c],b,c];
+        }"""
+        expect = "Error on line 2 col 29: ["
+        self.assertTrue(TestParser.test(input, expect, 223))
+    def test_24(self):
+        input = """class Test <- test{
+            func main():void{
+                a[2+y.a()] := new new Y().k;
+            }
+        }"""
+        expect = "Error on line 3 col 34: new"
+        self.assertTrue(TestParser.test(input, expect, 224))
+    def test_25(self):
+        input = """class Test <- test{
+            func main():void{
+                a[2+y.a()] := [1,2.0];
+            }
+        }"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 225))
+    def test_26(self):
+        input = """class Test <- test{
+            func main():void{
+                a[2+y.a()] := !a.t[2];
+            }
+        }"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 226))
+    def test_27(self):
+        input = "class B <- a{var x: [3]int = [fact(), 1 + 2, 3 + 4];}"
+        expect = "Error on line 1 col 30: fact"
+        self.assertTrue(TestParser.test(input, expect, 227))
+    def test_28(self):
+        input = """class B <- a{const a:[5]int = ["string", "arr",8,9.2]; }"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 228))
+    def test_29(self):
+        input = """class Program {
+            func @main():int {
+                @text := !(a && b);
+                }
+            }"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 229))
+    def test_30(self):
+        input = """class Program { 
+            class A {
+                func test(): int {
+                    func test(): void { }
+                }
+            }
+        }"""
+        expect = "Error on line 2 col 12: class"
+        self.assertTrue(TestParser.test(input, expect, 230))
+    def test_31(self):
+        input = """class Program { 
+        for i:=0; i<5; i:=i+1 { // for loop
+            if i==3 {
+                continue; // skip rest of loop
+            }
+            io.@writeInt(i);
+        }
+        io.@writeStr("Press 1 to exit: ");
+        if input==1 {
+            break; // terminate loop
+            }
+        }"""
+        expect = "Error on line 2 col 8: for"
+        self.assertTrue(TestParser.test(input, expect, 231))
+    def test_32(self):
+        input = """class Shape{
+            func setLength(): int{
+                return self.length = 5;
+            }
+        }"""
+        expect = "Error on line 3 col 35: ="
+        self.assertTrue(TestParser.test(input, expect, 232))
+    def test_33(self):
+        input = """class Program {
+            func @main(): void {
+                var message: string = "This is an unclosed string literal";
+                io.@writeString(message);
+            }
+        }"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 233))
+    def test_34(self):
+        input = """class Program {
+            @main(): void {
+                io.@writeString("Hello, World!");
+            }
+        }"""
+        expect = "Error on line 2 col 12: @main"
+        self.assertTrue(TestParser.test(input, expect, 234))
+    def test_35(self):
+        input = """class Program {
+            @main(): void {
+                io.@writeString("Hello, World!");
+            }
+        }"""
+        expect = "Error on line 2 col 12: @main"
+        self.assertTrue(TestParser.test(input, expect, 235))

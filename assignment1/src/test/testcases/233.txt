@@ -1,0 +1,6 @@
+class Program {
+            func @main(): void {
+                var message: string = "This is an unclosed string literal";
+                io.@writeString(message);
+            }
+        }

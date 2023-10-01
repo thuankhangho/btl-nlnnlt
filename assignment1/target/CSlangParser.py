@@ -283,8 +283,8 @@ class CSlangParser ( Parser ):
                       "DIFF", "DECLARE", "LE", "GE", "CONCAT", "MOD", "LRB", 
                       "RRB", "LSB", "RSB", "DOT", "CM", "SM", "COLON", "LCB", 
                       "RCB", "INTLIT", "FLOATLIT", "STRINGLIT", "BLOCKCMT", 
-                      "LINECMT", "ID", "ATIDENTIFIER", "WS", "UNCLOSED_STRING", 
-                      "ILLEGAL_ESCAPE", "ERROR_CHAR" ]
+                      "LINECMT", "ID", "ATIDENTIFIER", "WS", "ERROR_CHAR", 
+                      "UNCLOSED_STRING", "ILLEGAL_ESCAPE" ]
 
     RULE_program = 0
     RULE_decllist = 1
@@ -421,9 +421,9 @@ class CSlangParser ( Parser ):
     ID=56
     ATIDENTIFIER=57
     WS=58
-    UNCLOSED_STRING=59
-    ILLEGAL_ESCAPE=60
-    ERROR_CHAR=61
+    ERROR_CHAR=59
+    UNCLOSED_STRING=60
+    ILLEGAL_ESCAPE=61
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)

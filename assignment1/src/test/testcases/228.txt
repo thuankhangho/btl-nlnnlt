@@ -1,0 +1,1 @@
+class B <- a{const a:[5]int = ["string", "arr",8,9.2]; }

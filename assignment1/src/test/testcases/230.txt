@@ -1,0 +1,7 @@
+class Program { 
+            class A {
+                func test(): int {
+                    func test(): void { }
+                }
+            }
+        }

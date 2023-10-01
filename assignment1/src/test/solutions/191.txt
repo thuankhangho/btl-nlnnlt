@@ -1,0 +1,1 @@
+class,Test,<-,test,{,func,main,(,),:,void,{,a,[,2,+,y,.,a,(,),],:=,!,a,.,t,[,2,],;,},},<EOF>
