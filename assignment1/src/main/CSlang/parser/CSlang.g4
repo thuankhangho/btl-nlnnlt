@@ -1,3 +1,5 @@
+// Student ID: 2011357
+// Name: Ho Thuan Khang
 grammar CSlang;
 
 @lexer::header {
@@ -259,13 +261,13 @@ ID: [A-Za-z_] [A-Za-z_0-9]*;
 
 ATIDENTIFIER: '@' [A-Za-z_0-9]+;
 
-fragment DEC: '.'?[0-9]+;
+fragment DEC: '.'?[0-9]*;
 
 fragment EXP: [Ee][+-]?[0-9]+;
 
 fragment ESCAPESEQ: '\\b' | '\\f' | '\\r' | '\\n' | '\\t' | '\\"' | '\\\\';
 
-fragment CHAR_LIT: ~['"\\\r\nEOF] | ESCAPESEQ | '\\"';
+fragment CHAR_LIT: ~["\\\r\nEOF] | ESCAPESEQ | '\\"';
 
 WS : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
 

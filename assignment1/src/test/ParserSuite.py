@@ -1,6 +1,16 @@
 import unittest
 from TestUtils import TestParser
 
+# Parser testcases:
+# 1 -> 5:
+# 6 -> 10:
+# 11 -> 15:
+# 16 -> 30: 
+# 31 -> 35: 
+# 36 -> 50: 
+# 50 -> 55: 
+# 56 -> 100: random
+
 
 class ParserSuite(unittest.TestCase):
     def test_0(self):
@@ -294,3 +304,11 @@ class ParserSuite(unittest.TestCase):
                 }"""
         expect = "successful"
         self.assertTrue(TestParser.test(input, expect, 220))
+    # def test_10(self):
+    #     input = "class Program {func @main():int {@isSth := !a.x[1] && b [2];}}"
+    #     expected = "Illegal Escape In String: dkjoiue\s"
+    #     self.assertTrue(TestLexer.test(input, expected, 110))
+    # def test_11(self):
+    #     input = "class Program {func @main():int {@text := !(a && b);}}"
+    #     expected = "Illegal Escape In String: dkjoiue\s"
+    #     self.assertTrue(TestLexer.test(input, expected, 111))
