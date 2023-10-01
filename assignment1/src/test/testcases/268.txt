@@ -1,0 +1,6 @@
+class Program {
+            func @main(): void{
+                return io.@writeInt(3,2,1);
+            }
+        }
+        class A { var a: int = 3;}

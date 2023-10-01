@@ -1,0 +1,5 @@
+class A <- a {
+            func test (n: bool): void {
+                break;
+            }
+        }

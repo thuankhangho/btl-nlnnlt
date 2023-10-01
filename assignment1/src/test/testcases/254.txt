@@ -1,0 +1,5 @@
+class Program {
+            func @main(): void{
+                e.t[1] := a.c[1];
+            }
+        }

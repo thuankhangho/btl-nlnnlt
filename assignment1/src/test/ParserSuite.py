@@ -407,9 +407,331 @@ class ParserSuite(unittest.TestCase):
         self.assertTrue(TestParser.test(input, expect, 234))
     def test_35(self):
         input = """class Program {
-            @main(): void {
+            func @main(): int {
                 io.@writeString("Hello, World!");
             }
         }"""
-        expect = "Error on line 2 col 12: @main"
+        expect = "successful"
         self.assertTrue(TestParser.test(input, expect, 235))
+    def test_36(self):
+        input = """class Program {
+            func @main(): void{
+                @io.writeint(2);
+            }
+        }"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 236))
+    def test_37(self):
+        input = """class Program {
+            func @main(): void{
+                self.x := self.y;
+            }
+        }"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 237))
+    def test_38(self):
+        input = """class Program {
+            func @main(): void{
+                @io.readInt(3);
+            }
+        }"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 238))
+    def test_39(self):
+        input = """class Program {
+            func @main(): void{
+                self.test[3]();
+            }
+        }"""
+        expect = "Error on line 3 col 28: ("
+        self.assertTrue(TestParser.test(input, expect, 239))
+    def test_40(self):
+        input = """class Program {
+            func @main(): void{
+                Test.y := self.x + self.y;
+            }
+        }"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 240))
+    def test_41(self):
+        input = """class Program {
+            func @main(): void{
+                for i:=0; i<10; i:=i+1 {
+                    var x: int = new Test();
+                }
+            }
+        }"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 241))
+    def test_42(self):
+        input = """class Program {
+            func Test(): void {
+                for test[0] := 0; test[0] < test[1]; test[0]:=test[0] + 1 {
+                    io.@writeInt(test[0]);
+                    if test[0] < 10 {
+                        continue;
+                    }
+                    else {
+                        break;
+                    }
+                }
+            }
+        }"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 242))
+    def test_43(self):
+        input = """class Program {
+            func Test(): void {
+                    io.@writeInt(test[0]);
+                    if test[0] < 10 {
+                        continue;
+                    }
+                    else {
+                        break;
+                    }
+                }
+        }"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 243))
+    def test_44(self):
+        input = """class Program {
+            func @main(): void{
+                break;
+            }
+        }"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 244))
+    def test_45(self):
+        input = """class Program {
+            func @main(): void{
+                continue;
+            }
+        }"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 245))
+    def test_46(self):
+        input = """class Program {
+            func @main(): void{
+                return;
+            }
+        }"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 246))
+    def test_47(self):
+        input = """class Program {
+            func @main(): void{
+                return x > y;
+            }
+        }"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 247))
+    def test_48(self):
+        input = """class Program {
+            func @main(): void{
+                return x == y;
+            }
+        }"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 248))
+    def test_49(self):
+        input = """class Program {
+            func @main(): void{
+                return a != b;
+            }
+        }"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 249))
+    def test_50(self):
+        input = """class Program {
+            func @main(): void{
+                self.aPI := 3.14159;
+            }
+        }"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 250))
+    def test_51(self):
+        input = """class Program {
+            func @main(): void{
+                emp[0].t := 1;
+            }
+        }"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 251))
+    def test_52(self):
+        input = """class Program {
+            func @main(): void{
+                var a: [3]int = a := 1;
+            }
+        }"""
+        expect = "Error on line 3 col 34: :="
+        self.assertTrue(TestParser.test(input, expect, 252))
+    def test_53(self):
+        input = """class Program {
+            func @main(): void{
+                a := b.t[3];
+            }
+        }"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 253))
+    def test_54(self):
+        input = """class Program {
+            func @main(): void{
+                e.t[1] := a.c[1];
+            }
+        }"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 254))
+    def test_55(self):
+        input = """class Program {
+            func @main(): void{
+                const a: int = 3;
+                var b: string = "C";
+                var c: string = a ^ c;
+            }
+        }"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 255))
+    def test_56(self):
+        input = """class Program {
+            func @main(): void{
+                if {i := 0;} j > i {
+                    j := j - 1;
+                }
+                else {
+                    j := j + 1;
+                }
+            }
+        }"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 256))
+    def test_57(self):
+        input = """class Program {
+            func @main(): void{
+                l[3] := value * 2;
+            }
+        }"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 257))
+    def test_58(self):
+        input = """class Program {
+            func @main(): void{
+                value := x.foo(5);
+            }
+        }"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 258))
+    def test_59(self):
+        input = """class Program {
+            func @main(): void{
+                lhs := expr;
+            }
+        }"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 259))
+    def test_60(self):
+        input = """class Program {
+            func @main(): void{
+                if a + 4 == 5 {
+                    return a + 1;
+                }
+            }
+        }"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 260))
+    def test_61(self):
+        input = """class Program {
+            func @main(): void{
+                if a > 3 {
+                    return a + 1;
+                }
+                else {
+                    if a < 3 {
+                        return a - 1;
+                    }
+                }
+            }
+        }"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 261))
+    def test_62(self):
+        input = """class Program {
+            func @main(): void{
+                var a: [2]int = [2, 4];
+                for i := 0; i < 10; i:=i + 1 {
+                    a[i] := 5;
+                    }
+            }
+        }"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 262))
+    def test_63(self):
+        input = """class Program {
+            func @main(): void{
+                var a: [2]int = [2, 4];
+                for i := 0; i < 10; i:=i + 1 {
+                    a[i] := 5;
+                    }
+            }
+        }"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 263))
+    def test_64(self):
+        input = """class Program {
+            func @main(): void{
+                var a: [2]int = [2, 4];
+            }
+        }
+        class A { var a: int = 3;}"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 264))
+    def test_65(self):
+        input = """class Program {
+            func @main(): void{
+                return int;
+            }
+        }"""
+        expect = "Error on line 3 col 23: int"
+        self.assertTrue(TestParser.test(input, expect, 265))
+    def test_66(self):
+        input = """class Program {
+            func @main(): void{
+                func test(): void {
+                    
+                }
+            }
+        }
+        class A { var a: int = 3;}"""
+        expect = "Error on line 3 col 16: func"
+        self.assertTrue(TestParser.test(input, expect, 266))
+    def test_67(self):
+        input = """class Program {
+            func @main(): void{
+                class C <- B {}
+            }
+        }
+        class A { var a: int = 3;}"""
+        expect = "Error on line 3 col 16: class"
+        self.assertTrue(TestParser.test(input, expect, 267))
+    def test_68(self):
+        input = """class Program {
+            func @main(): void{
+                return io.@writeInt(3,2,1);
+            }
+        }
+        class A { var a: int = 3;}"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 268))
+    def test_69(self):
+        input = """class A <- a {
+            func test (n: bool): void {
+                break;
+            }
+        }"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 269))
+    def test_70(self):
+        input = """class Program {
+            func jNnzegvZco (x: string): [32278]string {  }
+        }"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 270))

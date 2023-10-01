@@ -1,0 +1,8 @@
+class Program {
+            func @main(): void{
+                func test(): void {
+                    
+                }
+            }
+        }
+        class A { var a: int = 3;}

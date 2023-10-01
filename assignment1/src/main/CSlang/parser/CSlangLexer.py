@@ -50,13 +50,13 @@ def serializedATN():
         buf.write("\7;\u0186\n;\f;\16;\u0189\13;\3<\3<\5<\u018d\n<\3<\6<")
         buf.write("\u0190\n<\r<\16<\u0191\3=\3=\3=\3=\3=\3=\3=\3=\3=\3=\3")
         buf.write("=\3=\3=\3=\5=\u01a2\n=\3>\3>\3>\3>\5>\u01a8\n>\3?\6?\u01ab")
-        buf.write("\n?\r?\16?\u01ac\3?\3?\3@\3@\3@\3A\3A\7A\u01b6\nA\fA\16")
-        buf.write("A\u01b9\13A\3A\3A\3B\3B\3B\3B\7B\u01c1\nB\fB\16B\u01c4")
-        buf.write("\13B\3B\3B\3B\3B\3B\4\u015e\u016c\2C\3\3\5\4\7\5\t\6\13")
-        buf.write("\7\r\b\17\t\21\n\23\13\25\f\27\r\31\16\33\17\35\20\37")
-        buf.write("\21!\22#\23%\24\'\25)\26+\27-\30/\31\61\32\63\33\65\34")
-        buf.write("\67\359\36;\37= ?!A\"C#E$G%I&K\'M(O)Q*S+U,W-Y.[/]\60_")
-        buf.write("\61a\62c\63e\64g\65i\66k\67m8o9q:s;u\2w\2y\2{\2}<\177")
+        buf.write("\n?\r?\16?\u01ac\3?\3?\3@\3@\7@\u01b3\n@\f@\16@\u01b6")
+        buf.write("\13@\3@\3@\3A\3A\3A\3A\7A\u01be\nA\fA\16A\u01c1\13A\3")
+        buf.write("A\3A\3A\3A\3A\3B\3B\3B\4\u015e\u016c\2C\3\3\5\4\7\5\t")
+        buf.write("\6\13\7\r\b\17\t\21\n\23\13\25\f\27\r\31\16\33\17\35\20")
+        buf.write("\37\21!\22#\23%\24\'\25)\26+\27-\30/\31\61\32\63\33\65")
+        buf.write("\34\67\359\36;\37= ?!A\"C#E$G%I&K\'M(O)Q*S+U,W-Y.[/]\60")
+        buf.write("_\61a\62c\63e\64g\65i\66k\67m8o9q:s;u\2w\2y\2{\2}<\177")
         buf.write("=\u0081>\u0083?\3\2\f\3\2\62;\3\3\f\f\5\2C\\aac|\6\2\62")
         buf.write(";C\\aac|\4\2GGgg\4\2--//\b\2\f\f\17\17$$GHQQ^^\5\2\13")
         buf.write("\f\17\17\"\"\t\2))^^ddhhppttvv\6\2\f\f\17\17$$^^\2\u01dd")
@@ -91,7 +91,7 @@ def serializedATN():
         buf.write("\2\2\2i\u014c\3\2\2\2k\u014e\3\2\2\2m\u0158\3\2\2\2o\u0166")
         buf.write("\3\2\2\2q\u0174\3\2\2\2s\u017b\3\2\2\2u\u0182\3\2\2\2")
         buf.write("w\u018a\3\2\2\2y\u01a1\3\2\2\2{\u01a7\3\2\2\2}\u01aa\3")
-        buf.write("\2\2\2\177\u01b0\3\2\2\2\u0081\u01b3\3\2\2\2\u0083\u01bc")
+        buf.write("\2\2\2\177\u01b0\3\2\2\2\u0081\u01b9\3\2\2\2\u0083\u01c7")
         buf.write("\3\2\2\2\u0085\u0086\7>\2\2\u0086\u0087\7/\2\2\u0087\4")
         buf.write("\3\2\2\2\u0088\u0089\7d\2\2\u0089\u008a\7t\2\2\u008a\u008b")
         buf.write("\7g\2\2\u008b\u008c\7c\2\2\u008c\u008d\7m\2\2\u008d\6")
@@ -201,20 +201,20 @@ def serializedATN():
         buf.write("\3\2\2\2\u01a8|\3\2\2\2\u01a9\u01ab\t\t\2\2\u01aa\u01a9")
         buf.write("\3\2\2\2\u01ab\u01ac\3\2\2\2\u01ac\u01aa\3\2\2\2\u01ac")
         buf.write("\u01ad\3\2\2\2\u01ad\u01ae\3\2\2\2\u01ae\u01af\b?\3\2")
-        buf.write("\u01af~\3\2\2\2\u01b0\u01b1\13\2\2\2\u01b1\u01b2\b@\4")
-        buf.write("\2\u01b2\u0080\3\2\2\2\u01b3\u01b7\7$\2\2\u01b4\u01b6")
-        buf.write("\5{>\2\u01b5\u01b4\3\2\2\2\u01b6\u01b9\3\2\2\2\u01b7\u01b5")
-        buf.write("\3\2\2\2\u01b7\u01b8\3\2\2\2\u01b8\u01ba\3\2\2\2\u01b9")
-        buf.write("\u01b7\3\2\2\2\u01ba\u01bb\bA\5\2\u01bb\u0082\3\2\2\2")
-        buf.write("\u01bc\u01c2\7$\2\2\u01bd\u01be\7^\2\2\u01be\u01c1\t\n")
-        buf.write("\2\2\u01bf\u01c1\n\13\2\2\u01c0\u01bd\3\2\2\2\u01c0\u01bf")
-        buf.write("\3\2\2\2\u01c1\u01c4\3\2\2\2\u01c2\u01c0\3\2\2\2\u01c2")
-        buf.write("\u01c3\3\2\2\2\u01c3\u01c5\3\2\2\2\u01c4\u01c2\3\2\2\2")
-        buf.write("\u01c5\u01c6\7^\2\2\u01c6\u01c7\n\n\2\2\u01c7\u01c8\3")
-        buf.write("\2\2\2\u01c8\u01c9\bB\6\2\u01c9\u0084\3\2\2\2\26\2\u0141")
-        buf.write("\u0148\u014c\u0152\u015e\u016c\u0170\u0178\u017f\u0182")
-        buf.write("\u0187\u018c\u0191\u01a1\u01a7\u01ac\u01b7\u01c0\u01c2")
-        buf.write("\7\3\66\2\b\2\2\3@\3\3A\4\3B\5")
+        buf.write("\u01af~\3\2\2\2\u01b0\u01b4\7$\2\2\u01b1\u01b3\5{>\2\u01b2")
+        buf.write("\u01b1\3\2\2\2\u01b3\u01b6\3\2\2\2\u01b4\u01b2\3\2\2\2")
+        buf.write("\u01b4\u01b5\3\2\2\2\u01b5\u01b7\3\2\2\2\u01b6\u01b4\3")
+        buf.write("\2\2\2\u01b7\u01b8\b@\4\2\u01b8\u0080\3\2\2\2\u01b9\u01bf")
+        buf.write("\7$\2\2\u01ba\u01bb\7^\2\2\u01bb\u01be\t\n\2\2\u01bc\u01be")
+        buf.write("\n\13\2\2\u01bd\u01ba\3\2\2\2\u01bd\u01bc\3\2\2\2\u01be")
+        buf.write("\u01c1\3\2\2\2\u01bf\u01bd\3\2\2\2\u01bf\u01c0\3\2\2\2")
+        buf.write("\u01c0\u01c2\3\2\2\2\u01c1\u01bf\3\2\2\2\u01c2\u01c3\7")
+        buf.write("^\2\2\u01c3\u01c4\n\n\2\2\u01c4\u01c5\3\2\2\2\u01c5\u01c6")
+        buf.write("\bA\5\2\u01c6\u0082\3\2\2\2\u01c7\u01c8\13\2\2\2\u01c8")
+        buf.write("\u01c9\bB\6\2\u01c9\u0084\3\2\2\2\26\2\u0141\u0148\u014c")
+        buf.write("\u0152\u015e\u016c\u0170\u0178\u017f\u0182\u0187\u018c")
+        buf.write("\u0191\u01a1\u01a7\u01ac\u01b4\u01bd\u01bf\7\3\66\2\b")
+        buf.write("\2\2\3@\3\3A\4\3B\5")
         return buf.getvalue()
 
 
@@ -282,9 +282,9 @@ class CSlangLexer(Lexer):
     ID = 56
     ATIDENTIFIER = 57
     WS = 58
-    ERROR_CHAR = 59
-    UNCLOSED_STRING = 60
-    ILLEGAL_ESCAPE = 61
+    UNCLOSED_STRING = 59
+    ILLEGAL_ESCAPE = 60
+    ERROR_CHAR = 61
 
     channelNames = [ u"DEFAULT_TOKEN_CHANNEL", u"HIDDEN" ]
 
@@ -307,8 +307,8 @@ class CSlangLexer(Lexer):
             "ASSIGN", "NEQ", "LEQ", "GEQ", "DIFF", "DECLARE", "LE", "GE", 
             "CONCAT", "MOD", "LRB", "RRB", "LSB", "RSB", "DOT", "CM", "SM", 
             "COLON", "LCB", "RCB", "INTLIT", "FLOATLIT", "STRINGLIT", "BLOCKCMT", 
-            "LINECMT", "ID", "ATIDENTIFIER", "WS", "ERROR_CHAR", "UNCLOSED_STRING", 
-            "ILLEGAL_ESCAPE" ]
+            "LINECMT", "ID", "ATIDENTIFIER", "WS", "UNCLOSED_STRING", "ILLEGAL_ESCAPE", 
+            "ERROR_CHAR" ]
 
     ruleNames = [ "T__0", "BREAK", "CONTINUE", "IF", "ELSE", "FOR", "TRUE", 
                   "FALSE", "INT", "FLOAT", "BOOL", "STRING", "RETURN", "NULL", 
@@ -319,7 +319,8 @@ class CSlangLexer(Lexer):
                   "LRB", "RRB", "LSB", "RSB", "DOT", "CM", "SM", "COLON", 
                   "LCB", "RCB", "INTLIT", "FLOATLIT", "STRINGLIT", "BLOCKCMT", 
                   "LINECMT", "ID", "ATIDENTIFIER", "DEC", "EXP", "ESCAPESEQ", 
-                  "CHAR_LIT", "WS", "ERROR_CHAR", "UNCLOSED_STRING", "ILLEGAL_ESCAPE" ]
+                  "CHAR_LIT", "WS", "UNCLOSED_STRING", "ILLEGAL_ESCAPE", 
+                  "ERROR_CHAR" ]
 
     grammarFileName = "CSlang.g4"
 
@@ -335,9 +336,9 @@ class CSlangLexer(Lexer):
         if self._actions is None:
             actions = dict()
             actions[52] = self.STRINGLIT_action 
-            actions[62] = self.ERROR_CHAR_action 
-            actions[63] = self.UNCLOSED_STRING_action 
-            actions[64] = self.ILLEGAL_ESCAPE_action 
+            actions[62] = self.UNCLOSED_STRING_action 
+            actions[63] = self.ILLEGAL_ESCAPE_action 
+            actions[64] = self.ERROR_CHAR_action 
             self._actions = actions
         action = self._actions.get(ruleIndex, None)
         if action is not None:
@@ -351,19 +352,19 @@ class CSlangLexer(Lexer):
             self.text = self.text[1:-1]
      
 
-    def ERROR_CHAR_action(self, localctx:RuleContext , actionIndex:int):
-        if actionIndex == 1:
-            raise ErrorToken(self.text)
-     
-
     def UNCLOSED_STRING_action(self, localctx:RuleContext , actionIndex:int):
-        if actionIndex == 2:
+        if actionIndex == 1:
             self.text = self.text[1:]; raise UncloseString(self.text)
      
 
     def ILLEGAL_ESCAPE_action(self, localctx:RuleContext , actionIndex:int):
-        if actionIndex == 3:
+        if actionIndex == 2:
             self.text = self.text[1:]; raise IllegalEscape(self.text)
+     
+
+    def ERROR_CHAR_action(self, localctx:RuleContext , actionIndex:int):
+        if actionIndex == 3:
+            raise ErrorToken(self.text)
      
 
 

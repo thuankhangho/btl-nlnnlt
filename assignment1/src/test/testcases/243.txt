@@ -1,0 +1,11 @@
+class Program {
+            func Test(): void {
+                    io.@writeInt(test[0]);
+                    if test[0] < 10 {
+                        continue;
+                    }
+                    else {
+                        break;
+                    }
+                }
+        }

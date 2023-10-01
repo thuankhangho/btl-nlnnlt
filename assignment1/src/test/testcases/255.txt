@@ -1,0 +1,7 @@
+class Program {
+            func @main(): void{
+                const a: int = 3;
+                var b: string = "C";
+                var c: string = a ^ c;
+            }
+        }
