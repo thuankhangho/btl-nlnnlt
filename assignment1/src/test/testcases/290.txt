@@ -1,0 +1,4 @@
+class Program {
+            func main():  void {
+                a["string1"^"string2"] := 5;
+            }}
