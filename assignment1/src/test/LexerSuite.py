@@ -63,8 +63,8 @@ class LexerSuite(unittest.TestCase):
         expected = "},<EOF>"
         self.assertTrue(TestLexer.test(input, expected, 114))
     def test_keyword_operator_separator_15(self):
-        input = "."
-        expected = ".,<EOF>"
+        input = ">="
+        expected = ">=,<EOF>"
         self.assertTrue(TestLexer.test(input, expected, 115))
     # def test_keyword_operator_separator_16(self):
     #     input = "[\"a\",\"b\",\"c\"]"
