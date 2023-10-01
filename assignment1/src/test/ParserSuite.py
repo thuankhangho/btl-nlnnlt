@@ -1,6 +1,16 @@
 import unittest
 from TestUtils import TestParser
 
+# Parser testcases:
+# 1 -> 5:
+# 6 -> 10:
+# 11 -> 15:
+# 16 -> 30: 
+# 31 -> 35: 
+# 36 -> 50: 
+# 50 -> 55: 
+# 56 -> 100: random
+
 
 class ParserSuite(unittest.TestCase):
     def test_0(self):
@@ -188,3 +198,117 @@ class ParserSuite(unittest.TestCase):
         }}"""
         expect = "successful"
         self.assertTrue(TestParser.test(input, expect, 214))
+    def test_15(self):
+        input = """class Program{
+        const @numOfShape: int = 0;
+        const immutableAttribute: int = 0;
+        var length, width: int;
+        func @getnumOfShape(): void {
+        if {} else { if k < 1 {} else {}}
+        }
+        }"""
+        expect = "Error on line 6 col 14: else"
+        self.assertTrue(TestParser.test(input, expect, 215))
+    def test_16(self):
+        input = """class Program{ var a, b, c: int = 1,2,3;}"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 216))
+    def test_17(self):
+        input = """class Main{
+    var x:int = Shape.@t.t[3].t[3].a();
+    const t:Shape;
+    func test(i,j:int, t:string):void{
+        Shape.@t.t[3].t[3].a := 2;
+    }
+}"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 217))
+    def test_18(self):
+        input = """class Program {
+      var x: int = 65;
+      func @fact(n: int):int {
+            if n == 0 {return 1;}
+            else {return n * @fact(n - 1);}
+        }
+        func  @inc( n, delta: int):void {
+            n := n + delta;
+            return n;
+        }
+        func @main():int {
+            var delta: int = @fact(3);
+            @inc(self.x, delta);
+            io.@writeInt(self.x);
+        }}"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 218))
+    def test_19(self):
+        input = """class Program {
+                func HorrorScene():void {
+                    if {
+                    You.@location := "balcony"; 
+                    io.@writeStr("Welcome to our house!");
+                    }
+                    You.goDown("floor4")
+                    {
+                        if You.goDown("floor3")
+                        {
+                            if You.goDown("floor2")
+                            {
+                                if You.goDown("floor1") 
+                                {
+                                    io.@writeStr("You seriously shouldnt go to the basement");
+                                    if You.goDown("basement")
+                                    {
+                                        io.@writeStr("Hey there Valak!");
+                                    }
+                                    else{
+                                        You.goUp();
+                                    }
+                                }
+                                else{
+                                    You.goUp();
+                                }
+                            }
+                            else
+                            {
+                                You.goUp();
+                            }
+                        }
+                        else
+                        {
+                            You.goUp();
+                        }
+                    }
+                    else{
+                        You.goUp();
+                    }                      
+                }
+            }"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 219))
+
+    def test_20(self):
+        input = """class Prog {
+                    const @numOfShape: int = 0;
+                    const immutableAttribute: int = 0;
+                    var length, width: int;
+
+                    func @main():void {
+                        if test.test1(Me) == true {
+                            io.@writeLn("This is line 1");
+                        }
+                        else{
+                            io.@writeLn("This is line 2");
+                        }
+                    }
+                }"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 220))
+    # def test_10(self):
+    #     input = "class Program {func @main():int {@isSth := !a.x[1] && b [2];}}"
+    #     expected = "Illegal Escape In String: dkjoiue\s"
+    #     self.assertTrue(TestLexer.test(input, expected, 110))
+    # def test_11(self):
+    #     input = "class Program {func @main():int {@text := !(a && b);}}"
+    #     expected = "Illegal Escape In String: dkjoiue\s"
+    #     self.assertTrue(TestLexer.test(input, expected, 111))

@@ -1,3 +1,5 @@
+// Student ID: 2011357
+// Name: Ho Thuan Khang
 grammar CSlang;
 
 @lexer::header {
@@ -18,7 +20,7 @@ decl: classdecl;
 
 identifier: ID | ATIDENTIFIER;
 
-classdecl: CLASS superpart? ID LCB memberlist RCB;
+classdecl: CLASS (superpart | ) ID LCB memberlist RCB;
 
 memberlist: member memberlist | ;
 
@@ -71,11 +73,9 @@ objdecl: NEW ID LRB RRB;
 
 // staticattributestate: (ID DOT)? ATIDENTIFIER;
 
-instancemethodstate: exp DOT identifier LRB nullableexplist RRB;
+instancemethodstate: exp DOT ID LRB nullableexplist RRB;
 
-staticmethodstate: (ID DOT)? ATIDENTIFIER LRB nullableexplist RRB;
-
-explist: exp CM explist | exp;
+staticmethodstate: (ID DOT | ) ATIDENTIFIER LRB nullableexplist RRB;
 
 nullableexplist: expprime |;
 
@@ -105,11 +105,11 @@ exp6: MINUS exp6 | exp7;
 
 exp7: exp8 LSB exp RSB | exp8;
 
-exp8: exp8 DOT ID (LRB explist RRB)? | exp9;
+exp8: exp8 DOT ID (LRB nullableexplist RRB | ) | exp9;
 
-exp9: (ID DOT)? ATIDENTIFIER | (ID DOT)? ATIDENTIFIER LRB nullableexplist RRB | exp10;
+exp9: (ID DOT | ) ATIDENTIFIER | (ID DOT | ) ATIDENTIFIER LRB nullableexplist RRB | exp10;
 
-exp10: NEW identifier LRB explist RRB | exp11;
+exp10: NEW identifier LRB nullableexplist RRB | exp11;
 
 exp11: LRB exp RRB | exp12;
 
@@ -122,7 +122,7 @@ exp12: literal | identifier | SELF;
 
 assignstate: exp ASSIGN exp SM;
 
-ifstate: IF blockstate? exp blockstate (ELSE blockstate)?;
+ifstate: IF (blockstate | ) exp blockstate (ELSE blockstate | );
 
 forstate: FOR assignstate (exp SM) (exp ASSIGN exp) blockstate;
 
@@ -130,7 +130,7 @@ breakstate: BREAK SM;
 
 continuestate: CONTINUE SM;
 
-returnstate: RETURN exp? SM;
+returnstate: RETURN (exp | ) SM;
 
 methodinvoke: (instancemethodstate | staticmethodstate) SM;
 
@@ -261,13 +261,13 @@ ID: [A-Za-z_] [A-Za-z_0-9]*;
 
 ATIDENTIFIER: '@' [A-Za-z_0-9]+;
 
-fragment DEC: '.'?[0-9]+;
+fragment DEC: '.'?[0-9]*;
 
 fragment EXP: [Ee][+-]?[0-9]+;
 
 fragment ESCAPESEQ: '\\b' | '\\f' | '\\r' | '\\n' | '\\t' | '\\"' | '\\\\';
 
-fragment CHAR_LIT: ~['"\\\r\nEOF] | ESCAPESEQ | '\\"';
+fragment CHAR_LIT: ~["\\\r\nEOF] | ESCAPESEQ | '\\"';
 
 WS : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
 

@@ -1,0 +1,14 @@
+class Prog {
+                    const @numOfShape: int = 0;
+                    const immutableAttribute: int = 0;
+                    var length, width: int;
+
+                    func @main():void {
+                        if test.test1(Me) == true {
+                            io.@writeLn("This is line 1");
+                        }
+                        else{
+                            io.@writeLn("This is line 2");
+                        }
+                    }
+                }

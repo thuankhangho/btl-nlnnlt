@@ -1,0 +1,7 @@
+class Main{
+    var x:int = Shape.@t.t[3].t[3].a();
+    const t:Shape;
+    func test(i,j:int, t:string):void{
+        Shape.@t.t[3].t[3].a := 2;
+    }
+}
