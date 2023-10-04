@@ -1,0 +1,4 @@
+class Program <- test {
+            func @main(): void {
+            var test: string = "This is a string ";
+        }}

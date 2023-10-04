@@ -1,0 +1,6 @@
+class Program {
+            func @main(): void{
+                var a: [2]int = [2, 4];
+            }
+        }
+        class A { var a: int = 3;}

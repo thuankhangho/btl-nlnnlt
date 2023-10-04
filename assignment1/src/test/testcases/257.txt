@@ -1,0 +1,5 @@
+class Program {
+            func @main(): void{
+                l[3] := value * 2;
+            }
+        }

@@ -1,0 +1,6 @@
+class Program {
+            func main(): string {
+                for a := 1; a < 10; a := i + 2 {
+                    io.@readInt(i);
+                    }
+                }}

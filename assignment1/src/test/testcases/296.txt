@@ -1,0 +1,4 @@
+class Program {
+            func @main(): void {
+            new Hero(HP: int, name: string);
+        }}

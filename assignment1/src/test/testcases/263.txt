@@ -1,0 +1,8 @@
+class Program {
+            func @main(): void{
+                var a: [2]int = [2, 4];
+                for i := 0; i < 10; i:=i + 1 {
+                    a[i] := 5;
+                    }
+            }
+        }

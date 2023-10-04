@@ -60,7 +60,7 @@ literal: INTLIT | FLOATLIT | boolit | STRINGLIT | arraylit;
 
 boolit: TRUE | FALSE;
 
-literallist: (INTLIT | FLOATLIT | boolit | STRINGLIT) CM literallist | (INTLIT | FLOATLIT | boolit | STRINGLIT);
+literallist: (INTLIT | FLOATLIT | boolit | STRINGLIT | NULL) CM literallist | (INTLIT | FLOATLIT | boolit | STRINGLIT | NULL);
 
 arraydecl: LSB INTLIT RSB typ;
 
@@ -267,7 +267,7 @@ fragment EXP: [Ee][+-]?[0-9]+;
 
 fragment ESCAPESEQ: '\\b' | '\\f' | '\\r' | '\\n' | '\\t' | '\\"' | '\\\\';
 
-fragment CHAR_LIT: ~["\\\r\nEOF] | ESCAPESEQ | '\\"';
+fragment CHAR_LIT: ~["\\\r\n] | ESCAPESEQ | '\\"';
 
 WS : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
 

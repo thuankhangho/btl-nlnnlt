@@ -1,0 +1,5 @@
+class Program {
+            func main():  void {
+                if @len == 0 {return 0;}
+                else {return 9;}
+            }}

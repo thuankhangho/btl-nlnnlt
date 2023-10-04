@@ -1,0 +1,5 @@
+class Program {
+            func @main(): void{
+                emp[0].t := 1;
+            }
+        }

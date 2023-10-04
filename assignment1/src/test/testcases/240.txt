@@ -1,0 +1,5 @@
+class Program {
+            func @main(): void{
+                Test.y := self.x + self.y;
+            }
+        }

@@ -1,0 +1,5 @@
+class Program {
+            func @main(): void{
+                value := x.foo(5);
+            }
+        }

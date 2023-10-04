@@ -1,0 +1,7 @@
+class Program {
+            func @main(): void {
+                var finalTestcase: string = "Final Testcase";
+                for i := 0; i < 10; i := i+1 {
+                    finalTestcase := "Its all over";
+                }
+        }}

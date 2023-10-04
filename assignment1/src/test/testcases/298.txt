@@ -1,0 +1,5 @@
+class Program {
+            func @main(): void {
+            a[3+x.foo(2)] := a[b[2]] +3;
+            x.b[2] := x.m()[3];
+        }}

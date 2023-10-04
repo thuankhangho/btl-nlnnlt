@@ -1,0 +1,6 @@
+class Program {
+            func @main(): void {
+                var a: [5]bool;
+                a[67 || 2] := [true,false,null];
+                }
+            }

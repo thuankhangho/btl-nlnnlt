@@ -1,0 +1,4 @@
+class Program {
+            func @main(): void {
+            var floatInt, floatNum: float = 1e2, 1.2, 1.3;
+        }}

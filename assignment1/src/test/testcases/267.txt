@@ -1,0 +1,6 @@
+class Program {
+            func @main(): void{
+                class C <- B {}
+            }
+        }
+        class A { var a: int = 3;}

@@ -1,0 +1,4 @@
+class Program {
+            func main():  void {
+                if {a := 0;} test > tests {p := p % 3;} else {p := p*q;}
+            }}
