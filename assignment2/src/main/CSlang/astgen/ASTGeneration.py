@@ -15,6 +15,3 @@ class ASTGeneration(CSlangVisitor):
 
     def visitCslangtype(self,ctx:CSlangParser.CslangtypeContext):
         return IntType() if ctx.INTTYPE() else VoidType()
-        
-
-    
