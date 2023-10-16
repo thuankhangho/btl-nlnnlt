@@ -6,7 +6,7 @@ from antlr4 import *
 
 for path in ['./test/', './main/CSlang/parser/']:
     sys.path.append(path)
-ANTLR_JAR = 'D:/btl-nlnnlt/antlr-4.9.2-complete.jar'
+ANTLR_JAR = os.environ.get('ANTLR_JAR')
 TARGET_DIR = '../target'
 GENERATE_DIR = 'main/CSlang/parser'
 
