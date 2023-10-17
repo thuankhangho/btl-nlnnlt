@@ -14,9 +14,7 @@ program: decllist EOF ;
 
 //Parser
 
-decllist: decl decllist | ;
-
-decl: classdecl;
+decllist: classdecl decllist | ;
 
 identifier: ID | ATIDENTIFIER;
 
