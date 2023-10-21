@@ -16,27 +16,33 @@ program: decllist EOF ;
 
 decllist: classdecl decllist | ;
 
-identifier: ID | ATIDENTIFIER;
-
 classdecl: CLASS (superpart | ) ID LCB memberlist RCB;
 
 memberlist: member memberlist | ;
 
 member: attributedecl | methoddecl;
 
-attributedecl: attributewithdeclare | attributenodeclare;
+attributedecl: vardecl | constdecl;
 
-attributenodeclare: (CONST | VAR) attributelist COLON (typ | arraydecl) SM;
+vardecl: VAR (attributewithdeclare | attributenodeclare);
 
-attributewithdeclare: (CONST | VAR) attlist SM;
+constdecl: CONST (attributewithdeclare | attributenodeclare);
 
-attlist: identifier CM attlist CM exp | identifier COLON (typ | arraydecl) DECLARE exp;
-//id comma comma expr
+typedecl: typ | arraydecl;
+
+attributenodeclare: attributelist COLON typedecl SM;
+
+attributewithdeclare: attlist SM;
+
+attlist: identifier CM attlist CM INTLIT | identifier COLON typedecl DECLARE INTLIT;
+//id comma ... comma expr
 //id : type = expr
 
 attributelist: identifier CM attributelist | identifier;
 
-methoddecl: FUNC (ID | ATIDENTIFIER) LRB parameterlist RRB COLON (typ | VOID | arraydecl) blockstate;
+constructor: FUNC CONSTRUCTOR LRB parameterlist RRB blockstate;
+
+methoddecl: FUNC identifier LRB parameterlist RRB COLON (typ | VOID | arraydecl) blockstate;
 
 parameterlist: parameterprime | ;
 
@@ -49,8 +55,6 @@ parameterpart2: (identifierlist COLON typ) CM parameterpart2 | (identifierlist C
 identifierlist: identifierprime | ;
 
 identifierprime: ID CM identifierprime | ID;
-
-constructor: FUNC CONSTRUCTOR LRB parameterlist RRB blockstate;
 
 superpart: ID '<-';
 
@@ -142,6 +146,8 @@ stmt: attributedecl | assignstate | ifstate | forstate | breakstate | continuest
 | returnstate | methodinvoke | blockstate;
 
 arraylit: LSB literallist RSB;
+
+identifier: ID | ATIDENTIFIER;
 
 //Lexer
 BREAK : 'break';

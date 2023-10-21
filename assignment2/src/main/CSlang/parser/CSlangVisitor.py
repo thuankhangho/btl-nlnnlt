@@ -19,16 +19,6 @@ class CSlangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by CSlangParser#decl.
-    def visitDecl(self, ctx:CSlangParser.DeclContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by CSlangParser#identifier.
-    def visitIdentifier(self, ctx:CSlangParser.IdentifierContext):
-        return self.visitChildren(ctx)
-
-
     # Visit a parse tree produced by CSlangParser#classdecl.
     def visitClassdecl(self, ctx:CSlangParser.ClassdeclContext):
         return self.visitChildren(ctx)
@@ -49,6 +39,21 @@ class CSlangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by CSlangParser#vardecl.
+    def visitVardecl(self, ctx:CSlangParser.VardeclContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CSlangParser#constdecl.
+    def visitConstdecl(self, ctx:CSlangParser.ConstdeclContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CSlangParser#typedecl.
+    def visitTypedecl(self, ctx:CSlangParser.TypedeclContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by CSlangParser#attributenodeclare.
     def visitAttributenodeclare(self, ctx:CSlangParser.AttributenodeclareContext):
         return self.visitChildren(ctx)
@@ -66,6 +71,11 @@ class CSlangVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by CSlangParser#attributelist.
     def visitAttributelist(self, ctx:CSlangParser.AttributelistContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CSlangParser#constructor.
+    def visitConstructor(self, ctx:CSlangParser.ConstructorContext):
         return self.visitChildren(ctx)
 
 
@@ -101,11 +111,6 @@ class CSlangVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by CSlangParser#identifierprime.
     def visitIdentifierprime(self, ctx:CSlangParser.IdentifierprimeContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by CSlangParser#constructor.
-    def visitConstructor(self, ctx:CSlangParser.ConstructorContext):
         return self.visitChildren(ctx)
 
 
@@ -306,6 +311,11 @@ class CSlangVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by CSlangParser#arraylit.
     def visitArraylit(self, ctx:CSlangParser.ArraylitContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CSlangParser#identifier.
+    def visitIdentifier(self, ctx:CSlangParser.IdentifierContext):
         return self.visitChildren(ctx)
 
 

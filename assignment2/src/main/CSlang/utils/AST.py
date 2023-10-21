@@ -197,6 +197,20 @@ class VarDecl(StoreDecl):
     def toParam(self):
         return "Param(" + str(self.variable) + "," + str(self.varType) + ")"
 
+# Program(
+#     [
+#         ClassDecl(
+#         Id(main),
+#         [AttributeDecl(VarDecl(Id(x),IntType,IntLit(1))
+#                        ),
+#          AttributeDecl(VarDecl(Id(y),IntType,IntLit(2))
+#                        ),
+#          AttributeDecl(VarDecl(Id(z),IntType,IntLit(3))
+#                        )
+#          ]
+#         )
+#     ]
+# )
 
 # used for local constant declaration
 @dataclass
