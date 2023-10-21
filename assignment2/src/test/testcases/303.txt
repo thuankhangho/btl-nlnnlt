@@ -1,1 +1,1 @@
-class main {func test(): int {}}
+class main {func @test(): int {break;}}

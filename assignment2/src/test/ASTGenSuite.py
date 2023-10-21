@@ -10,8 +10,8 @@ class ASTGenSuite(unittest.TestCase):
         self.assertTrue(TestAST.test(input,expect,300))
 
     def test_simple_program(self):
-        input = """class main {func test(): int {}}"""
-        expect = str(Program([ClassDecl(Id("main"),[MethodDecl("test",[],IntType(),Block([]))])]))
+        input = """class main {func @test(): int {break;}}"""
+        expect = str(Program([ClassDecl(Id("main"),[MethodDecl(Id("@test"),[],IntType(),Block([Break()]))])]))
         self.assertTrue(TestAST.test(input,expect,303))
 
     # def test_class_with_one_decl_program(self):

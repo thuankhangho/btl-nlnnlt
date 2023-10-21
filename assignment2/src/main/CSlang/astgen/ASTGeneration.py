@@ -46,7 +46,8 @@ class ASTGeneration(CSlangVisitor):
     # identifier CM attlist CM INTLIT | identifier COLON typedecl DECLARE INTLIT;
     # def visitAttlist(self, ctx:CSlangParser.AttlistContext):
     
-
+    
+    
     # FUNC identifier LRB parameterlist RRB COLON (typ | VOID | arraydecl) blockstate;
     def visitMethoddecl(self, ctx:CSlangParser.MethoddeclContext):
         return MethodDecl(self.visit(ctx.identifier()), self.visit(ctx.parameterlist()), self.visit(ctx.typ()), self.visit(ctx.blockstate()))
@@ -68,7 +69,89 @@ class ASTGeneration(CSlangVisitor):
         if ctx.getChildCount() == 5:
             return [VarDecl(self.visit(ctx.identifier()), self.visit(ctx.typ()))] + self.visit(ctx.parameterpart1())
         return [VarDecl(self.visit(ctx.identifier()), self.visit(ctx.typ()))]
+    
+    # exp1 CONCAT exp1 | exp1;
+    def visitExp(self, ctx:CSlangParser.ExpContext):
+        if ctx.getChildCount() == 3:
+            return BinaryOp(ctx.CONCAT.getText(), self.visit(ctx.exp1),self.visit(ctx.exp1))
+        return self.visit(ctx.exp1)
+    
+    # exp2 relational exp2 | exp2;
+    def visitExp1(self, ctx:CSlangParser.Exp1Context):
+        if ctx.getChildCount() == 3:
+            return BinaryOp(self.visit(ctx.relational()), self.visit(ctx.exp2),self.visit(ctx.exp2))
+        return self.visit(ctx.exp2)
+    
+    # exp2 logical exp3 | exp3;
+    def visitExp2(self, ctx:CSlangParser.Exp2Context):
+        if ctx.getChildCount() == 3:
+            return BinaryOp(self.visit(ctx.logical()), self.visit(ctx.exp2),self.visit(ctx.exp3))
+        return self.visit(ctx.exp3)
+    
+    # exp3 adding exp4 | exp4;
+    def visitExp3(self, ctx:CSlangParser.Exp3Context):
+        if ctx.getChildCount() == 3:
+            return BinaryOp(self.visit(ctx.adding()), self.visit(ctx.exp3),self.visit(ctx.exp4))
+        return self.visit(ctx.exp4)
+    
+    # exp4 multiplying exp5 | exp5;
+    def visitExp4(self, ctx:CSlangParser.Exp4Context):
+        if ctx.getChildCount() == 3:
+            return BinaryOp(self.visit(ctx.multiplying()), self.visit(ctx.exp4),self.visit(ctx.exp5))
+        return self.visit(ctx.exp5)
+    
+    # DIFF exp5 | exp6;
+    def visitExp5(self, ctx:CSlangParser.Exp5Context):
+        if ctx.getChildCount() == 2:
+            return UnaryOp(ctx.DIFF().getText(), self.visit(ctx.exp5))
+        return self.visit(ctx.exp6)
+    
+    # MINUS exp6 | exp7;
+    def visitExp6(self, ctx:CSlangParser.Exp6Context):
+        if ctx.getChildCount() == 2:
+            return UnaryOp(ctx.MINUS().getText(), self.visit(ctx.exp6))
+        return self.visit(ctx.exp7)
+    
+    # exp8 LSB exp RSB | exp8;
+    def visitExp7(self, ctx:CSlangParser.Exp7Context):
+        return self.visit(ctx.exp8)
 
+    # EQ | NEQ | LE | GE | LEQ | GEQ;
+    def visitRelational(self, ctx:CSlangParser.RelationalContext):
+        if ctx.EQ():
+            return ctx.EQ().getText()
+        elif ctx.NEQ():
+            return ctx.NEQ().getText()
+        elif ctx.LE():
+            return ctx.LE().getText()
+        elif ctx.GE():
+            return ctx.GE().getText()
+        elif ctx.LEQ():
+            return ctx.LEQ().getText()
+        return ctx.GEQ().getText()
+    
+    # AND | OR;
+    def visitLogical(self, ctx:CSlangParser.LogicalContext):
+        if ctx.AND():
+            return ctx.AND().getText()
+        return ctx.OR().getText()
+    
+    # PLUS | MINUS;
+    def visitAdding(self, ctx:CSlangParser.AddingContext):
+        if ctx.PLUS():
+            return ctx.PLUS().getText()
+        return ctx.MINUS().getText()
+    
+    # MULTIPLY | DIVIDE_FLOAT | DIVIDE_INT | MOD;
+    def visitMultiplying(self, ctx:CSlangParser.MultiplyingContext):
+        if ctx.MULTIPLY():
+            return ctx.MULTIPLY().getText()
+        elif ctx.DIVIDE_FLOAT():
+            return ctx.DIVIDE_FLOAT().getText()
+        elif ctx.DIVIDE_INT():
+            return ctx.DIVIDE_INT().getText()
+        return ctx.MOD().getText()
+        
     # LCB stmtlist RCB;
     def visitBlockstate(self, ctx:CSlangParser.BlockstateContext):
         return Block(self.visit(ctx.stmtlist()))
@@ -79,8 +162,26 @@ class ASTGeneration(CSlangVisitor):
             return []
         return [self.visit(ctx.stmt())] + self.visit(ctx.stmtlist())
     
+    # stmt: attributedecl | assignstate | ifstate | forstate | breakstate | continuestate
+    # | returnstate | methodinvoke | blockstat
     def visitStmt(self, ctx:CSlangParser.StmtContext):
-        return self.visit(ctx.Returnstate())
+        if ctx.attributedecl():
+            return self.visit(ctx.attributedecl())
+        elif ctx.assignstate():
+            return self.visit(ctx.assignstate())
+        elif ctx.ifstate():
+            return self.visit(ctx.assignstate())
+        elif ctx.forstate():
+            return self.visit(ctx.forstate())
+        elif ctx.breakstate():
+            return self.visit(ctx.breakstate())
+        elif ctx.continuestate():
+            return self.visit(ctx.continuestate())
+        elif ctx.returnstate():
+            return self.visit(ctx.returnstate())
+        elif ctx.methodinvoke():
+            return self.visit(ctx.methodinvoke())
+        return self.visit(ctx.blockstat())
 
     # typ | arraydecl;
     def visitTypedecl(self, ctx:CSlangParser.TypedeclContext):
@@ -116,9 +217,9 @@ class ASTGeneration(CSlangVisitor):
             return StringType()
         return Id()
 
-    # ID | ATIDENTIFIER;
-    def visitIdentifer(self, ctx:CSlangParser.IdentifierContext):
-        return Id() if ctx.ID() else ctx.ATIDENTIFIER()
+    # identifier: ID | ATIDENTIFIER;
+    def visitIdentifier(self, ctx:CSlangParser.IdentifierContext):
+        return Id(ctx.ID().getText()) if ctx.ID() else Id(ctx.ATIDENTIFIER().getText())
     
     # LSB literallist RSB;
     def visitArraylit(self, ctx:CSlangParser.ArraylitContext):
