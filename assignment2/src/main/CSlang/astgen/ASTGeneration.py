@@ -253,7 +253,7 @@ class ASTGeneration(CSlangVisitor):
     def visitReturnstate(self, ctx:CSlangParser.ReturnstateContext):
         if ctx.exp():
             return Return(self.visit(ctx.exp()))
-        return Return()
+        return Return(None)
 
     # LSB INTLIT RSB typ;
     def visitArraydecl(self, ctx:CSlangParser.ArraydeclContext):
