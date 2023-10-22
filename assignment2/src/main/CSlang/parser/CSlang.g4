@@ -15,30 +15,25 @@ program: decllist EOF ;
 //Parser
 
 decllist: classdecl decllist | ;
-
 classdecl: CLASS (superpart | ) ID LCB memberlist RCB;
-
 memberlist: member memberlist | ;
-
 member: attributedecl | methoddecl;
 
 attributedecl: vardecl | constdecl;
 
-vardecl: VAR (attributewithdeclare | attributenodeclare);
+vardecl: VAR attributecheck SM;
+constdecl: CONST attributecheck SM;
 
-constdecl: CONST (attributewithdeclare | attributenodeclare);
+attributecheck: attributewithdeclare | attributenodeclare;
 
-typedecl: typ | arraydecl;
+attributenodeclare: attributelist COLON typedecl;
+attributelist: identifier CM attributelist | identifier;
 
-attributenodeclare: attributelist COLON typedecl SM;
-
-attributewithdeclare: attlist SM;
-
+attributewithdeclare: attlist;
 attlist: identifier CM attlist CM INTLIT | identifier COLON typedecl DECLARE INTLIT;
 //id comma ... comma expr
 //id : type = expr
 
-attributelist: identifier CM attributelist | identifier;
 
 constructor: FUNC CONSTRUCTOR LRB parameterlist RRB blockstate;
 
@@ -148,6 +143,8 @@ stmt: attributedecl | assignstate | ifstate | forstate | breakstate | continuest
 arraylit: LSB literallist RSB;
 
 identifier: ID | ATIDENTIFIER;
+
+typedecl: typ | arraydecl;
 
 //Lexer
 BREAK : 'break';

@@ -1,1 +1,5 @@
-class main {func @test(): int {break;}}
+class main {
+            var a, b:int;
+            var c:int;
+            const d:string;
+        }

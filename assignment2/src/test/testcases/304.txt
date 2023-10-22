@@ -1,0 +1,6 @@
+class main {
+            var u, i:int;
+            var a, b, g, h: int = 1, 2, 3, 4;
+            const c, d: bool;
+            var x, y, z, t: string;
+        }

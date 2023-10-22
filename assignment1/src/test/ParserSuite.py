@@ -7,7 +7,7 @@ class ParserSuite(unittest.TestCase):
     def test_0(self):
         input = """class Program {
             func @main():int {
-                @isSth := !a.x[1] && b [2];
+                a:= a[1+1];
             }
         }"""
         expect = "successful"

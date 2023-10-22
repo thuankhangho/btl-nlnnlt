@@ -49,13 +49,18 @@ class CSlangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by CSlangParser#typedecl.
-    def visitTypedecl(self, ctx:CSlangParser.TypedeclContext):
+    # Visit a parse tree produced by CSlangParser#attributecheck.
+    def visitAttributecheck(self, ctx:CSlangParser.AttributecheckContext):
         return self.visitChildren(ctx)
 
 
     # Visit a parse tree produced by CSlangParser#attributenodeclare.
     def visitAttributenodeclare(self, ctx:CSlangParser.AttributenodeclareContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CSlangParser#attributelist.
+    def visitAttributelist(self, ctx:CSlangParser.AttributelistContext):
         return self.visitChildren(ctx)
 
 
@@ -66,11 +71,6 @@ class CSlangVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by CSlangParser#attlist.
     def visitAttlist(self, ctx:CSlangParser.AttlistContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by CSlangParser#attributelist.
-    def visitAttributelist(self, ctx:CSlangParser.AttributelistContext):
         return self.visitChildren(ctx)
 
 
@@ -316,6 +316,11 @@ class CSlangVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by CSlangParser#identifier.
     def visitIdentifier(self, ctx:CSlangParser.IdentifierContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CSlangParser#typedecl.
+    def visitTypedecl(self, ctx:CSlangParser.TypedeclContext):
         return self.visitChildren(ctx)
 
 
