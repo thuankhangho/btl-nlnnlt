@@ -35,8 +35,9 @@ class ASTGenSuite(unittest.TestCase):
     def test_class_with_one_decl_program(self):
         input = """class main {
             var u, i:int;
-            var a, b, g, h: int = 1, 2, 3, 4;
+            var a, b, g, h: int;
             const c, d: bool;
+            func test(a: int, b:string): void {}
             var x, y, z, t: string;
         }"""
         expect = str(Program([ClassDecl(Id("main"),[AttributeDecl(VarDecl(Id("a"),IntType()))])]))
@@ -53,3 +54,13 @@ class ASTGenSuite(unittest.TestCase):
     #          AttributeDecl(VarDecl(Id("b"),IntType()))])]))
     #     self.assertTrue(TestAST.test(input,expect,305))
    
+    def test_class_with_one_decl_program(self):
+        input = """class main {
+            var u, i:int;
+            var a, b, g, h: int;
+            const c, d: bool;
+            func test(a: int, b:string): void {}
+            var x, y, z, t: string;
+        }"""
+        expect = str(Program([ClassDecl(Id("main"),[AttributeDecl(VarDecl(Id("a"),IntType()))])]))
+        self.assertTrue(TestAST.test(input,expect,306))

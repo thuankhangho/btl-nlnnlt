@@ -257,7 +257,7 @@ class ASTGeneration(CSlangVisitor):
 
     # LSB INTLIT RSB typ;
     def visitArraydecl(self, ctx:CSlangParser.ArraydeclContext):
-        return ArrayType(ctx.INT().getType(), self.visit(ctx.typ()))
+        return ArrayType(IntLiteral(ctx.INT().getType()), self.visit(ctx.typ()))
     
     # BOOL | INT | FLOAT | STRING | ID;
     def visitTyp(self, ctx:CSlangParser.TypContext):
@@ -269,7 +269,7 @@ class ASTGeneration(CSlangVisitor):
             return FloatType()
         elif ctx.STRING():
             return StringType()
-        return Id(ctx.ID().getText())
+        return ClassType(Id(ctx.ID().getText()))
 
     # identifier: ID | ATIDENTIFIER;
     def visitIdentifier(self, ctx:CSlangParser.IdentifierContext):
