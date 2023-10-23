@@ -56,7 +56,7 @@ class ASTGenSuite(unittest.TestCase):
    
     def test_class_with_one_decl_program(self):
         input = """class main {
-            var u, i:int;
+            var u, i:int = 1,2;
             var a, b, g, h: int;
             const c, d: bool;
             func test(a: int, b:string): void {}

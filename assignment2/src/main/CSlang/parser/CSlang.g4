@@ -37,7 +37,7 @@ attlist: identifier CM attlist CM INTLIT | identifier COLON typedecl DECLARE INT
 
 constructor: FUNC CONSTRUCTOR LRB parameterlist RRB blockstate;
 
-methoddecl: FUNC identifier LRB parameterlist RRB COLON (typ | VOID | arraydecl) blockstate;
+methoddecl: FUNC identifier LRB parameterlist RRB COLON typedeclwithvoid blockstate;
 
 parameterlist: parameterprime | ;
 
@@ -145,6 +145,8 @@ arraylit: LSB literallist RSB;
 identifier: ID | ATIDENTIFIER;
 
 typedecl: typ | arraydecl;
+
+typedeclwithvoid: typ | arraydecl | VOID;
 
 //Lexer
 BREAK : 'break';

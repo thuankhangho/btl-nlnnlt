@@ -324,5 +324,10 @@ class CSlangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by CSlangParser#typedeclwithvoid.
+    def visitTypedeclwithvoid(self, ctx:CSlangParser.TypedeclwithvoidContext):
+        return self.visitChildren(ctx)
+
+
 
 del CSlangParser

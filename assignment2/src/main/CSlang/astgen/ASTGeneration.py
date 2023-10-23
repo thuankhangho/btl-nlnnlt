@@ -39,7 +39,7 @@ class ASTGeneration(CSlangVisitor):
             for x in self.visit(ctx.attributedecl()):
                 res = res + [AttributeDecl(x)]
             return res
-        return self.visit(ctx.methoddecl())
+        return [self.visit(ctx.methoddecl())]
     
     # vardecl | constdecl;
     def visitAttributedecl(self, ctx:CSlangParser.AttributedeclContext):
@@ -102,9 +102,17 @@ class ASTGeneration(CSlangVisitor):
         return [(self.visit(ctx.identifier()), IntLiteral(ctx.INTLIT().getText()))] + (self.visit(ctx.attlist()))
         
 ##################################################################################################################################
-    # FUNC identifier LRB parameterlist RRB COLON (typ | VOID | arraydecl) blockstate;
+    # FUNC identifier LRB parameterlist RRB COLON typedeclwithvoid blockstate;
     def visitMethoddecl(self, ctx:CSlangParser.MethoddeclContext):
-        return MethodDecl(self.visit(ctx.identifier()), self.visit(ctx.parameterlist()), self.visit(ctx.typ()), self.visit(ctx.blockstate()))
+        return MethodDecl(self.visit(ctx.identifier()), self.visit(ctx.parameterlist()), self.visit(ctx.typedeclwithvoid()), self.visit(ctx.blockstate()))
+
+    # typ | arraydecl | VOID;
+    def visitTypedeclwithvoid(self, ctx:CSlangParser.TypedeclwithvoidContext):
+        if ctx.typ():
+            return self.visit(ctx.typ())
+        elif ctx.arraydecl():
+            return self.visit(ctx.arraydecl())
+        return VoidType()
 
     # parameterprime | ;
     def visitParameterlist(self, ctx:CSlangParser.ParameterlistContext):
@@ -121,8 +129,8 @@ class ASTGeneration(CSlangVisitor):
     # (ID COLON typ) CM parameterpart1 | (ID COLON typ);
     def visitParameterpart1(self, ctx:CSlangParser.Parameterpart1Context):
         if ctx.getChildCount() == 5:
-            return [VarDecl(self.visit(ctx.identifier()), self.visit(ctx.typ()))] + self.visit(ctx.parameterpart1())
-        return [VarDecl(self.visit(ctx.identifier()), self.visit(ctx.typ()))]
+            return [VarDecl(Id(ctx.ID().getText()), self.visit(ctx.typ()))] + self.visit(ctx.parameterpart1())
+        return [VarDecl(Id(ctx.ID().getText()), self.visit(ctx.typ()))]
     
     # exp1 CONCAT exp1 | exp1;
     def visitExp(self, ctx:CSlangParser.ExpContext):
@@ -206,6 +214,10 @@ class ASTGeneration(CSlangVisitor):
             return ctx.DIVIDE_INT().getText()
         return ctx.MOD().getText()
         
+    # exp ASSIGN exp SM;
+    def visitAssignstate(self, ctx:CSlangParser.AssignstateContext):
+        return Assign(self.visit(ctx.exp()), self.visit(ctx.exp()))
+    
     # LCB stmtlist RCB;
     def visitBlockstate(self, ctx:CSlangParser.BlockstateContext):
         return Block(self.visit(ctx.stmtlist()))
