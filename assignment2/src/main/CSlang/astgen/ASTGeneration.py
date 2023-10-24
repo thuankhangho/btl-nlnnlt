@@ -49,31 +49,32 @@ class ASTGeneration(CSlangVisitor):
     
     # VAR attributecheck SM;
     def visitVardecl(self, ctx:CSlangParser.VardeclContext):
-        attribute = []
-        value = []
-        for x in self.visit(ctx.attributecheck()):
-            if type(x) is tuple:
-                attribute.append(x[0])
-                value.append(x[1])
         res = []
-        for (x, y) in zip(attribute, value):
-            res = res + [VarDecl(x, y)]
-        print(res)
+        for x, y, z in self.visit(ctx.attributecheck()):
+            res = res + [VarDecl(x, y, z)]
+        # print(res)
         return res
-        # return self.visit(ctx.attributecheck())
     
     # CONST attributecheck SM;
     def visitConstdecl(self, ctx:CSlangParser.ConstdeclContext):
         res = []
-        for x, y in self.visit(ctx.attributecheck()):
-            res = res + [ConstDecl(x, y, None)]
+        for x, y, z in self.visit(ctx.attributecheck()):
+            res = res + [ConstDecl(x, y, z)]
         return res
 
     # attributewithdeclare | attributenodeclare;
     def visitAttributecheck(self, ctx:CSlangParser.AttributecheckContext):
         if ctx.attributenodeclare():
-            return self.visit(ctx.attributenodeclare())
-        return self.visit(ctx.attributewithdeclare())
+            attributedecl = self.visit(ctx.attributenodeclare())
+            res = []
+            for x in attributedecl:
+                res = res + [(x[0],x[1],None)]
+            return res
+        attributedecl = self.visit(ctx.attributewithdeclare())
+        res = []
+        for x in attributedecl:
+            res = res + [(x[0],x[2],x[1])]
+        return res
 
     # attributelist COLON typedecl SM;
     def visitAttributenodeclare(self, ctx:CSlangParser.AttributenodeclareContext):
@@ -82,6 +83,7 @@ class ASTGeneration(CSlangVisitor):
         res = []
         for x in self.visit(ctx.attributelist()):
             res.append((x,self.visit(ctx.typedecl())))
+        # print(res)
         return res
 
     # identifier CM attributelist | identifier;
@@ -93,7 +95,22 @@ class ASTGeneration(CSlangVisitor):
     # attlist;
     def visitAttributewithdeclare(self, ctx:CSlangParser.AttributewithdeclareContext):
         # print(self.visit(ctx.attlist()))
-        return self.visit(ctx.attlist())
+        attlist = self.visit(ctx.attlist())
+        type = attlist[-1]
+        attlist = attlist[0:len(attlist) - 1]
+        # print(attlist)
+        attribute = []
+        value = []
+        for x in attlist:
+            attribute = attribute + [x[0]]
+            value = value + [x[1]]
+        value.reverse()
+
+        res = []
+        for (x, y) in zip(attribute, value):
+            res = res + [(x, y, type)]
+        # print(res)
+        return res
     
     # identifier CM attlist CM INTLIT | identifier COLON typedecl DECLARE INTLIT;
     def visitAttlist(self, ctx:CSlangParser.AttlistContext):
@@ -176,7 +193,33 @@ class ASTGeneration(CSlangVisitor):
     
     # exp8 LSB exp RSB | exp8;
     def visitExp7(self, ctx:CSlangParser.Exp7Context):
+        if ctx.getChildCount() == 4:
+            return ArrayCell(self.visit(ctx.exp8()), self.visit(ctx.exp()))
         return self.visit(ctx.exp8())
+    
+    # exp8 DOT ID (LRB nullableexplist RRB | ) | exp9;
+    def visitExp8(self, ctx:CSlangParser.Exp8Context):
+        if ctx.getChildCount() == 3:
+            return FieldAccess(self.visit(ctx.exp8), Id(ctx.ID().getText()))
+        elif ctx.getChildCount() == 6:
+            return CallStmt(self.visit(ctx.exp8()), Id(ctx.ID.getText()), self.visit(ctx.nullableexplist()))
+        return self.visit(ctx.exp9())
+    
+    # (ID DOT | ) ATIDENTIFIER (LRB nullableexplist RRB | ) | exp10;
+    def visitExp9(self, ctx:CSlangParser.Exp9Context):
+        return self.visit(ctx.exp10())
+    
+    # expprime |;
+    def visitNullableexplist(self, ctx:CSlangParser.NullableexplistContext):
+        if ctx.getChildCount() == 0:
+            return []
+        return [self.visit(ctx.expprime())]
+    
+    # exp CM expprime | exp;
+    def visitExpprime(self, ctx:CSlangParser.ExpprimeContext):
+        if ctx.getChildCount() == 1:
+            return [self.visit(ctx.exp())]
+        return [self.visit(ctx.exp())] + self.visit(ctx.expprime())
 
     # EQ | NEQ | LE | GE | LEQ | GEQ;
     def visitRelational(self, ctx:CSlangParser.RelationalContext):
@@ -309,7 +352,10 @@ class ASTGeneration(CSlangVisitor):
             return NullLiteral()
         elif ctx.SELF():
             return SelfLiteral()
-        
+    
+    # ID '<-';
+    def visitSuperpart(self, ctx:CSlangParser.SuperpartContext):
+        return Id(ctx.ID().getText())
 
 from abc import ABC, abstractmethod, ABCMeta
 #from Visitor import Visitor

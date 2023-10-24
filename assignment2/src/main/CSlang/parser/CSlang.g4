@@ -34,7 +34,6 @@ attlist: identifier CM attlist CM INTLIT | identifier COLON typedecl DECLARE INT
 //id comma ... comma expr
 //id : type = expr
 
-
 constructor: FUNC CONSTRUCTOR LRB parameterlist RRB blockstate;
 
 methoddecl: FUNC identifier LRB parameterlist RRB COLON typedeclwithvoid blockstate;
@@ -104,7 +103,7 @@ exp7: exp8 LSB exp RSB | exp8;
 
 exp8: exp8 DOT ID (LRB nullableexplist RRB | ) | exp9;
 
-exp9: (ID DOT | ) ATIDENTIFIER | (ID DOT | ) ATIDENTIFIER LRB nullableexplist RRB | exp10;
+exp9: (ID DOT | ) ATIDENTIFIER (LRB nullableexplist RRB | ) | exp10;
 
 exp10: NEW identifier LRB nullableexplist RRB | exp11;
 

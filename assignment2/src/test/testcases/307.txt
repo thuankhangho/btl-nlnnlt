@@ -1,0 +1,4 @@
+class main{
+            func foo2  (a: int, b: float):void {}
+            func foo1  (a: int, b: float):void {}
+            }
