@@ -1,5 +1,6 @@
-class main {
-            var a, b:int;
-            const c,d:bool;
-            var x,y,z,t: string;
-        }
+class main{
+func foo  (a: int, b: float):void {}
+
+func @main():void{
+     io.printInt(4);
+}}

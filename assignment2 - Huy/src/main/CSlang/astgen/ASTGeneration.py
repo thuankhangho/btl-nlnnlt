@@ -1,3 +1,6 @@
+# Student ID: 2052496
+# Name: Nguyễn Khánh Huy
+
 from CSlangVisitor import CSlangVisitor
 from CSlangParser import CSlangParser
 from AST import *
@@ -36,15 +39,22 @@ class ASTGeneration(CSlangVisitor):
     def visitClass_type(self,ctx:CSlangParser.Class_typeContext):
         return ClassType(Id(ctx.IDENTIFIER().getText()))
 
-    def visitLiteral(self,ctx:CSlangParser.LiteralContext):
+    def visitLiteral(self,ctx:CSlangParser.LiteralContext): #INTLIT | FLOATLIT | BOOLLIT | STRLIT | SELF | NULL | arrlit | xdd;
         if ctx.INTLIT():
-            return IntLiteral()
+            return IntLiteral(int(ctx.INTLIT().getText()))
         elif ctx.FLOATLIT():
-            return FloatLiteral()
+            return FloatLiteral(float(ctx.FLOATLIT().getText()))
         elif ctx.BOOLLIT():
-            return BooleanLiteral()
+            return BooleanLiteral(False if ctx.BOOLLIT().getText() == ctx.FALSE().getText() else True)
         elif ctx.STRLIT():
-            return StringLiteral()
+            return StringLiteral(ctx.STRLIT().getText())
+        elif ctx.SELF():
+            return SelfLiteral()
+        elif ctx.NULL():
+            return NullLiteral()
+        elif ctx.arrlit():
+            return self.visit(ctx.arrlit())
+        return self.visit(ctx.xdd())
     
     def visitBreak_statement(self,ctx:CSlangParser.Break_statementContext):
         return Break()
@@ -56,7 +66,8 @@ class ASTGeneration(CSlangVisitor):
         if ctx.IDENTIFIER():
             return Id(ctx.IDENTIFIER().getText())
         elif ctx.AT_ID():
-            return ctx.AT_ID().getText()
+            return Id(ctx.AT_ID().getText())
+        
     def visitArr(self,ctx:CSlangParser.ArrContext):
         if ctx.getChildCount() == 1: return self.visit(ctx.literal())
         return self.visit(ctx.literal()) + self.visit(ctx.arr())
@@ -115,10 +126,7 @@ class ASTGeneration(CSlangVisitor):
         type = self.visit(ctx.typeorarrtype())
         res = []
         for x in list_of_attribute:
-            res.append({
-                "id": x,
-                "type": type
-            })
+            res.append(x, type)
         return res
 
     def visitTypeorarrtype(self,ctx:CSlangParser.TypeorarrtypeContext):
@@ -151,7 +159,7 @@ class ASTGeneration(CSlangVisitor):
         return VarDecl(ctx.IDENTIFIER().getText(),self.visit(ctx.typee()))
 
     def visitConstructor(self,ctx:CSlangParser.ConstructorContext):
-        return MethodDecl(Id("constructor"),self.visit(ctx.list_of_param()),VoidType(),self.visit(ctx.block_statement()))
+        return MethodDecl(Id(ctx.CONSTRUCTOR().getText()),self.visit(ctx.list_of_param()),VoidType(),self.visit(ctx.block_statement()))
 
     def visitVar_const_statement(self,ctx:CSlangParser.Var_const_statementContext):
         return self.visit(ctx.attribute())
@@ -169,7 +177,7 @@ class ASTGeneration(CSlangVisitor):
         return For(self.visit(ctx.ass_statement()),self.visit(ctx.exp()),self.visit(ctx.assex_statement()),self.visit(ctx.block_statement()))
 
     def visitReturn_statement(self,ctx:CSlangParser.Return_statementContext):
-         if ctx.exp():  return Return(self.visit(ctx.exp()))
+         if ctx.exp(): return Return(self.visit(ctx.exp()))
          return Return(None)
 
     def visitBlock_statement(self,ctx:CSlangParser.Block_statementContext):

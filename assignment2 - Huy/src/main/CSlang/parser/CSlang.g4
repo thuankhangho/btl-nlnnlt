@@ -58,7 +58,7 @@ exp9: (IDENTIFIER DOT | ) AT_ID | (IDENTIFIER DOT | ) AT_ID LB list_of_exp RB | 
 exp10: NEW IDENTIFIER LB list_of_exp RB | exp11 ;
 exp11: LB exp RB | exp12;
 exp12: literal | arrlit | xdd | SELF ;
-literal: INTLIT | FLOATLIT | BOOLLIT | STRLIT ;
+literal: INTLIT | FLOATLIT | BOOLLIT | STRLIT | SELF | NULL | arrlit | xdd;
 var_const_statement: attribute ;
 ass_statement: assex_statement SM ;
 assex_statement: lhs ASSIGN exp;
