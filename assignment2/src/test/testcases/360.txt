@@ -1,5 +1,1 @@
-class main {
-            func test():void{
-                @getArea(Shape.check());
-            }
-        }
+class main {var b, c: int;}

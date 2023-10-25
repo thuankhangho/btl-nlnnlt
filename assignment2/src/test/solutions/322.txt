@@ -1,1 +1,1 @@
-Program([ClassDecl(Id(main),[AttributeDecl(ConstDecl(Id(a),BoolType,None)),AttributeDecl(ConstDecl(Id(b),BoolType,None)),AttributeDecl(VarDecl(Id(c),StringType)),AttributeDecl(VarDecl(Id(d),StringType))])])
+Program([ClassDecl(Id(prog),[AttributeDecl(ConstDecl(Id(a),BoolType,BooleanLit(True))),AttributeDecl(ConstDecl(Id(b),BoolType,BooleanLit(False))),AttributeDecl(VarDecl(Id(c),StringType)),AttributeDecl(VarDecl(Id(d),StringType))])])

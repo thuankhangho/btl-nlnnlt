@@ -1,3 +1,7 @@
 class main {
-            func constructor(a:int, b:string){}
+            func test(a: int, b:string): void {
+                var cc: int = 1;
+                const ddd, eee, fff: bool;
+            }
+            var x, t: string;
         }

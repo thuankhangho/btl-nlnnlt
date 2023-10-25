@@ -1,10 +1,5 @@
 class main {
-            func test():void{
-                if true {
-                    a:=1;
-                }
-                else{
-                
+                func test(): void {
+                    io.readString("Hello World");
                 }
             }
-        }

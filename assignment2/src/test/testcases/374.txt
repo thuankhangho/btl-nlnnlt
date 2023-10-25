@@ -1,4 +1,8 @@
 class main {
-            func test():void{}
-            func constructor(){}
+            func constructor(){
+                var a:string = "Hello";
+                if true {
+                    io.@Write("See ya");
+                }
+            }
         }

@@ -1,5 +1,5 @@
 class main {
             func constructor() {
-                main.@printInt(4);
+                main.@printInt(a + b);
             }
         }

@@ -1,1 +1,3 @@
-class main {func @test(): void {continue;}}
+class main {
+            func @test(): void {return a;}
+            }

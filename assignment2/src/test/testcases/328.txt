@@ -1,7 +1,7 @@
 class main {
-            var u, i:int = A, B;
-            var a, b, g, h: int;
+            var u, i: int = A, B;
             const c, d: J;
-            func test(a: int, b:string): void {}
-            var x, y, z, t: string;
+            func test(a: int, b:string): void {
+                return test + test1;
+            }
         }

@@ -1,5 +1,5 @@
 class main {
-            func test():void{
-                value := x.foo(5);
+                func constructor() {
+                    a[0] := b[0];
+                }
             }
-        }

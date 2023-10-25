@@ -1,8 +1,5 @@
 class main {
-            func constructor(){
-                var a:string = "hi";
-                if true {
-                    io.@Write("bye");
-                }
-            }
+            var a, b:int;
+            var c: int = 100;
+            const d: string = 200;
         }

@@ -134,8 +134,7 @@ blockstate: LCB stmtlist RCB;
 
 stmtlist: stmt stmtlist | ;
 
-stmt: attributedecl | assignstate | ifstate | forstate | breakstate | continuestate
-| returnstate | methodinvoke | blockstate;
+stmt: attributedecl | assignstate | ifstate | forstate | breakstate | continuestate | returnstate | methodinvoke | blockstate;
 
 arraylit: LSB literallist RSB;
 

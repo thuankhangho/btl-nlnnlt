@@ -1,5 +1,5 @@
-class main {
-            func test():void{
-                Shape[2].a := 2;
-            }
-        }
+class main{
+            func foobar (a: bool, b: float): float {}
+            func @main():void{
+                test[5].printInt(4);
+            }}

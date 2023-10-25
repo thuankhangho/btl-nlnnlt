@@ -108,7 +108,6 @@ class ASTGenSuite(unittest.TestCase):
                 io.printInt(4);
             }}"""
         expect = str(Program([ClassDecl(Id("main"),[
-            MethodDecl(Id("foo"),[VarDecl(Id("a"),IntType()),VarDecl(Id("b"),FloatType())],VoidType(),Block([])),
             MethodDecl(Id("@main"),[],VoidType(),Block([CallStmt(Id("io"),Id("printInt"),[IntLiteral(4)])]))])]))
         self.assertTrue(TestAST.test(input,expect,307))
 

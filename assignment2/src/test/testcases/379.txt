@@ -1,3 +1,6 @@
 class main {
-            func constructor(a,b:int, c,d:Shape){}
-        }
+            var a: string = 1;
+            }
+            class main2 {
+                const b: int;
+                }

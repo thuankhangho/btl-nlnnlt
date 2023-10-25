@@ -1,3 +1,6 @@
 class main {
-            var a:string = true;
-        }
+            var a: int;
+            }
+            class main1 {
+                const b: int = 100;
+                }

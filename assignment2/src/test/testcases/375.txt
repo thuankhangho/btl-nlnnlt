@@ -1,4 +1,5 @@
 class main {
-            func constructor(a:int){}
-            func constructor(){}
+            func test():void{
+                Shape[2].length := 2;
+            }
         }

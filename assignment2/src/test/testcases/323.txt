@@ -1,5 +1,5 @@
 class main {
             var a, b: float;
             var c, d: int;
-            const e, f: string;
+            const e, f: string = "abc", "def";
         }

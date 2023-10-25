@@ -4,8 +4,7 @@ class main {
             const c, d: bool;
             func test(a: int, b:string): void {
                 var cc: int = 1;
-                var dd, ee, ff: string = "2", "3", "4";
+                var pi, alpha, tau: float = 3.14197, 22*7, 3 / 4;
                 const ddd, eee, fff: bool;
             }
-            var x, y, z, t: string;
         }

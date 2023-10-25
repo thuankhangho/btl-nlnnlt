@@ -1,7 +1,7 @@
 class main {
-            func constructor(){
-                for i:=1;false;j:=true{
-                    return null;
-                }
+            var a: int;
+            var b: int;
             }
-        }
+            class main1 {
+                var b: int;
+                }

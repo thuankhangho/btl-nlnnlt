@@ -1,3 +1,5 @@
 class main {
-            var a:string = a[2].t(1,2);
-        }
+            func @__test(): int {
+                self.aPI := 3.14;
+                }
+            }

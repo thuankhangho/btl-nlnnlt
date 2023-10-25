@@ -1,6 +1,8 @@
-class main {
-            func test():void{}
-            func @io():int{
-                return 1;
+class Shape <- Rectangle {
+            func getArea():int {
+                return self.length * self.width;
+                }
+            func getLength(): int {
+                return self.length;
+                }
             }
-        }

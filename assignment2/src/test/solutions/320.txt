@@ -1,1 +1,1 @@
-Program([ClassDecl(Id(main),[AttributeDecl(VarDecl(Id(b),BoolType))])])
+Program([ClassDecl(Id(main),[AttributeDecl(VarDecl(Id(b),FloatType))])])

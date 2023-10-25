@@ -1,6 +1,4 @@
 class main {
-            func constructor(){
-                var t:int;
-                var a:string;
-            }
+            func constructor(a: int){}
+            func constructor(b: string){}
         }

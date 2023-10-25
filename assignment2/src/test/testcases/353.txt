@@ -1,7 +1,5 @@
 class main {
-            func test():void{
-                for i:=2; true; i:=i+1{
-                    a:=2;
+                func test():void {
+                    const a, b: int = a + 1, true - "string";
                 }
             }
-        }

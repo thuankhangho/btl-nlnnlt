@@ -1,5 +1,5 @@
 class main{
-            func foo  (a: int, b: float):void {}
+            func foo (a: string, b: bool): int {}
             func @main():void{
-                io.printInt(4);
+                io.printInt(a / 4);
             }}

@@ -1,6 +1,3 @@
 class main {
-            func constructor(){
-                var t:int = null;
-                var a:string = self;
-            }
+            func constructor(a: int, b: float, c: string){}
         }

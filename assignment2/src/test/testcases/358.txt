@@ -1,5 +1,6 @@
 class main {
-            func test():void{
-                @getArea();
-            }
+            var u, i: int = 1,2;
+            const a, b: float;
+            const c, d: bool;
+            func test(a: int, b: string, c: float): void {}
         }

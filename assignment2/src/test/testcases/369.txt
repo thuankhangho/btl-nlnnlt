@@ -1,5 +1,6 @@
 class main {
-            func test():void{
-                if {i := 0;} j > i {j := j - 1;} else {j := j + 1;}
+            const a: string = 1;
             }
-        }
+            class main1 {
+                var b: int;
+                }

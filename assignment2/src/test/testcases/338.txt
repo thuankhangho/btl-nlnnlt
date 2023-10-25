@@ -1,3 +1,5 @@
 class main {
-            var a:string = ("temp"^"temp")[2];
+            func test():void{
+                Shape.a := true;
+            }
         }

@@ -1,0 +1,1 @@
+Program([ClassDecl(Id(main),[AttributeDecl(ConstDecl(Id(a),StringType,IntLit(1)))]),ClassDecl(Id(main1),[AttributeDecl(VarDecl(Id(b),IntType))])])

@@ -1,4 +1,4 @@
-class main {
-            const a, b: bool;
+class prog {
+            const a, b: bool = true, false;
             var c, d: string;
         }

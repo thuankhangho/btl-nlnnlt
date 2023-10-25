@@ -1,7 +1,1 @@
-class main {
-            func constructor(){
-                for i:=1;false;j:=true{
-                    return @t();
-                }
-            }
-        }
+class main {func @test1(): int {return;}}

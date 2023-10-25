@@ -1,9 +1,6 @@
 class main {
-            func constructor(){
-                if true{
-                    for j:=1;true;j:=5{
-                        return i+j;
-                    }
-                }
-            }
+            var u, i, a, b, g, h: int;
+            const c, d: bool;
+            func test(a: int, b:string): void {}
+            var x, y, z, t: string;
         }

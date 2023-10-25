@@ -1,3 +1,5 @@
 class main {
-            func constructor(a,b:int, c:Shape){}
+            var u, i:int = 1,2;
+            var a, b, g, h: int;
+            const c, d: bool;
         }

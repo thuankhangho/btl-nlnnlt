@@ -342,7 +342,7 @@ class ASTGeneration(CSlangVisitor):
         return [self.visit(ctx.stmt())] + self.visit(ctx.stmtlist())
     
     # stmt: attributedecl | assignstate | ifstate | forstate | breakstate | continuestate
-    # | returnstate | methodinvoke | blockstat
+    # | returnstate | methodinvoke | blockstate
     def visitStmt(self, ctx:CSlangParser.StmtContext):
         if ctx.attributedecl():
             return self.visit(ctx.attributedecl())
@@ -360,7 +360,7 @@ class ASTGeneration(CSlangVisitor):
             return self.visit(ctx.returnstate())
         elif ctx.methodinvoke():
             return self.visit(ctx.methodinvoke())
-        return self.visit(ctx.blockstat())
+        return self.visit(ctx.blockstate())
 
     # CONTINUE SM;
     def visitContinuestate(self, ctx:CSlangParser.ContinuestateContext):

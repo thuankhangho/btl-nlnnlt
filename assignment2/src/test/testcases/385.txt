@@ -1,9 +1,3 @@
 class main {
-            func constructor(){
-                for i:=1;false;j:=true{
-                    for j:=1;true;j:=i{
-                    
-                    }
-                }
-            }
+            var a, b: int;
         }

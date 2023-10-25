@@ -1,9 +1,9 @@
-class main {
-            var a: int;
+class main2 {
+            var a: float;
             }
-            class main1 {
-                var b: int;
+            class main3 {
+                var b: string;
                 }
-                class main2 {
+                class main1 {
                     var c: float;
                     }

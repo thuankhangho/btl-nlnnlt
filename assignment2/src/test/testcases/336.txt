@@ -1,3 +1,11 @@
 class main {
-            var a:string = Shape.@a(2,5,6);
+            var u, i:int = 1,2;
+            var a, b, g, h: int;
+            const c, d: bool;
+            func test(a: int, b:string): void {
+                var cc: int = 1;
+                var dd, ee, ff: string = "2", "3", "4";
+                Shape.@getArea(1 + 2, 3 * 4);
+            }
+            var x, y, z, t: string;
         }

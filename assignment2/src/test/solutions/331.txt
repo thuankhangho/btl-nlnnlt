@@ -1,0 +1,1 @@
+Program([ClassDecl(Id(main),[MethodDecl(Id(@__test),[],IntType,Block([AssignStmt(FieldAccess(Self(),Id(aPI)),FloatLit(3.14))]))])])

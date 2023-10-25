@@ -1,5 +1,6 @@
 class main {
-            func test():void{
-                @getArea(1,2);
+            var a: [5]foo;
             }
-        }
+            class main1 {
+                var b: int;
+                }

@@ -1,5 +1,3 @@
 class main {
-            func constructor(){
-                var a:string = new X("hi");
-            }
+            func test(a, b: float, c: Test): void{}
         }

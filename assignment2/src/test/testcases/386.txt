@@ -1,7 +1,10 @@
 class main {
-            func constructor(){
-                for i:=1;false;j:=true{
-                    break;
-                }
+            var u, i: int = 100, 250;
+            var a, b, g, h: int;
+            const c, d: bool;
+            func test(a: int, b: float): void {
+                var cc: int = 1;
+                var dd, ee, ff: string = "2", "3", "4";
+                const ddd, eee, fff: bool;
             }
         }

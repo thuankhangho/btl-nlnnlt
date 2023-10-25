@@ -1,5 +1,10 @@
 class main {
-            func test():void{
-                Shape.getArea(@test());
+            var u, i: bool = true, false;
+            var a, b: int = 1, 2;
+            const c, d: bool;
+            func test(a: int, b:string): void {
+                var cc: int = 1;
+                const ddd, eee, fff: bool;
             }
+            var x, y, z, t: string;
         }

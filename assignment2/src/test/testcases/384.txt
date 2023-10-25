@@ -1,8 +1,6 @@
 class main {
-            func constructor(){
-                var a:string = "hi";
-                for i:=1;false;j:=true{
-                    @t();
-                }
-            }
+            var a, b, g, h: int;
+            const c, d: bool;
+            func test(a: int, b:string): void {}
+            var x, y, z, t: string;
         }

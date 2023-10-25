@@ -1,3 +1,5 @@
 class main {
-            var a:string = awdwa;
+            var a, b:int;
+            var c: int;
+            const d: string = false;
         }

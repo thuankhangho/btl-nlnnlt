@@ -1,4 +1,6 @@
 class main {
-            var a:int;
-            var b:string =5;
+            func constructor(){
+                var t: int = null;
+                var a: string = self;
+            }
         }

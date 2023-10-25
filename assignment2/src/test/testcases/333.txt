@@ -1,3 +1,5 @@
 class main {
-            var a:string = Shape.@a;
+            var a, b: [5]float;
+            const c: bool;
+            var d: string;
         }

@@ -1,0 +1,1 @@
+Program([ClassDecl(Id(main),[MethodDecl(Id(foobar),[Param(Id(a),BoolType),Param(Id(b),FloatType)],FloatType,Block([])),MethodDecl(Id(@main),[],VoidType,Block([Call(ArrayCell(Id(test),IntLit(5)),Id(printInt),[IntLit(4)])]))])])

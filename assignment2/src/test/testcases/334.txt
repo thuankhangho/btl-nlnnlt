@@ -1,3 +1,5 @@
 class main {
-            var a:string = @a;
+            var u, i: float;
+            const c, d: string = "false", "false";
+            func test(a: int, b:string): void {}
         }

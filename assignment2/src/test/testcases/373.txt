@@ -1,4 +1,5 @@
 class main {
-            const a:Shape = new Shape(2);
-            func test():void{}
+            func constructor(){
+                var a:string = new X("Hello");
+            }
         }

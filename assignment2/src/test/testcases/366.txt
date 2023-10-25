@@ -1,5 +1,8 @@
 class main {
-            func test():void{
-                self.aPI := 3.14;
+            func test(a: int, b:string): void {
+                var cc: int = 1;
+                var dd, ee, ff: string = "aa", "bb", "cc";
+                const ddd, eee, fff: bool;
             }
+            var x, t: string;
         }

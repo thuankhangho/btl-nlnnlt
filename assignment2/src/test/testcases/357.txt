@@ -1,5 +1,5 @@
-class main {
-            func test():void{
-                Shape.getArea(Shape.test());
-            }
-        }
+class main{
+            func foo  (a: int, b: float):void {}
+            func @main():void{
+                io.setInt(4);
+            }}

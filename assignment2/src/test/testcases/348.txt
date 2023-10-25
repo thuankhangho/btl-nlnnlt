@@ -1,5 +1,5 @@
 class main {
-            func test():void{
-                a[2]:= 2;
-            }
+            var a, b, g, h: int;
+            const c, d: bool;
+            var x, y, z, t: string;
         }
