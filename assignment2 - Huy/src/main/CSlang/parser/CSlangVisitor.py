@@ -39,18 +39,13 @@ class CSlangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by CSlangParser#attribute1.
-    def visitAttribute1(self, ctx:CSlangParser.Attribute1Context):
+    # Visit a parse tree produced by CSlangParser#attributeconst.
+    def visitAttributeconst(self, ctx:CSlangParser.AttributeconstContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by CSlangParser#attribute1const.
-    def visitAttribute1const(self, ctx:CSlangParser.Attribute1constContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by CSlangParser#attribute1var.
-    def visitAttribute1var(self, ctx:CSlangParser.Attribute1varContext):
+    # Visit a parse tree produced by CSlangParser#attributevar.
+    def visitAttributevar(self, ctx:CSlangParser.AttributevarContext):
         return self.visitChildren(ctx)
 
 
@@ -59,13 +54,18 @@ class CSlangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by CSlangParser#attribute2.
-    def visitAttribute2(self, ctx:CSlangParser.Attribute2Context):
+    # Visit a parse tree produced by CSlangParser#attribute1.
+    def visitAttribute1(self, ctx:CSlangParser.Attribute1Context):
         return self.visitChildren(ctx)
 
 
     # Visit a parse tree produced by CSlangParser#list_of_attribute.
     def visitList_of_attribute(self, ctx:CSlangParser.List_of_attributeContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CSlangParser#attribute2.
+    def visitAttribute2(self, ctx:CSlangParser.Attribute2Context):
         return self.visitChildren(ctx)
 
 

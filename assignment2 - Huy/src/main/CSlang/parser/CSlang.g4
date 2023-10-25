@@ -16,19 +16,20 @@ class_declarelist: class_declare class_declarelist | ;
 class_declare: CLASS superX IDENTIFIER LC list_of_member RC;
 list_of_member: member list_of_member | ;
 member: attribute | method;
-attribute: attribute1 | attribute2 ;
-attribute1: attribute1const | attribute1var;
-attribute1const: CONST attributedecl SM;
-attribute1var: VAR attributedecl SM;
+attribute: attributeconst | attributevar;
 
-attributedecl: list_of_attribute CL typeorarrtype;
+attributeconst: CONST attributedecl SM;
+attributevar: VAR attributedecl SM;
+attributedecl: attribute1 | attribute2;
 
-attribute2: (CONST|VAR) list_of_a SM ;
-list_of_attribute:  xdd CM list_of_attribute | xdd ;
+attribute1: list_of_attribute CL typeorarrtype;
+list_of_attribute: xdd CM list_of_attribute | xdd;
+
+attribute2: list_of_a;
 list_of_a: xdd CM list_of_a CM exp | xdd CL typeorarrtype DECLARE exp ;
 
-method:FUNC xdd LB list_of_param RB CL typev block_statement | constructor;
-list_of_param:list_of_param1 | list_of_param2;
+method: FUNC xdd LB list_of_param RB CL typev block_statement | constructor;
+list_of_param: list_of_param1 | list_of_param2;
 list_of_param1: primee | ;
 primee: param_declare CM primee | param_declare ;
 param_declare: IDENTIFIER CL typee ;
