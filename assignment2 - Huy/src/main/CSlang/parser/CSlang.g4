@@ -29,56 +29,64 @@ attribute2: list_of_a;
 list_of_a: xdd CM list_of_a CM exp | xdd CL typeorarrtype DECLARE exp ;
 
 method: FUNC xdd LB list_of_param RB CL typev block_statement | constructor;
-list_of_param: list_of_param1 | list_of_param2;
-list_of_param1: primee | ;
-primee: param_declare CM primee | param_declare ;
-param_declare: IDENTIFIER CL typee ;
-list_of_param2: primeme | ;
-primeme: list_of_identifier CM primeme | list_of_identifier ;
-list_of_identifier: (primy | ) CL typee;
-primy: IDENTIFIER CM primy | IDENTIFIER ;
-constructor: FUNC CONSTRUCTOR LB list_of_param RB block_statement ;
-typee: BOOL | INT | FLOAT | STRING | IDENTIFIER;
-typev: BOOL | INT | FLOAT | STRING | VOID | IDENTIFIER;
-arr_type: LS INTLIT RS typee ;
-class_type: NEW IDENTIFIER LS RS;
-typeorarrtype: typee|arr_type;
+list_of_param: primee | ;
+
+primee: list_of_param1 | list_of_param2;
+list_of_param1: param_declare CM primee | param_declare;
+param_declare: IDENTIFIER CL typee;
+
+list_of_param2: list_of_identifier CL typee CM list_of_param2 | list_of_identifier CL typee;
+list_of_identifier: IDENTIFIER CM list_of_identifier | IDENTIFIER;
+
+constructor: FUNC CONSTRUCTOR LB list_of_param RB block_statement;
 
 list_of_exp: primu | ;
 primu: exp CM primu | exp;
 exp: exp1 CONCAT exp1 | exp1;
-exp1: exp2 (EQUAL | DIFFER | SMOL | BIG | SMOL_EQUAL | BIG_EQUAL) exp2| exp2;
-exp2: exp2 (AND | OR) exp3| exp3 ;
-exp3: exp3 (PLUS | MINUS) exp4 | exp4 ;
-exp4: exp4 (MULTIPLE | DIVIDE_FLOAT | DIVIDE_INT | MOD) exp5 | exp5 ;
-exp5: CHAMTHAN exp5 | exp6 ;
-exp6: MINUS exp6 | exp7 ;
-exp7: exp8 LS exp RS | exp8 ;
-exp8: exp8 DOT IDENTIFIER( LB list_of_exp RB | ) | exp9 ;
+exp1: exp2 relational_ops exp2| exp2;
+exp2: exp2 and_or exp3| exp3;
+exp3: exp3 plus_minus exp4 | exp4;
+exp4: exp4 divide_and_multiply exp5 | exp5;
+exp5: CHAMTHAN exp5 | exp6;
+exp6: MINUS exp6 | exp7;
+exp7: exp8 LS exp RS | exp8;
+exp8: exp8 DOT IDENTIFIER (LB list_of_exp RB | ) | exp9;
 exp9: (IDENTIFIER DOT | ) AT_ID | (IDENTIFIER DOT | ) AT_ID LB list_of_exp RB | exp10;
-exp10: NEW IDENTIFIER LB list_of_exp RB | exp11 ;
+exp10: NEW IDENTIFIER LB list_of_exp RB | exp11;
 exp11: LB exp RB | exp12;
-exp12: literal | arrlit | xdd | SELF ;
+exp12: literal | arrlit | xdd | SELF;
+
+relational_ops: EQUAL | DIFFER | SMOL | BIG | SMOL_EQUAL | BIG_EQUAL;
+and_or: AND | OR;
+plus_minus: PLUS | MINUS;
+divide_and_multiply: MULTIPLE | DIVIDE_FLOAT | DIVIDE_INT | MOD;
 literal: INTLIT | FLOATLIT | BOOLLIT | STRLIT | SELF | NULL | arrlit | xdd;
-var_const_statement: attribute ;
-ass_statement: assex_statement SM ;
+var_const_statement: attribute;
+ass_statement: assex_statement SM;
 assex_statement: lhs ASSIGN exp;
-lhs: IDENTIFIER | exp8 |  IDENTIFIER LS exp RS ;
-if_statement: IF (block_statement |) exp block_statement (ELSE block_statement |) ;
-for_statement: FOR ass_statement exp SM assex_statement block_statement ;
-break_statement:BREAK SM;
-continue_statement:CONTINUE SM ;
-return_statement: RETURN (exp | ) SM ;
-method_invocation_statement: instance_method_invocation|static_method_invocation SM ;
-instance_method_invocation:exp DOT IDENTIFIER LB list_of_exp RB ;
-static_method_invocation: (IDENTIFIER DOT |) AT_ID LB list_of_exp RB  ;
-block_statement: LC list_of_statement RC ;
+
+lhs: IDENTIFIER | AT_ID | IDENTIFIER LS exp RS;
+if_statement: IF (block_statement |) exp block_statement (ELSE block_statement |);
+for_statement: FOR ass_statement exp SM assex_statement block_statement;
+break_statement: BREAK SM;
+continue_statement: CONTINUE SM;
+return_statement: RETURN (exp | ) SM;
+method_invocation_statement: instance_method_invocation|static_method_invocation SM;
+instance_method_invocation: exp DOT IDENTIFIER LB list_of_exp RB;
+static_method_invocation: (IDENTIFIER DOT |) AT_ID LB list_of_exp RB;
+block_statement: LC list_of_statement RC;
 list_of_statement: statement list_of_statement | ;
-statement:var_const_statement | ass_statement | if_statement | for_statement | break_statement | continue_statement | 
+statement: var_const_statement | ass_statement | if_statement | for_statement | break_statement | continue_statement | 
 return_statement | method_invocation_statement | block_statement;
-xdd:IDENTIFIER | AT_ID;
+
+typee: BOOL | INT | FLOAT | STRING | IDENTIFIER;
+typev: BOOL | INT | FLOAT | STRING | VOID | IDENTIFIER;
+arr_type: LS INTLIT RS typee;
+class_type: NEW IDENTIFIER LS RS;
+typeorarrtype: typee|arr_type;
+xdd: IDENTIFIER | AT_ID;
 superX: IDENTIFIER '<-' | ;
-arrlit: LS arr RS ;
+arrlit: LS arr RS;
 arr:literal CM arr|literal;
 
 

@@ -84,13 +84,13 @@ class CSlangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by CSlangParser#list_of_param1.
-    def visitList_of_param1(self, ctx:CSlangParser.List_of_param1Context):
+    # Visit a parse tree produced by CSlangParser#primee.
+    def visitPrimee(self, ctx:CSlangParser.PrimeeContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by CSlangParser#primee.
-    def visitPrimee(self, ctx:CSlangParser.PrimeeContext):
+    # Visit a parse tree produced by CSlangParser#list_of_param1.
+    def visitList_of_param1(self, ctx:CSlangParser.List_of_param1Context):
         return self.visitChildren(ctx)
 
 
@@ -121,31 +121,6 @@ class CSlangVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by CSlangParser#constructor.
     def visitConstructor(self, ctx:CSlangParser.ConstructorContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by CSlangParser#typee.
-    def visitTypee(self, ctx:CSlangParser.TypeeContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by CSlangParser#typev.
-    def visitTypev(self, ctx:CSlangParser.TypevContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by CSlangParser#arr_type.
-    def visitArr_type(self, ctx:CSlangParser.Arr_typeContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by CSlangParser#class_type.
-    def visitClass_type(self, ctx:CSlangParser.Class_typeContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by CSlangParser#typeorarrtype.
-    def visitTypeorarrtype(self, ctx:CSlangParser.TypeorarrtypeContext):
         return self.visitChildren(ctx)
 
 
@@ -301,6 +276,31 @@ class CSlangVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by CSlangParser#statement.
     def visitStatement(self, ctx:CSlangParser.StatementContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CSlangParser#typee.
+    def visitTypee(self, ctx:CSlangParser.TypeeContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CSlangParser#typev.
+    def visitTypev(self, ctx:CSlangParser.TypevContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CSlangParser#arr_type.
+    def visitArr_type(self, ctx:CSlangParser.Arr_typeContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CSlangParser#class_type.
+    def visitClass_type(self, ctx:CSlangParser.Class_typeContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CSlangParser#typeorarrtype.
+    def visitTypeorarrtype(self, ctx:CSlangParser.TypeorarrtypeContext):
         return self.visitChildren(ctx)
 
 

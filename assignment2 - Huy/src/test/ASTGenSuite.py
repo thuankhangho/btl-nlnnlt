@@ -4,7 +4,9 @@ from AST import *
 
 class ASTGenSuite(unittest.TestCase):
     def test_simple_program(self):
-        input = """class main {const a, b: int;}"""
+        input = """class main {
+            func test(a: string, b: int): int {}
+        }"""
         expect = "Program([ClassDecl(Id(main),[AttributeDecl(VarDecl(Id(a),IntType))])])"
         self.assertTrue(TestAST.test(input,expect,300))
 
