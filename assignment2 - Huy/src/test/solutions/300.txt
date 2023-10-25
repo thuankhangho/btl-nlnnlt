@@ -1,1 +1,1 @@
-Program([ClassDecl(Id(main),[MethodDecl(Id(test),[Param(Id(a),StringType),Param(Id(b),IntType)],IntType,Block([]))])])
+Program([ClassDecl(Id(main),[AttributeDecl(VarDecl(Id(a),IntType))])])

@@ -54,26 +54,25 @@ exp8: exp8 DOT IDENTIFIER (LB list_of_exp RB | ) | exp9;
 exp9: (IDENTIFIER DOT | ) AT_ID | (IDENTIFIER DOT | ) AT_ID LB list_of_exp RB | exp10;
 exp10: NEW IDENTIFIER LB list_of_exp RB | exp11;
 exp11: LB exp RB | exp12;
-exp12: literal | arrlit | xdd | SELF;
+exp12: literal;
 
 relational_ops: EQUAL | DIFFER | SMOL | BIG | SMOL_EQUAL | BIG_EQUAL;
 and_or: AND | OR;
 plus_minus: PLUS | MINUS;
 divide_and_multiply: MULTIPLE | DIVIDE_FLOAT | DIVIDE_INT | MOD;
 literal: INTLIT | FLOATLIT | BOOLLIT | STRLIT | SELF | NULL | arrlit | xdd;
-var_const_statement: attribute;
-ass_statement: assex_statement SM;
-assex_statement: lhs ASSIGN exp;
 
+var_const_statement: attribute;
+ass_statement: lhs ASSIGN exp SM;
 lhs: IDENTIFIER | AT_ID | IDENTIFIER LS exp RS;
-if_statement: IF (block_statement |) exp block_statement (ELSE block_statement |);
-for_statement: FOR ass_statement exp SM assex_statement block_statement;
+if_statement: IF (block_statement | ) exp block_statement (ELSE block_statement | );
+for_statement: FOR ass_statement exp SM lhs ASSIGN exp block_statement;
 break_statement: BREAK SM;
 continue_statement: CONTINUE SM;
 return_statement: RETURN (exp | ) SM;
-method_invocation_statement: instance_method_invocation|static_method_invocation SM;
+method_invocation_statement: (instance_method_invocation|static_method_invocation) SM;
 instance_method_invocation: exp DOT IDENTIFIER LB list_of_exp RB;
-static_method_invocation: (IDENTIFIER DOT |) AT_ID LB list_of_exp RB;
+static_method_invocation: (IDENTIFIER DOT | ) AT_ID LB list_of_exp RB;
 block_statement: LC list_of_statement RC;
 list_of_statement: statement list_of_statement | ;
 statement: var_const_statement | ass_statement | if_statement | for_statement | break_statement | continue_statement | 

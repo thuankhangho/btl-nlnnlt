@@ -62,14 +62,12 @@ typ: BOOL | INT | FLOAT | STRING | ID | arraydecl;
 
 objdecl: NEW ID LRB RRB;
 
+createobjectexpr: NEW ID LRB nullableexplist RRB;
+
 //Expressions
 // instanceattributestate: exp DOT identifier;
 
 // staticattributestate: (ID DOT)? ATIDENTIFIER;
-
-instancemethodstate: exp DOT ID LRB nullableexplist RRB;
-
-staticmethodstate: (ID DOT | ) ATIDENTIFIER LRB nullableexplist RRB;
 
 nullableexplist: expprime |;
 
@@ -107,18 +105,20 @@ exp10: NEW ID LRB nullableexplist RRB | exp11;
 
 exp11: LRB exp RRB | exp12;
 
-exp12: literal | identifier | SELF | NULL;
+exp12: literal | identifier | SELF | NULL | createobjectexpr;
 
 //Statements
 // varstate: VAR (attributelist COLON typ SM | attlist SM);
 
 // constate: CONST (attributelist COLON typ SM | attlist SM);
 
+declrstate: attributedecl;
+
 assignstate: exp ASSIGN exp SM;
 
 ifstate: IF (blockstate | ) exp blockstate (ELSE blockstate | );
 
-forstate: FOR assignstate exp SM assignstate blockstate;
+forstate: FOR assignstate exp SM exp ASSIGN exp blockstate;
 
 breakstate: BREAK SM;
 
@@ -127,8 +127,8 @@ continuestate: CONTINUE SM;
 returnstate: RETURN (exp | ) SM;
 
 methodinvoke: (instancemethodstate | staticmethodstate) SM;
-
-createobjectstate: NEW ID LRB nullableexplist RRB;
+instancemethodstate: exp DOT ID LRB nullableexplist RRB;
+staticmethodstate: (ID DOT | ) ATIDENTIFIER LRB nullableexplist RRB;
 
 blockstate: LCB stmtlist RCB;
 

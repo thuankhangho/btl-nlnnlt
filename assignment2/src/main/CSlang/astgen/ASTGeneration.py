@@ -263,7 +263,7 @@ class ASTGeneration(CSlangVisitor):
             return self.visit(ctx.exp())
         return self.visit(ctx.exp12())
     
-    #literal | identifier | SELF | NULL;
+    #literal | identifier | SELF | NULL | createobjectexpr;
     def visitExp12(self, ctx:CSlangParser.Exp12Context):
         if ctx.literal():
             return self.visit(ctx.literal())
@@ -271,7 +271,9 @@ class ASTGeneration(CSlangVisitor):
             return self.visit(ctx.identifier())
         elif ctx.SELF():
             return SelfLiteral()
-        return NullLiteral()
+        elif ctx.NULL(): 
+            return NullLiteral()
+        return self.visit(ctx.createobjectexpr())
     
     # expprime |;
     def visitNullableexplist(self, ctx:CSlangParser.NullableexplistContext):
@@ -322,6 +324,10 @@ class ASTGeneration(CSlangVisitor):
         return ctx.MOD().getText()
         
 ##################################################################################################################################
+    
+    # attributedecl SM;
+    def visitDeclrstate(self, ctx:CSlangParser.DeclrstateContext):
+        return self.visit(ctx.attributedecl())
     
     # exp ASSIGN exp SM;
     def visitAssignstate(self, ctx:CSlangParser.AssignstateContext):
@@ -385,9 +391,9 @@ class ASTGeneration(CSlangVisitor):
         else:
             return If(self.visit(ctx.exp()), self.visit(ctx.blockstate()[1]), self.visit(ctx.blockstate()[0]), self.visit(ctx.blockstate()[2]))
 
-    # FOR assignstate exp SM assignstate blockstate;
+    # FOR assignstate exp SM exp ASSIGN exp blockstate;
     def visitForstate(self,ctx:CSlangParser.ForstateContext):
-        return For(self.visit(ctx.assignstate()[0]), self.visit(ctx.exp()), self.visit(ctx.assignstate()[1]), self.visit(ctx.blockstate()))
+        return For(self.visit(ctx.assignstate()), self.visit(ctx.exp()[0]), Assign(self.visit(ctx.exp()[1]),self.visit(ctx.exp()[1])), self.visit(ctx.blockstate()))
 
     # (instancemethodstate | staticmethodstate) SM;
     def visitMethodinvoke(self, ctx:CSlangParser.MethodinvokeContext):

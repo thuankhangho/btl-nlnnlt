@@ -104,18 +104,8 @@ class CSlangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by CSlangParser#primeme.
-    def visitPrimeme(self, ctx:CSlangParser.PrimemeContext):
-        return self.visitChildren(ctx)
-
-
     # Visit a parse tree produced by CSlangParser#list_of_identifier.
     def visitList_of_identifier(self, ctx:CSlangParser.List_of_identifierContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by CSlangParser#primy.
-    def visitPrimy(self, ctx:CSlangParser.PrimyContext):
         return self.visitChildren(ctx)
 
 
@@ -199,6 +189,26 @@ class CSlangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by CSlangParser#relational_ops.
+    def visitRelational_ops(self, ctx:CSlangParser.Relational_opsContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CSlangParser#and_or.
+    def visitAnd_or(self, ctx:CSlangParser.And_orContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CSlangParser#plus_minus.
+    def visitPlus_minus(self, ctx:CSlangParser.Plus_minusContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CSlangParser#divide_and_multiply.
+    def visitDivide_and_multiply(self, ctx:CSlangParser.Divide_and_multiplyContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by CSlangParser#literal.
     def visitLiteral(self, ctx:CSlangParser.LiteralContext):
         return self.visitChildren(ctx)
@@ -211,11 +221,6 @@ class CSlangVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by CSlangParser#ass_statement.
     def visitAss_statement(self, ctx:CSlangParser.Ass_statementContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by CSlangParser#assex_statement.
-    def visitAssex_statement(self, ctx:CSlangParser.Assex_statementContext):
         return self.visitChildren(ctx)
 
 

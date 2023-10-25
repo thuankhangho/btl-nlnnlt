@@ -93,8 +93,8 @@ class ASTGeneration(CSlangVisitor):
             res = res + [(x, y, type)]
         return res
     
-    def list_of_a(self, ctx:CSlangParser.List_of_aContext): #xdd CM list_of_a CM exp | xdd CL typeorarrtype DECLARE exp ;
-        if ctx.typedecl():
+    def visitList_of_a(self, ctx:CSlangParser.List_of_aContext): #xdd CM list_of_a CM exp | xdd CL typeorarrtype DECLARE exp ;
+        if ctx.typeorarrtype():
             return [(self.visit(ctx.xdd()), self.visit(ctx.exp()))] + [self.visit(ctx.typeorarrtype())]
         return [(self.visit(ctx.xdd()), self.visit(ctx.exp()))] + self.visit(ctx.list_of_a())
 
@@ -200,15 +200,9 @@ class ASTGeneration(CSlangVisitor):
         return self.visit(ctx.exp12())
     
     def visitExp12(self, ctx:CSlangParser.Exp12Context): # literal;
-        if ctx.literal():
-            return self.visit(ctx.literal())
-        elif ctx.xdd():
-            return self.visit(ctx.xdd())
-        elif ctx.SELF():
-            return SelfLiteral()
-        return NullLiteral()
-
-    def visitList_of_exp(self, ctx:CSlangParser.List_of_expContext): # list_of_exp: primu | ;
+        return self.visit(ctx.literal())
+        
+    def visitList_of_exp(self, ctx:CSlangParser.List_of_expContext): # primu | ;
         return self.visit(ctx.primu()) if ctx.primu() else []
     
     def visitPrimu(self, ctx:CSlangParser.PrimuContext): # primu: exp CM primu | exp;
@@ -227,20 +221,17 @@ class ASTGeneration(CSlangVisitor):
             return ctx.SMOL_EQUAL().getText()
         return ctx.BIG_EQUAL().getText()
     
-    # AND | OR;
-    def visitLogical(self, ctx:CSlangParser.LogicalContext):
+    def visitAnd_or(self, ctx:CSlangParser.And_orContext): # AND | OR;
         if ctx.AND():
             return ctx.AND().getText()
         return ctx.OR().getText()
     
-    # PLUS | MINUS;
-    def visitAdding(self, ctx:CSlangParser.AddingContext):
+    def visitPlus_minus(self, ctx:CSlangParser.Plus_minusContext): # PLUS | MINUS;
         if ctx.PLUS():
             return ctx.PLUS().getText()
         return ctx.MINUS().getText()
     
-    # MULTIPLY | DIVIDE_FLOAT | DIVIDE_INT | MOD;
-    def visitMultiplying(self, ctx:CSlangParser.MultiplyingContext):
+    def visitDivide_and_multiply(self, ctx:CSlangParser.Divide_and_multiplyContext): # MULTIPLY | DIVIDE_FLOAT | DIVIDE_INT | MOD;
         if ctx.MULTIPLY():
             return ctx.MULTIPLY().getText()
         elif ctx.DIVIDE_FLOAT():
@@ -254,17 +245,17 @@ class ASTGeneration(CSlangVisitor):
     def visitVar_const_statement(self,ctx:CSlangParser.Var_const_statementContext):
         return self.visit(ctx.attribute())
 
-    def visitAss_statement(self,ctx:CSlangParser.Ass_statementContext):
+    def visitAss_statement(self,ctx:CSlangParser.Ass_statementContext): # lhs ASSIGN exp SM;
         return Assign(self.visit(ctx.lhs()), self.visit(ctx.exp()))
     
-    def visitIf_statement(self,ctx:CSlangParser.If_statementContext):
-        if ctx.getChildCount() == 3: return If(self.visit(ctx.exp()),self.visit(ctx.block_statement()))
-        elif ctx.getChildCount() == 4: return If(self.visit(ctx.exp()),self.visit(ctx.block_statement()), self.visit(ctx.block_statement()))
-        elif ctx.getChildCount() == 5: return If(self.visit(ctx.exp()),self.visit(ctx.block_statement()), None ,self.visit(ctx.block_statement()))
-        return If(self.visit(ctx.exp()),self.visit(ctx.block_statement()), self.visit(ctx.block_statement()) ,self.visit(ctx.block_statement()))
+    def visitIf_statement(self,ctx:CSlangParser.If_statementContext): # IF (block_statement |) exp block_statement (ELSE block_statement |);
+        if ctx.getChildCount() == 3: return If(self.visit(ctx.exp()),self.visit(ctx.block_statement()[0]))
+        elif ctx.getChildCount() == 4: return If(self.visit(ctx.exp()),self.visit(ctx.block_statement()[0]), self.visit(ctx.block_statement()[1]))
+        elif ctx.getChildCount() == 5: return If(self.visit(ctx.exp()),self.visit(ctx.block_statement()[1]), None ,self.visit(ctx.block_statement()[0]))
+        return If(self.visit(ctx.exp()),self.visit(ctx.block_statement()[0]), self.visit(ctx.block_statement()[1]) ,self.visit(ctx.block_statement()[2]))
     
     def visitFor_statement(self,ctx:CSlangParser.For_statementContext):
-        return For(self.visit(ctx.ass_statement()),self.visit(ctx.exp()),self.visit(ctx.assex_statement()),self.visit(ctx.block_statement()))
+        return For(self.visit(ctx.ass_statement()),self.visit(ctx.exp()[0]),Assign(self.visit(ctx.exp()[1]),self.visit(ctx.exp()[1])),self.visit(ctx.block_statement()))
 
     def visitReturn_statement(self,ctx:CSlangParser.Return_statementContext):
         if ctx.exp(): return Return(self.visit(ctx.exp()))
@@ -275,12 +266,25 @@ class ASTGeneration(CSlangVisitor):
     
     def visitContinue_statement(self,ctx:CSlangParser.Continue_statementContext):
         return Continue()
+    
+    def visitMethod_invocation_statement(self, ctx:CSlangParser.Method_invocation_statementContext):
+        if ctx.instance_method_invocation(): return self.visit(ctx.instance_method_invocation())
+        return self.visit(ctx.static_method_invocation())
+        
+    def visitInstance_method_invocation(self, ctx:CSlangParser.Instance_method_invocationContext): # exp DOT IDENTIFIER LB list_of_exp RB;
+        return CallStmt(self.visit(ctx.exp()), Id(ctx.IDENTIFIER().getText()), self.visit(ctx.list_of_exp()))
+    
+    def visitStatic_method_invocation(self, ctx:CSlangParser.Static_method_invocationContext): # (IDENTIFIER DOT |) AT_ID LB list_of_exp RB;
+        if ctx.getChildCount() == 6:
+            return CallStmt(Id(ctx.IDENTIFIER().getText()), Id(ctx.AT_ID().getText()), self.visit(ctx.list_of_exp()))
+        return CallStmt(None, Id(ctx.AT_ID().getText()), self.visit(ctx.list_of_exp()))
 
     def visitBlock_statement(self,ctx:CSlangParser.Block_statementContext):
         return Block(self.visit(ctx.list_of_statement()))
     
     def visitList_of_statement(self,ctx:CSlangParser.List_of_statementContext):
         if ctx.getChildCount() == 0:  return []
+        if (type(self.visit(ctx.statement()))) is list: return self.visit(ctx.statement()) + self.visit(ctx.list_of_statement())
         return [self.visit(ctx.statement())] + self.visit(ctx.list_of_statement())
     
     def visitStatement(self,ctx:CSlangParser.StatementContext):
@@ -316,9 +320,9 @@ class ASTGeneration(CSlangVisitor):
         elif ctx.STRING():
             return StringType()
         elif ctx.IDENTIFIER():
-            return ctx.IDENTIFIER().getText()
+            return ClassType(ctx.IDENTIFIER().getText())
         elif ctx.VOID():
-            return ctx.VOID().getText()
+            return VoidType()
 
     def visitArr_type(self,ctx:CSlangParser.Arr_typeContext):
         return ArrayType(IntLiteral(),self.visit(ctx.typee()))
