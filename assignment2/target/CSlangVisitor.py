@@ -109,11 +109,6 @@ class CSlangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by CSlangParser#identifierprime.
-    def visitIdentifierprime(self, ctx:CSlangParser.IdentifierprimeContext):
-        return self.visitChildren(ctx)
-
-
     # Visit a parse tree produced by CSlangParser#superpart.
     def visitSuperpart(self, ctx:CSlangParser.SuperpartContext):
         return self.visitChildren(ctx)

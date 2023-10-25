@@ -30,13 +30,13 @@ attributenodeclare: attributelist COLON typedecl;
 attributelist: identifier CM attributelist | identifier;
 
 attributewithdeclare: attlist;
-attlist: identifier CM attlist CM INTLIT | identifier COLON typedecl DECLARE INTLIT;
+attlist: identifier CM attlist CM exp | identifier COLON typedecl DECLARE exp;
 //id comma ... comma expr
 //id : type = expr
 
 constructor: FUNC CONSTRUCTOR LRB parameterlist RRB blockstate;
 
-methoddecl: FUNC identifier LRB parameterlist RRB COLON typedeclwithvoid blockstate;
+methoddecl: constructor | FUNC identifier LRB parameterlist RRB COLON typedeclwithvoid blockstate;
 
 parameterlist: parameterprime | ;
 
@@ -44,11 +44,9 @@ parameterprime: parameterpart1 | parameterpart2;
 
 parameterpart1: (ID COLON typ) CM parameterpart1 | (ID COLON typ);
 
-parameterpart2: (identifierlist COLON typ) CM parameterpart2 | (identifierlist COLON typ);
+parameterpart2: identifierlist COLON typ CM parameterpart2 | identifierlist COLON typ;
 
-identifierlist: identifierprime | ;
-
-identifierprime: ID CM identifierprime | ID;
+identifierlist: ID CM identifierlist | ID;
 
 superpart: ID '<-';
 
@@ -60,7 +58,7 @@ literallist: (INTLIT | FLOATLIT | boolit | STRINGLIT | NULL) CM literallist | (I
 
 arraydecl: LSB INTLIT RSB typ;
 
-typ: BOOL | INT | FLOAT | STRING | ID;
+typ: BOOL | INT | FLOAT | STRING | ID | arraydecl;
 
 objdecl: NEW ID LRB RRB;
 
@@ -101,15 +99,15 @@ exp6: MINUS exp6 | exp7;
 
 exp7: exp8 LSB exp RSB | exp8;
 
-exp8: exp8 DOT ID (LRB nullableexplist RRB | ) | exp9;
+exp8: exp8 (LSB exp RSB | ) DOT ID (LRB nullableexplist RRB | ) | exp9;
 
 exp9: (ID DOT | ) ATIDENTIFIER (LRB nullableexplist RRB | ) | exp10;
 
-exp10: NEW identifier LRB nullableexplist RRB | exp11;
+exp10: NEW ID LRB nullableexplist RRB | exp11;
 
 exp11: LRB exp RRB | exp12;
 
-exp12: literal | identifier | SELF;
+exp12: literal | identifier | SELF | NULL;
 
 //Statements
 // varstate: VAR (attributelist COLON typ SM | attlist SM);
@@ -120,7 +118,7 @@ assignstate: exp ASSIGN exp SM;
 
 ifstate: IF (blockstate | ) exp blockstate (ELSE blockstate | );
 
-forstate: FOR assignstate (exp SM) (exp ASSIGN exp) blockstate;
+forstate: FOR assignstate exp SM assignstate blockstate;
 
 breakstate: BREAK SM;
 

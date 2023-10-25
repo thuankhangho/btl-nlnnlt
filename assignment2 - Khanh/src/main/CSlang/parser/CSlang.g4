@@ -20,9 +20,10 @@ attr: attrdc | attrndc;
 attrdc: hder attlist SC;
 attrndc: hder attrlist COLON typ SC;
 attrlist: iden CM attrlist | iden;
-attlist: iden CM attlist CM expr | iden COLON array? typ EQUAL expr;
+attlist: iden CM attlist CM expr | iden COLON typ EQUAL expr;
 //Type - Identifiers
-typ: INT | FLOAT | BOOL | STRING;
+arrayType: SLB INTLIT SRB (BOOL | INT | FLOAT | STRING | IDENTIFIER);
+typ: INT | FLOAT | BOOL | STRING | arrayType | IDENTIFIER;
 idenNoAtlist: IDENTIFIER CM idenNoAtlist | IDENTIFIER;
 iden: ATIDENTIFIER | IDENTIFIER;
 //Attributes
@@ -39,9 +40,9 @@ param1: (IDENTIFIER COLON typ CM param1) | (IDENTIFIER COLON typ);
 param2: (idenNoAtlist COLON typ CM param2) | (idenNoAtlist COLON typ);  
 //Array Literals
 boolit: TRUE|FALSE;
-lits: INTLIT | FLOATLIT | boolit | STRINGLIT | array;
-array: SLB arraylist SRB;
-arraylist: lits CM arraylist | lits;
+litlist: lits CM litlist | lits;
+lits: INTLIT | FLOATLIT | boolit | STRINGLIT | NULL | SELF | iden;
+array: SLB litlist SRB;
 //Expressions:
 operators: COMPEQ | DIFFROM | LESS | MOR | LESSEQ | MOREEQ;
 logical: AND | OR;
@@ -57,11 +58,11 @@ expr5: DIFF expr5 | expr6;
 expr6: MINUS expr6 | expr7;
 expr7: expr8 SLB expr SRB | expr8;
     //Member Access
-expr8: expr8 DOT IDENTIFIER array? | expr8 DOT IDENTIFIER array? LB exprlist RB | expr9;
-expr9: (IDENTIFIER DOT)? ATIDENTIFIER array? | (IDENTIFIER DOT)? ATIDENTIFIER array? LB exprlist RB | expr10;
+expr8: expr8 (SLB expr SRB)? DOT IDENTIFIER | expr8 (SLB expr SRB)? DOT IDENTIFIER LB exprlist RB | expr9;
+expr9: (IDENTIFIER DOT)? ATIDENTIFIER | (IDENTIFIER DOT)? ATIDENTIFIER LB exprlist RB | expr10;
 expr10: new | expr11;
 expr11: LB expr RB | expr12;
-expr12: lits | iden | SELF;
+expr12: lits | array;
 
 //New Idenfier
 new: NEW iden LB exprlist RB;
@@ -73,18 +74,26 @@ blkstate: LCB stmtlist RCB;
 stmtlist: stmt stmtlist | ;
 stmt: declstmt | assstmt | ifstmt | forstmt | breakstmt | contstmt | retstmt | metdinvoke | blkstate;
     //Statements
-declstmt: (VAR | CONST) (attrlist COLON typ SC | attlist SC);
-assstmt: (iden array? | metdinvoke) ASSIGN expr SC;
-ifstmt: IF blkstate? expr blkstate (ELSE blkstate)?;
+declstmt: (attrdc | attrndc) SC;
+assstmt: (assignNonS | assignS) SC;
+assignNonS: leftNonS ASSIGN expr;
+leftNonS: arrayNS | insAttr;
+arrayNS: expr8 SLB expr SRB;
+insAttr: expr8 (SLB expr SRB)? DOT IDENTIFIER | (IDENTIFIER DOT)? ATIDENTIFIER;
+assignS: IDENTIFIER ASSIGN expr;
+
+prestate: blkstate;
+elsestate: blkstate;
+ifstmt: IF prestate? expr blkstate (ELSE elsestate)?;
         //For Statement
-initstmt: IDENTIFIER array? ASSIGN INTLIT;
-condstmt: IDENTIFIER array? operators (INTLIT | IDENTIFIER array?);
-poststmt: IDENTIFIER array? ASSIGN IDENTIFIER array? (adding | multiplying) (INTLIT | IDENTIFIER array?);
-forstmt: FOR initstmt SC condstmt SC poststmt blkstate;
+initstmt: IDENTIFIER ASSIGN expr;
+forstmt: FOR initstmt SC expr SC initstmt blkstate;
 breakstmt: BREAK SC;
 contstmt: CONTINUE SC;
-retstmt: RETURN (expr | iden)? SC;
-metdinvoke: (IDENTIFIER DOT)? ATIDENTIFIER LB exprlist RB SC;
+retstmt: RETURN expr? SC;
+metdinvoke: (invocInsStmt | invocStaticStmt) SC;
+invocInsStmt: expr8 (SLB expr SRB)? DOT IDENTIFIER LB exprlist RB;
+invocStaticStmt: (IDENTIFIER DOT)? ATIDENTIFIER LB exprlist RB;
 superpart: IDENTIFIER '<-';
 	/* LEXER */
 //Comments:

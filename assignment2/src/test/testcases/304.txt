@@ -1,6 +1,7 @@
 class main {
-            var u, i:int;
-            var a, b, g, h: int = 1, 2, 3, 4;
+            var u, i: int;
+            var a, b, g, h: int;
             const c, d: bool;
+            func test(a: int, b:string): void {}
             var x, y, z, t: string;
         }
