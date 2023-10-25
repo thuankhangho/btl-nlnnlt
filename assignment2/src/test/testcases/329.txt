@@ -1,3 +1,9 @@
 class main {
-            var a:string = a[2].t;
-        }
+            var a: int;
+            }
+            class main1 {
+                var b: int;
+                }
+                class main2 {
+                    var c: float;
+                    }

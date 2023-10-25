@@ -109,7 +109,7 @@ exp8: exp8 DOT ID (LRB nullableexplist RRB | ) | exp9;
 
 exp9: (ID DOT | ) ATIDENTIFIER | (ID DOT | ) ATIDENTIFIER LRB nullableexplist RRB | exp10;
 
-exp10: NEW identifier LRB nullableexplist RRB | exp11;
+exp10: NEW ID LRB nullableexplist RRB | exp11;
 
 exp11: LRB exp RRB | exp12;
 
@@ -133,8 +133,6 @@ continuestate: CONTINUE SM;
 returnstate: RETURN (exp | ) SM;
 
 methodinvoke: (instancemethodstate | staticmethodstate) SM;
-
-createobjectstate: NEW ID LRB nullableexplist RRB;
 
 blockstate: LCB stmtlist RCB;
 

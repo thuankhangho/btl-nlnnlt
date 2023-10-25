@@ -214,6 +214,11 @@ class CSlangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by CSlangParser#boollit.
+    def visitBoollit(self, ctx:CSlangParser.BoollitContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by CSlangParser#var_const_statement.
     def visitVar_const_statement(self, ctx:CSlangParser.Var_const_statementContext):
         return self.visitChildren(ctx)

@@ -144,6 +144,11 @@ class CSlangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by CSlangParser#createobjectexpr.
+    def visitCreateobjectexpr(self, ctx:CSlangParser.CreateobjectexprContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by CSlangParser#nullableexplist.
     def visitNullableexplist(self, ctx:CSlangParser.NullableexplistContext):
         return self.visitChildren(ctx)
@@ -286,11 +291,6 @@ class CSlangVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by CSlangParser#staticmethodstate.
     def visitStaticmethodstate(self, ctx:CSlangParser.StaticmethodstateContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by CSlangParser#createobjectstate.
-    def visitCreateobjectstate(self, ctx:CSlangParser.CreateobjectstateContext):
         return self.visitChildren(ctx)
 
 

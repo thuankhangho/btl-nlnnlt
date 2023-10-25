@@ -1,3 +1,6 @@
 class main {
-            const a:string = "22";
-        }
+            var a: int;
+            }
+            class main1 {
+                var b: int;
+                }

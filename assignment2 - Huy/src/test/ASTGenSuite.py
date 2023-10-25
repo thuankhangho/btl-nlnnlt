@@ -116,7 +116,7 @@ class ASTGenSuite(unittest.TestCase):
         input = """class main {
             var u, i: int = 1,2;
             var a, b, g, h: int;
-            const c: bool;
+            const c, d: bool;
             func test(a: int, b:string): void {}
             var x, y, z, t: string;
         }"""

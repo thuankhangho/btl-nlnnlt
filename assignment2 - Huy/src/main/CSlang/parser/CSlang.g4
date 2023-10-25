@@ -60,7 +60,8 @@ relational_ops: EQUAL | DIFFER | SMOL | BIG | SMOL_EQUAL | BIG_EQUAL;
 and_or: AND | OR;
 plus_minus: PLUS | MINUS;
 divide_and_multiply: MULTIPLE | DIVIDE_FLOAT | DIVIDE_INT | MOD;
-literal: INTLIT | FLOATLIT | BOOLLIT | STRLIT | SELF | NULL | arrlit | xdd;
+literal: INTLIT | FLOATLIT | boollit | STRLIT | SELF | NULL | arrlit | xdd;
+boollit: TRUE | FALSE;
 
 var_const_statement: attribute;
 ass_statement: lhs ASSIGN exp SM;
@@ -150,7 +151,6 @@ FLOATLIT:INTPART DEC | INTPART DEC? EXP;
 fragment INTPART: [0-9]+;
 fragment DEC: '.' [0-9]*;
 fragment EXP: [eE] [+-]? [0-9]+;
-BOOLLIT: TRUE | FALSE ;
 STRLIT: '"' CHARS* '"' {self.text = self.text[1:-1]};
 fragment CHARS: ~['"\\\r\nEOF] | ESC_SEQ | '\\"';
 fragment ESC_SEQ: '\\b'|'\\f'|'\\r'|'\\n'|'\\t'|'\\"'|'\\\\' ;

@@ -1,0 +1,1 @@
+Program([ClassDecl(Id(main),[MethodDecl(Id(constructor),[],VoidType,Block([Call(Id(main),Id(@printInt),[IntLit(4)])]))])])

@@ -1,4 +1,9 @@
 class main {
-            var a:string = t > 5;
-            var b:string = t >= 5;
-        }
+            var a: int;
+            }
+            class main1 {
+                var b: int;
+                }
+                class main2 {
+                    var c: float;
+                    }

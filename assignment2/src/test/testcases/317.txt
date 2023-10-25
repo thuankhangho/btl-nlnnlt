@@ -1,3 +1,5 @@
-class main {
-            var a:string = t != 5;
-        }
+class main{
+            func foo  (a: int, b: float):void {}
+            func @main():void{
+                io.printInt(4);
+            }}

@@ -1,5 +1,4 @@
 class main {
-            func test():void{
-                return;
-            }
+            const a, b: bool;
+            var c, d: string;
         }

@@ -1,4 +1,7 @@
 class main {
-            var a:string = t < 5;
-            var b:string = t <= 5;
+            var u, i:int = A, B;
+            var a, b, g, h: int;
+            const c, d: J;
+            func test(a: int, b:string): void {}
+            var x, y, z, t: string;
         }

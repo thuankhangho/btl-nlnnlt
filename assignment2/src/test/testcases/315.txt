@@ -1,3 +1,5 @@
 class main {
-            var a:string = "2";
+            func constructor() {
+                main.@printInt(4);
+            }
         }
