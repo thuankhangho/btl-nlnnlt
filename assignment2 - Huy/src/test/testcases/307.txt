@@ -1,4 +1,0 @@
-class main{
-            func @main():void{
-                io.printInt(4);
-            }}

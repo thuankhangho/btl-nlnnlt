@@ -1,9 +1,0 @@
-Program([ClassDecl(Id(main),[
-    AttributeDecl(VarDecl(Id(a),IntType)),
-    AttributeDecl(VarDecl(Id(b),IntType)),
-    AttributeDecl(ConstDecl(Id(c),BoolType,None)),
-    AttributeDecl(ConstDecl(Id(d),BoolType,None)),
-    AttributeDecl(VarDecl(Id(x),StringType)),
-    AttributeDecl(VarDecl(Id(y),StringType)),
-    AttributeDecl(VarDecl(Id(z),StringType)),
-    AttributeDecl(VarDecl(Id(t),StringType))])])
