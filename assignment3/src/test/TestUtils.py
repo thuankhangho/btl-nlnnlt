@@ -8,7 +8,7 @@ if os.path.isdir('../target/main/CSlang/parser') and not '../target/main/CSlang/
     sys.path.append('../target/main/CSlang/parser/')
 from CSlangLexer import CSlangLexer
 from CSlangParser import CSlangParser
-from ASTGeneration import  ASTGeneration
+from ASTGeneration import ASTGeneration
 from StaticCheck import StaticChecker
 from StaticError import StaticError
 from lexererr import *

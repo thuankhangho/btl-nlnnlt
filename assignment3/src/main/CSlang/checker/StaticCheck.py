@@ -1,4 +1,3 @@
-
 """
  * @author nhphung
 """
@@ -60,3 +59,91 @@ class StaticChecker(BaseVisitor,Utils):
         if ast.variable.name in map(lambda x: x.name,c):
             raise Redeclared(Attribute(),ast.variable.name)
         return Member(ast.variable.name,ast.varType,True)
+    
+    def visitIntType(self, ast, c):
+        return inttype
+    
+    def visitFloatType(self, ast, c):
+        return floattype
+    
+    def visitBoolType(self, ast, c):
+        return booltype
+    
+    def visitStringType(self, ast, c):
+        return stringtype
+    
+    def visitVoidType(self, ast, c):
+        return voidtype
+    
+    def visitArrayType(self, ast, c):
+        ArrayType
+        return None
+    
+    def visitClassType(self, ast, c):
+        return None
+    
+    def visitBinaryOp(self, ast, c):
+        return None
+    
+    def visitUnaryOp(self, ast, c):
+        return None
+    
+    def visitCallExpr(self, ast, c):
+        return None
+    
+    def visitNewExpr(self, ast, c):
+        return None
+    
+    def visitId(self, ast, c):
+        return None
+    
+    def visitArrayCell(self, ast, c):
+        return None
+    
+    def visitFieldAccess(self, ast, c):
+        return None
+    
+    def visitBlock(self, ast, c):
+        return None
+    
+    def visitIf(self, ast, c):
+        return None
+    
+    def visitFor(self, ast, c):
+        return None
+    
+    def visitContinue(self, ast, c):
+        return None
+    
+    def visitBreak(self, ast, c):
+        return None
+    
+    def visitReturn(self, ast, c):
+        return None
+    
+    def visitAssign(self, ast, c):
+        return None
+    
+    def visitCallStmt(self, ast, c):
+        return None
+    
+    def visitIntLiteral(self, ast, c):
+        return None
+    
+    def visitFloatLiteral(self, ast, c):
+        return None
+    
+    def visitBooleanLiteral(self, ast, c):
+        return None
+    
+    def visitStringLiteral(self, ast, c):
+        return None
+    
+    def visitNullLiteral(self, ast, c):
+        return None
+    
+    def visitSelfLiteral(self, ast, c):
+        return None 
+        
+    def visitArrayLiteral(self, ast, c):
+        return None 
