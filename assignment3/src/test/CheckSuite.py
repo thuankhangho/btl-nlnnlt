@@ -3,21 +3,39 @@ from TestUtils import TestChecker
 from AST import *
  
 class CheckSuite(unittest.TestCase):
-    def test_redeclared_class(self):
-        input = """class a {} class b {} class a {}"""
-        expect = "Redeclared Class: a"
+    # def test_redeclared_class(self):
+    #     input = """class a {} class b {} class a {}"""
+    #     expect = "Redeclared Class: a"
+    #     self.assertTrue(TestChecker.test(input,expect,400))
+    # def test_redeclared_attribute(self):
+    #     input = """class a {var a:int;var c:int;var c:int;}"""
+    #     expect = "Redeclared Attribute: c"
+    #     self.assertTrue(TestChecker.test(input,expect,401))
+    # def test_redeclared_class_with_ast(self):
+    #     input = Program([ClassDecl(Id("a"),[]),ClassDecl(Id("b"),[]),ClassDecl(Id("a"),[])])
+    #     expect = "Redeclared Class: a"
+    #     self.assertTrue(TestChecker.test(input,expect,402))
+    # def test_redeclared_attribute_with_ast(self):
+    #     input = Program([ClassDecl(Id("a"),[AttributeDecl(VarDecl(Id("a"),IntType())),AttributeDecl(VarDecl(Id("c"),IntType())),AttributeDecl(VarDecl(Id("c"),IntType()))])])
+    #     expect = "Redeclared Attribute: c"
+    #     self.assertTrue(TestChecker.test(input,expect,404))    
+    
+    def test_400(self):
+        input = Program([ClassDecl(Id("a"),[])])
+        expect = "No Entry Point"
         self.assertTrue(TestChecker.test(input,expect,400))
-    def test_redeclared_attribute(self):
-        input = """class a {var a:int;var c:int;var c:int;}"""
+        
+    def test_401(self):
+        input = Program([ClassDecl(Id("Program"),[MethodDecl(Id("main"),[],VoidType(),Block([])),AttributeDecl(VarDecl(Id("c"),IntType())),AttributeDecl(VarDecl(Id("c"),IntType()))])])
         expect = "Redeclared Attribute: c"
         self.assertTrue(TestChecker.test(input,expect,401))
-    
-    def test_redeclared_class_with_ast(self):
-        input = Program([ClassDecl(Id("a"),[]),ClassDecl(Id("b"),[]),ClassDecl(Id("a"),[])])
-        expect = "Redeclared Class: a"
+        
+    def test_402(self):
+        input = Program([ClassDecl(Id("Program"),[MethodDecl(Id("main"),[],VoidType(),Block([])),AttributeDecl(VarDecl(Id("c"),IntType())),MethodDecl(Id("c"),[],IntType(),Block([]))])])
+        expect = "Redeclared Method: c"
         self.assertTrue(TestChecker.test(input,expect,402))
-    def test_redeclared_attribute_with_ast(self):
-        input = Program([ClassDecl(Id("a"),[AttributeDecl(VarDecl(Id("a"),IntType())),AttributeDecl(VarDecl(Id("c"),IntType())),AttributeDecl(VarDecl(Id("c"),IntType()))])])
-        expect = "Redeclared Attribute: c"
-        self.assertTrue(TestChecker.test(input,expect,404))    
-    
+        
+    def test_403(self):
+        input = Program([ClassDecl(Id("Program"),[MethodDecl(Id("main"),[],VoidType(),Block([]))]),ClassDecl(Id("c"),[]),ClassDecl(Id("c"),[])])
+        expect = "Redeclared Class: c"
+        self.assertTrue(TestChecker.test(input,expect,403))
