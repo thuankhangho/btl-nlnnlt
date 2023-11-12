@@ -57,7 +57,7 @@ class BKClass:
         if classDecl:
             self.name = classDecl.classname
             self.parent = parent
-            self.members = {}            
+            self.members = {}
             reduce(lambda _, mem: self.sortMember(mem, manager), classDecl.memlist, self.members)
         else:
             self.name = Id("io")
@@ -86,10 +86,10 @@ class BKClass:
             raise Redeclared(Method(), methodName)
         paramType = list(map(lambda el: manager.checkForClassType(el.varType), member.param))
         returnType = manager.checkForClassType(member.returnType)
-        method = MethodEnv(Id(methodName), paramType, returnType, methodName[0]=='@')
+        method = MethodEnv(Id(methodName), paramType, returnType, static = (methodName[0]=='@'))
                 
         if methodName == "constructor":
-            if (any(map(lambda el: method == el, self.constructor))):
+            if any(map(lambda el: method == el, self.constructor)):
                 raise Redeclared(Method(), methodName)
             else:
                 self.constructor += [method]
@@ -98,7 +98,7 @@ class BKClass:
             
     def processAttribute(self, member: AttributeDecl, manager):
         decl = member.decl
-        if(type(decl) == ConstDecl):
+        if type(decl) is ConstDecl:
             self.processConstantAttribute(decl, manager)
         else:
             self.processVariableAttribute(decl, manager)
@@ -108,14 +108,14 @@ class BKClass:
         if name in self.members:
             raise Redeclared(Attribute(), name)
         attributeType = manager.checkForClassType(member.constType)
-        self.members[name] = AttributeEnv(Id(name), attributeType, isMutable = True, static = (name[0]=='@'))
+        self.members[name] = AttributeEnv(Id(name), attributeType, isMutable = False, static = (name[0]=='@'))
         
     def processVariableAttribute(self, member: VarDecl,manager):
         name = member.variable.name
-        if(name in self.members):
-            raise Redeclared(Attribute(),name)
+        if name in self.members:
+            raise Redeclared(Attribute(), name)
         attributeType = manager.checkForClassType(member.varType)
-        self.members[name] = AttributeEnv(Id(name), attributeType, isMutable = False, static = (name[0]=='@'))
+        self.members[name] = AttributeEnv(Id(name), attributeType, isMutable = True, static = (name[0]=='@'))
         
 class ClassManager:
     classes = Dict[str, BKClass]
@@ -124,9 +124,9 @@ class ClassManager:
             "io": BKClass(None)
         }
         for classDecl in ast.decl:
-            self.add_class(classDecl)
+            self.appendClass(classDecl)
 
-    def add_class(self, newClass: ClassDecl):
+    def appendClass(self, newClass: ClassDecl):
         newClassName = newClass.classname.name
         if newClassName in self.classes:
             raise Redeclared(Class(), newClassName)
@@ -135,7 +135,6 @@ class ClassManager:
             parentName = newClass.parentname.name
             if parentName not in self.classes:
                 raise Undeclared(Class(), parentName)
-            parentEnv = self.class_list[parentName]
             self.classes[newClassName] = BKClass(newClass, Id(parentName), self)
         else: #không thừa kế
             self.classes[newClassName] = BKClass(newClass, manager=self)
@@ -151,7 +150,7 @@ class ClassManager:
         return self.classes[className]
     
     def checkForClassType(self, typ: Type):
-        if type(typ) == ClassType:
+        if type(typ) is ClassType:
             if typ.classname.name not in self.classes:
                 raise Undeclared(Class(), typ.classname.name)
         return typ
@@ -163,4 +162,4 @@ class StaticChecker(BaseVisitor,Utils):
     def check(self):
         self.manager = ClassManager(self.ast)
         self.manager.checkRedeclared()
-        return ""
+        return "successful"

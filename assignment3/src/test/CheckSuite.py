@@ -2,7 +2,7 @@ import unittest
 from TestUtils import TestChecker
 from AST import *
  
-class CheckSuite(unittest.TestCase): 
+class CheckSuite(unittest.TestCase):
     # def test_400(self):
     #     input = Program([ClassDecl(Id("a"),[])])
     #     expect = "No Entry Point"

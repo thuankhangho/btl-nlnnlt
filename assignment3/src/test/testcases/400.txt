@@ -1,1 +1,1 @@
-Program([ClassDecl(Id(a),[])])
+class a {} class b {} class a {}
