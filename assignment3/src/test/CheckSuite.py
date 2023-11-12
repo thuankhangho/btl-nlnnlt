@@ -40,7 +40,20 @@ class CheckSuite(unittest.TestCase):
     #     expect = "Redeclared Class: c"
     #     self.assertTrue(TestChecker.test(input,expect,403))
 
-    def test_404(self):
-        input = Program([ClassDecl(Id("Program"),[MethodDecl(Id("main"),[],VoidType(),Block([]))])])
-        expect = "successful"
-        self.assertTrue(TestChecker.test(input,expect,404))
+    # def test_404(self):
+    #     input = Program([ClassDecl(Id("Program"),[MethodDecl(Id("main"),[],VoidType(),Block([]))])])
+    #     expect = "successful"
+    #     self.assertTrue(TestChecker.test(input,expect,404))
+    
+    # def test_405(self):
+    #     input = Program([ClassDecl(Id("io"),[])])
+    #     expect = "Redeclared Class: io"
+    #     self.assertTrue(TestChecker.test(input,expect,405))
+    
+    def test_406(self):
+        input = Program([ClassDecl(Id("Program"),[MethodDecl(Id("@main"),[],VoidType(),Block([])),
+                                                  ]),
+                         ClassDecl(Id("Test"),[MethodDecl(Id("test"),[],VoidType(),Block([])),
+                                                  ])])
+        expect = ""
+        self.assertTrue(TestChecker.test(input,expect,406))
