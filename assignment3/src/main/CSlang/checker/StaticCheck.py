@@ -24,16 +24,16 @@ class MethodEnv(MemberEnv):
         self.returnType = returnType
         self.static = static
         
-    def __eq__(self, value: object) -> bool:
-        if type(value) != MethodEnv:
-            return False
-        if self.name.name != value.name.name:
-            return False
-        if list(map(lambda param: str(param), self.paramList)) != list(map(lambda param: str(param), value.paramList)):
-            return False
-        if self.returnType != value.returnType:
-            return False
-        return True
+    # def __eq__(self, value: object) -> bool:
+    #     if type(value) != MethodEnv:
+    #         return False
+    #     if self.name.name != value.name.name:
+    #         return False
+    #     if list(map(lambda param: str(param), self.paramList)) != list(map(lambda param: str(param), value.paramList)):
+    #         return False
+    #     if self.returnType != value.returnType:
+    #         return False
+    #     return True
 
 class AttributeEnv(MemberEnv):
     id: Id
@@ -89,10 +89,7 @@ class BKClass:
         method = MethodEnv(Id(methodName), paramType, returnType, static = (methodName[0]=='@'))
                 
         if methodName == "constructor":
-            if any(map(lambda el: method == el, self.constructor)):
-                raise Redeclared(Method(), methodName)
-            else:
-                self.constructor += [method]
+            self.constructor += [method]
         else:
             self.members[methodName] = method
             
@@ -139,15 +136,12 @@ class ClassManager:
         else: #không thừa kế
             self.classes[newClassName] = BKClass(newClass, manager=self)
 
-    def checkRedeclared(self):
+    def checkNoEntryPoint(self):
         if "Program" not in self.classes:
             raise NoEntryPoint()
         programClass = self.classes["Program"]
         if "@main" not in programClass.members:
             raise NoEntryPoint()
-        
-    def getClassEnv(self, className: str) -> BKClass:
-        return self.classes[className]
     
     def checkForClassType(self, typ: Type):
         if type(typ) is ClassType:
@@ -161,5 +155,5 @@ class StaticChecker(BaseVisitor,Utils):
         
     def check(self):
         self.manager = ClassManager(self.ast)
-        self.manager.checkRedeclared()
-        return "successful"
+        self.manager.checkNoEntryPoint()
+        return ""
