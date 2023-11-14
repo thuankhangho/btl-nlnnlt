@@ -33,10 +33,22 @@ class CheckSuite(unittest.TestCase):
     #     expect = "Redeclared Class: io"
     #     self.assertTrue(TestChecker.test(input,expect,405))
     
-    def test_406(self):
-        input = Program([ClassDecl(Id("Program"),[MethodDecl(Id("@main"),[],VoidType(),Block([])),
-                                                  ]),
-                         ClassDecl(Id("Test"),[MethodDecl(Id("test"),[],VoidType(),Block([])),
-                                                  ])])
+    # def test_406(self):
+    #     input = Program([ClassDecl(Id("Program"),[MethodDecl(Id("@main"),[],VoidType(),Block([])),
+    #                                               ]),
+    #                      ClassDecl(Id("Test"),[MethodDecl(Id("test"),[],VoidType(),Block([])),
+    #                                               ])])
+    #     expect = ""
+    #     self.assertTrue(TestChecker.test(input,expect,406))
+    
+    def test_407(self):
+        input = """
+        class Program {
+            func @main(): void {
+                
+            }
+        }
+        """
         expect = ""
-        self.assertTrue(TestChecker.test(input,expect,406))
+        self.assertTrue(TestChecker.test(input,expect,407))
+        
