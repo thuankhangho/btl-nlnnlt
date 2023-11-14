@@ -1,8 +1,1 @@
-        class a{
-            func @main():void{
-                
-            }
-        }
-        class a <- Program{
-        
-        }
+Program([ClassDecl(Id(a),[])])

@@ -1,1 +1,1 @@
-Redeclared Class: a
+No Entry Point
