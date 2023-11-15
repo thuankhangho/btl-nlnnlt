@@ -1,13 +1,8 @@
 
+        class Program {}
         class Program {
             func @main(): void {
                 
             }
-        }
-        class a {
-            var a: int;
-        }
-        class a {
-            var a: string;
         }
         

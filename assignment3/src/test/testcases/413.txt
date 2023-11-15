@@ -4,10 +4,8 @@
                 
             }
         }
-        class a {
-            var a: int;
-        }
-        class b <- a {
-            var a: string;
+        class Program <- Test {
+            func test(): void {}
+            func test(): int {}
         }
         

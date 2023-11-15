@@ -34,11 +34,11 @@ class CheckSuite(unittest.TestCase):
         self.assertTrue(TestChecker.test(input,expect,405))
     
     def test_406(self):
-        input = Program([ClassDecl(Id("Program"),[MethodDecl(Id("@main"),[],VoidType(),Block([])),
+        input = Program([ClassDecl(Id("Program"),[MethodDecl(Id("main"),[],VoidType(),Block([])),
                                                   ]),
                          ClassDecl(Id("Test"),[MethodDecl(Id("test"),[],VoidType(),Block([])),
                                                   ])])
-        expect = "[]"
+        expect = "No Entry Point"
         self.assertTrue(TestChecker.test(input,expect,406))
     
     def test_407(self):
@@ -48,8 +48,9 @@ class CheckSuite(unittest.TestCase):
                 
             }
         }
+        class Program {}
         """
-        expect = "[]"
+        expect = "Redeclared Class: Program"
         self.assertTrue(TestChecker.test(input,expect,407))
         
     def test_408(self):
@@ -62,14 +63,14 @@ class CheckSuite(unittest.TestCase):
         class a {
             var a: int;
         }
-        class a <- b {
+        class a {
             var a: string;
         }
         """
-        expect = "[]"
+        expect = "Redeclared Class: a"
         self.assertTrue(TestChecker.test(input,expect,408))
 
-    def test_408(self):
+    def test_409(self):
         input = """
         class Program {
             func @main(): void {
@@ -84,9 +85,9 @@ class CheckSuite(unittest.TestCase):
         }
         """
         expect = "Redeclared Class: a"
-        self.assertTrue(TestChecker.test(input,expect,408))
+        self.assertTrue(TestChecker.test(input,expect,409))
 
-    def test_409(self):
+    def test_410(self):
         input = """
         class Program {
             func @main(): void {
@@ -103,4 +104,56 @@ class CheckSuite(unittest.TestCase):
         }
         """
         expect = "Redeclared Class: a"
-        self.assertTrue(TestChecker.test(input,expect,409))
+        self.assertTrue(TestChecker.test(input,expect,410))
+
+    def test_411(self):
+        input = """
+        class Program {}
+        class Program {
+            func @main(): void {
+                
+            }
+        }
+        """
+        expect = "Redeclared Class: Program"
+        self.assertTrue(TestChecker.test(input,expect,411))
+
+    def test_412(self):
+        input = """
+        class Program {
+            func @main(): void {
+                
+            }
+        }
+        class Program <- Test {
+            var a: string;
+            var a: int;
+        }
+        """
+        expect = "Redeclared Attribute: a"
+        self.assertTrue(TestChecker.test(input,expect,412))
+
+    def test_413(self):
+        input = """
+        class Program {
+            func @main(): void {
+                
+            }
+        }
+        class Program <- Test {
+            func test(): void {}
+            func test(): int {}
+        }
+        """
+        expect = "Redeclared Method: test"
+        self.assertTrue(TestChecker.test(input,expect,413))
+
+    def test_414(self):
+        input = """
+        class Program {
+            func @main(): void {}
+        }
+        class a {} class b {} class c {} class a {}
+        """
+        expect = "Redeclared Class: a"
+        self.assertTrue(TestChecker.test(input,expect,414))

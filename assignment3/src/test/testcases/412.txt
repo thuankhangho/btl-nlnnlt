@@ -4,10 +4,8 @@
                 
             }
         }
-        class a {
-            var a: int;
-        }
-        class b <- a {
+        class Program <- Test {
             var a: string;
+            var a: int;
         }
         
