@@ -1,6 +1,12 @@
 """
  * @author nhphung
 """
+
+# Student ID: 2011357
+# Name: Ho Thuan Khang
+# Line 164 is the return statement of the entire file.
+# It is disabled to be submitted, but needs to be un-commented in order to function.
+
 from AST import * 
 from Visitor import *
 from Utils import *
@@ -16,7 +22,7 @@ class MethodEnv(MemberEnv):
     name: Id
     paramList: List[Type]
     returnType: Type
-    static: bool #có @ hay không
+    static: bool # có @ hay không
     
     def __init__(self, name: Id, paramList: List[Type], returnType: Type, static: bool):
         self.name = name
@@ -39,7 +45,7 @@ class AttributeEnv(MemberEnv):
     id: Id
     typ: Type
     isMutable: bool
-    static: bool #có @ hay không
+    static: bool # có @ hay không
     def __init__(self, id: Id, typ: Type, isMutable: bool, static: bool):
         self.id = id
         self.typ = typ
@@ -128,12 +134,12 @@ class ClassManager:
         if newClassName in self.classes:
             raise Redeclared(Class(), newClassName)
         
-        if newClass.parentname: #có thừa kế
+        if newClass.parentname: # có thừa kế
             parentName = newClass.parentname.name
             if parentName not in self.classes:
                 raise Undeclared(Class(), parentName)
             self.classes[newClassName] = BKClass(newClass, Id(parentName), self)
-        else: #không thừa kế
+        else: # không thừa kế
             self.classes[newClassName] = BKClass(newClass, manager=self)
 
     def checkNoEntryPoint(self):
@@ -156,4 +162,4 @@ class StaticChecker(BaseVisitor,Utils):
     def check(self):
         self.manager = ClassManager(self.ast)
         self.manager.checkNoEntryPoint()
-        return ""
+        # return ""
