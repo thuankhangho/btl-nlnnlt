@@ -157,3 +157,64 @@ class CheckSuite(unittest.TestCase):
         """
         expect = "Redeclared Class: a"
         self.assertTrue(TestChecker.test(input,expect,414))
+
+    def test_415(self):
+        input = """
+        class Program {
+            func @main(): void {}
+        }
+        class io {}
+        """
+        expect = "Redeclared Class: io"
+        self.assertTrue(TestChecker.test(input,expect,415))
+
+    def test_416(self):
+        input = """
+        class Program {}
+        class a <- Program {
+            func @main(): void
+        }
+        """
+        expect = "Redeclared Class: Program"
+        self.assertTrue(TestChecker.test(input,expect,416))
+
+    def test_417(self):
+        input = """
+        class Program {
+            func @main(): void {}
+            var a: int;
+            func a(): void {}
+        }
+        """
+        expect = "Redeclared Method: a"
+        self.assertTrue(TestChecker.test(input,expect,417))
+
+    def test_418(self):
+        input = """
+        class a {}
+        class b {}
+        class a <- Program {
+            func @main(): void {}
+        }
+        class b <- Program {
+            func @main(): int {}
+        }
+        """
+        expect = "Redeclared Class: Program"
+        self.assertTrue(TestChecker.test(input,expect,418))
+
+    def test_419(self):
+        input = """
+        class Program {
+            func @main(a: int): int {}
+        }
+        class Program <- b {
+            func test(a: int): void {}
+            func constructor(a: bool) {}
+            func @test(a: int): int {}
+            var a: int;
+            const a: string;
+        }
+        """
+        expect = "Redeclared Attribute: a"
+        self.assertTrue(TestChecker.test(input,expect,419))
