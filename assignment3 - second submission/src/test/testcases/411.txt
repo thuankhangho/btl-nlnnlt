@@ -1,0 +1,8 @@
+
+        class Program {}
+        class Program {
+            func @main(): void {
+                
+            }
+        }
+        

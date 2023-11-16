@@ -1,0 +1,6 @@
+
+        class Program {}
+        class a <- Program {
+            func @main(): void
+        }
+        

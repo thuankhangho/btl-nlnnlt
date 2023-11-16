@@ -1,0 +1,12 @@
+
+        class Program {
+            func @main(a: int): int {}
+        }
+        class Program <- b {
+            func test(a: int): void {}
+            func constructor(a: bool) {}
+            func @test(a: int): int {}
+            var a: int;
+            const a: string;
+        }
+        

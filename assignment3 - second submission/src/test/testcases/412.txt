@@ -1,0 +1,11 @@
+
+        class Program {
+            func @main(): void {
+                
+            }
+        }
+        class Program <- Test {
+            var a: string;
+            var a: int;
+        }
+        

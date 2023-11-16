@@ -1,0 +1,10 @@
+
+        class a {}
+        class b {}
+        class a <- Program {
+            func @main(): void {}
+        }
+        class b <- Program {
+            func @main(): int {}
+        }
+        
