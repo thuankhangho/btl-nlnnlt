@@ -50,7 +50,7 @@ identifierlist: ID CM identifierlist | ID;
 
 superpart: ID '<-';
 
-literal: INTLIT | FLOATLIT | boolit | STRINGLIT | arraylit;
+literal: INTLIT | FLOATLIT | boolit | STRINGLIT | arraylit | SELF | NULL;
 
 boolit: TRUE | FALSE;
 
