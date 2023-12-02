@@ -8,10 +8,10 @@ class CheckSuite(unittest.TestCase):
     #     expect = "No Entry Point"
     #     self.assertTrue(TestChecker.test(input,expect,400))
         
-    def test_401(self):
-        input = Program([ClassDecl(Id("Program"),[MethodDecl(Id("@main"),[],VoidType(),Block([])),AttributeDecl(VarDecl(Id("c"),IntType())),AttributeDecl(VarDecl(Id("b"),IntType()))])])
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input,expect,401))
+    # def test_401(self):
+    #     input = Program([ClassDecl(Id("Program"),[MethodDecl(Id("@main"),[],VoidType(),Block([])),AttributeDecl(VarDecl(Id("c"),IntType())),AttributeDecl(VarDecl(Id("b"),IntType()))])])
+    #     expect = "[]"
+    #     self.assertTrue(TestChecker.test(input,expect,401))
         
     # def test_402(self):
     #     input = Program([ClassDecl(Id("Program"),[MethodDecl(Id("main"),[],VoidType(),Block([])),AttributeDecl(VarDecl(Id("c"),IntType())),MethodDecl(Id("c"),[],IntType(),Block([]))])])
@@ -203,18 +203,12 @@ class CheckSuite(unittest.TestCase):
     #     expect = "Redeclared Class: Program"
     #     self.assertTrue(TestChecker.test(input,expect,418))
 
-    # def test_419(self):
-    #     input = """
-    #     class Program {
-    #         func @main(a: int): int {}
-    #     }
-    #     class Program <- b {
-    #         func test(a: int): void {}
-    #         func constructor(a: bool) {}
-    #         func @test(a: int): int {}
-    #         var a: int;
-    #         const a: string;
-    #     }
-    #     """
-    #     expect = "Redeclared Attribute: a"
-    #     self.assertTrue(TestChecker.test(input,expect,419))
+    def test_419(self):
+        input = """
+        class Program {
+            func @main(): void {}
+            var a: int;
+        }
+        """
+        expect = "Redeclared Attribute: a"
+        self.assertTrue(TestChecker.test(input,expect,419))

@@ -1,1 +1,1 @@
-Redeclared Class: Program
+Undeclared Class: A
