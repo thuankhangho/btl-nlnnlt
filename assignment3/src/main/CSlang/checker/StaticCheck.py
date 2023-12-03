@@ -122,8 +122,8 @@ class ClassManager:
         }
         self.currentCheck = None #Variable, Constant, Attribute, Parameter
         self.scope = []
-        self.loop = False
-        self.mode = True
+        self.loop = False #có vào loop hay chưa (check break & continue)
+        self.mode = True #undeclared = true hay redeclared = false
         
         for classDecl in ast.decl:
             self.appendClass(classDecl)
@@ -186,9 +186,9 @@ class StaticChecker(BaseVisitor, Utils):
         reduce(lambda _, member: self.visit(member, o), ast.memlist, [])
     
     def visitAttributeDecl(self, ast: AttributeDecl, o: ClassManager):
-        o.currentCheck = Attribute()
+        o.currentCheck = Attribute() # hiện tại check Attribute
         self.visit(ast.decl,o)
-        o.currentCheck = None
+        o.currentCheck = None # trả về None để check thứ khác
         
     def visitVarDecl(self, ast: VarDecl, o: ClassManager):
         if o.currentCheck == None:
@@ -200,14 +200,18 @@ class StaticChecker(BaseVisitor, Utils):
         
         # check type
         varDeclType = self.visit(ast.varType, o)
-        if type(varDeclType) is VoidType:
-            raise TypeMismatchInDeclaration(ast)
+        if type(varDeclType) is VoidType: #nếu type của vardecl là void
+            raise TypeMismatchInDeclaration(ast) #ném lỗi
         
         # check giá trị khởi tạo có cùng type với biến
-        if ast.varInit:
-            res = self.visit(ast.varInit, o)
-            
-        
+        if ast.varInit is not None: #nếu có giá trị khởi tạo
+            o.mode = True
+            varInitType = self.visit(ast.varInit,o) #tìm type của giá trị khởi tạo
+            if o.compareType(varDeclType, varInitType) is True:
+                raise TypeMismatchInDeclaration(ast)
+        #Assign to scope
+        if(not isinstance(o.cur_check,Attribute)):
+            o.scope[0][ast.variable.name] = Res(decl_typ,Id(ast.variable.name),VAR)
         
             
     def visitFor(self, ast: For, o: ClassManager):
