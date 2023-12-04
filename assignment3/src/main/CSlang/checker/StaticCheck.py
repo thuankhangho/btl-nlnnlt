@@ -7,6 +7,7 @@
 # Line 164 is the return statement of the entire file.
 # It is disabled to be submitted, but needs to be un-commented in order to function.
 
+from pickle import TRUE
 from AST import * 
 from Visitor import *
 from Utils import *
@@ -168,11 +169,18 @@ class ClassManager:
             if typ.classname.name not in self.classes:
                 raise Undeclared(Class(), typ.classname.name)
         elif type(typ) is ArrayType:
-            self.check_type(typ.eleType)
+            self.checkForType(typ.eleType)
         return typ
     
-    def getClassEnv(self, class_name):
-        return self.classes[class_name]
+    def getClassEnv(self, name: str, mode: bool):
+        if mode == True: # check Undeclared
+            if name in self.classes:
+                return self.classes[name]
+            else:
+                raise Undeclared(Class(), name)
+        else: # check Redeclared
+            if name in self.classes:
+                raise Redeclared(Class(), name)
     
     def checkUndeclaredRedeclared(self, name: str, kind: Kind, mode: bool):
     # mode = true: undeclared, mode = false: redeclared
@@ -278,7 +286,7 @@ class StaticChecker(BaseVisitor, Utils):
         o.returnType = ast.returnType
         
         #visit thân hàm
-        # self.visit(ast.body, o)
+        self.visit(ast.body, o)
         
         #xóa scope & kiểu trả về khi ra khỏi hàm
         o.scope.pop(0)
@@ -348,14 +356,53 @@ class StaticChecker(BaseVisitor, Utils):
             return ConstVarLitEnv(arr.typ.eleType)
         raise TypeMismatchInExpression(ast)
     
-    def visitFieldAccess(self, ast: FieldAccess, o: ClassManager):
-        obj = self.visit(ast.obj, o)
-        fieldname = ast.fieldname.name
+    # def visitFieldAccess(self, ast: FieldAccess, o: ClassManager):
+    #     obj = self.visit(ast.obj, o)
+    #     fieldname = ast.fieldname.name
+    #     currentClassChecking = ""
 
-        #TH1: <obj>.<fieldname>
-        if type(obj) != None:
-            if type(obj) is not Id:
-                raise TypeMismatchInExpression(ast)
+    #     #TH1: <fieldname> không có @ -> instance attribute access
+    #     if fieldname[0] != '@':
+    #         if type(obj.typ) is ClassType:
+    #             if Id(obj.typ.classname.name) == o.currentClass.parent:
+    #                 currentClassChecking = obj.typ.classname.name
+    #         else: raise TypeMismatchInExpression(ast)
+           
+    #     #TH2: <fieldname> có @ -> static attribute access
+    #     else:
+    #         if obj is None: #class hiện tại
+    #             currentClassChecking = o.currentClass.name
+    #         elif type(obj.typ) is Id:
+    #             currentClassChecking = obj.name
+    #         else:
+    #             raise TypeMismatchInExpression(ast)
+            
+    #     obj_env = o.getClassEnv(currentClassChecking, True)
+        
+    def visitNewExpr(self, ast: NewExpr, o: ClassManager):
+        className = ast.classname.name #lấy tên class của expr
+        params = ast.param #lấy danh sách param của expr
+        
+        classEnv = o.getClassEnv(className, True) #lấy môi trường của class có đối tượng khai báo new
+        classConstructors = classEnv.constructor #lấy các constructor của class có đối tượng khai báo new
+        
+        for constructor in classConstructors:
+            constructorParamType = constructor.paramList #lấy danh sách param của từng constructor
+            paramTypeList = [self.visit(param, o).typ for param in params] #lấy danh sách type của từng param trong khai báo new
+            if o.compareParams(constructorParamType, paramTypeList) is True:
+                return ConstVarLitEnv(ClassType(Id(className)))
+        
+        raise TypeMismatchInExpression(ast)
+    
+    ## TO-DO: write compareParams
+            
+    def visitContinue(self, ast: Continue, o: ClassManager):
+        if o.loop == False:
+            raise MustInLoop(ast)
+    
+    def visitBreak(self, ast: Break, o: ClassManager):
+        if o.loop == False:
+            raise MustInLoop(ast)
 
     def visitId(self, ast: Id, o: ClassManager):
         return o.checkUndeclaredRedeclared(ast.name, o.currentCheck, o.mode)
@@ -383,10 +430,10 @@ class StaticChecker(BaseVisitor, Utils):
         return StringType()
     def visitVoidType(self, ast: VoidType, o):
         return VoidType()
-    def visitArrayType(self, ast: ArrayType, o):
-        return ArrayType()
-    def visitClassType(self, ast: ClassType, o):
-        return ClassType()
+    def visitArrayType(self, ast: ArrayType, o: ClassManager):
+        return o.checkForType(ast)
+    def visitClassType(self, ast: ClassType, o: ClassManager):
+        return o.checkForType(ast)
     
     def visitIntLiteral(self, ast: IntLiteral, o):
         return ConstVarLitEnv(IntType())

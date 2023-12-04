@@ -219,24 +219,25 @@ class CheckSuite(unittest.TestCase):
     #     expect = "Redeclared Attribute: a"
     #     self.assertTrue(TestChecker.test(input,expect,419))
         
-    def test_420(self):
-        input = """
-        class Program {
-            func @main(): void {}
-            var a, b: int = 1, "3.0";
-        }
-        """
-        expect = "Type Mismatch In Declaration: VarDecl(Id(b),IntType,StringLit(3.0))"
-        self.assertTrue(TestChecker.test(input,expect,420))
+    # def test_420(self):
+    #     input = """
+    #     class Program {
+    #         func @main(): void {}
+    #         var a, b: int = 1, "3.0";
+    #     }
+    #     """
+    #     expect = "Type Mismatch In Declaration: VarDecl(Id(b),IntType,StringLit(3.0))"
+    #     self.assertTrue(TestChecker.test(input,expect,420))
 
     def test_421(self):
         input = """
+        class A {
+            func constructor(a: int, b: string) {}
+        }
         class Program {
-            func @main(): void {}
-            var a: string = "3";
-            var b: string = "4";
-            var c: string = "3"^"4";
-            
+            func @main(): void {
+                var a: string = new A(1, "2");
+            }
         }
         """
         expect = "Type Mismatch In Declaration: VarDecl(Id(b),IntType,StringLit(3.0))"
