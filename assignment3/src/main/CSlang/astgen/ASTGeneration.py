@@ -452,7 +452,7 @@ class ASTGeneration(CSlangVisitor):
             return [self.visit(ctx.literal())] + self.visit(ctx.literallist())
         return [self.visit(ctx.literal())]
 
-    # INTLIT | FLOATLIT | boolit | STRINGLIT | arraylit;
+    # INTLIT | FLOATLIT | boolit | STRINGLIT | arraylit | NULL | SELF;
     def visitLiteral(self, ctx:CSlangParser.LiteralContext):
         if ctx.INTLIT():
             return IntLiteral(int(ctx.INTLIT().getText()))

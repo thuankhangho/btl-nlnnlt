@@ -1,0 +1,9 @@
+
+        class Program {
+            func @main(): void {}
+            var a: string = "3";
+            var b: string = "4";
+            var c: string = "3"^"4";
+            
+        }
+        

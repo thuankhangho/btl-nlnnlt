@@ -36,7 +36,17 @@ class AttributeEnv(MemberEnv):
         self.id = id
         self.typ = typ
         self.isMutable = isMutable
+        
+class ConstVarLitEnv: # variable, constant & literal env
+    id: Id
+    typ: Type
+    isMutable: bool #const = false, var = true
 
+    def __init__(self, typ: Type, id: Id = None, isMutable: bool = False):
+        self.typ = typ
+        self.id = id
+        self.isMutable = isMutable
+        
 class BKClass:
     name: Id
     parent: Id
@@ -91,7 +101,7 @@ class BKClass:
         else:
             if methodName[0] != '@':
                 self.members[methodName] = method
-            self.staticMembers[methodName] = method
+            else: self.staticMembers[methodName] = method
             
     def processAttribute(self, member: AttributeDecl, manager):
         decl = member.decl
@@ -105,7 +115,7 @@ class BKClass:
         if name in self.members:
             raise Redeclared(Attribute(), name)
         attributeType = manager.checkForType(member.constType)
-        self.staticMembers[name] = AttributeEnv(Id(name), attributeType, isMutable = False)
+        self.members[name] = AttributeEnv(Id(name), attributeType, isMutable = False)
         
     def processVariableAttribute(self, member: VarDecl,manager):
         name = member.variable.name
@@ -121,9 +131,11 @@ class ClassManager:
             "io": BKClass()
         }
         self.currentCheck = None #Variable, Constant, Attribute, Parameter
-        self.scope = []
-        self.loop = False #có vào loop hay chưa (check break & continue)
-        self.mode = True #undeclared = true hay redeclared = false
+        self.scope = [] #các tầm vực
+        self.loop: bool = False #có vào loop hay chưa (check break & continue)
+        self.mode: bool = True #undeclared = true hay redeclared = false
+        self.currentClass: BKClass = None #class hiện tại đang được duyệt
+        self.returnType = None #kiểu trả về của hàm
         
         for classDecl in ast.decl:
             self.appendClass(classDecl)
@@ -164,8 +176,20 @@ class ClassManager:
     
     def checkUndeclaredRedeclared(self, name: str, kind: Kind, mode: bool):
     # mode = true: undeclared, mode = false: redeclared
-        if name in self.scope[0]:
-            raise Redeclared(Identifier, ast.name)
+        if mode == True:
+            for sc in self.scope:
+                if name in sc:
+                    return sc[name]
+            if kind not in (Attribute, Method):
+                kind = Identifier()
+            raise Undeclared(kind, name)
+        elif name in self.scope[0]:
+            raise Redeclared(kind, name)
+        
+    def compareTypes(self, inputType: ConstVarLitEnv, checkingType: ConstVarLitEnv) -> bool:
+        if type(inputType) == type(checkingType):
+            return True
+        return False
 
 class StaticChecker(BaseVisitor, Utils):
     def __init__(self, ast):
@@ -181,8 +205,7 @@ class StaticChecker(BaseVisitor, Utils):
         reduce(lambda _, decl: self.visit(decl, o), ast.decl, [])
         
     def visitClassDecl(self, ast: ClassDecl, o: ClassManager):
-        currentClass = o.classes[ast.classname.name]
-        print(currentClass)
+        o.currentClass = o.classes[ast.classname.name]
         reduce(lambda _, member: self.visit(member, o), ast.memlist, [])
     
     def visitAttributeDecl(self, ast: AttributeDecl, o: ClassManager):
@@ -190,12 +213,39 @@ class StaticChecker(BaseVisitor, Utils):
         self.visit(ast.decl,o)
         o.currentCheck = None # trả về None để check thứ khác
         
+    def visitConstDecl(self, ast: ConstDecl, o: ClassManager):
+        # chuyển current check thành Constant
+        if o.currentCheck == None:
+            o.currentCheck = Constant()
+            
+        # check tên biến
+        if type(o.currentCheck) is not Attribute: #Const hoặc Parameter
+            o.mode = False
+            self.visit(ast.constant,o)
+        
+        # check type
+        constDeclType = self.visit(ast.constType, o)
+        if type(constDeclType) is VoidType: #nếu type của constdecl là void
+            raise TypeMismatchInDeclaration(ast) #ném lỗi
+        
+        #check giá trị khởi tạo có cùng type với biến
+        o.mode = True
+        valueType = self.visit(ast.value,o) #tìm type của giá trị khởi tạo
+        if o.compareType(constDeclType, valueType.typ) is False:
+            raise TypeMismatchInDeclaration(ast)
+            
+        # thêm biến vào tầm vực hiện tại
+        if type(o.currentCheck) is not Attribute:
+            o.scope[0][ast.variable.name] = ConstVarLitEnv(id = Id(ast.variable.name), typ = constDeclType, isMutable = False)
+            
     def visitVarDecl(self, ast: VarDecl, o: ClassManager):
+        # chuyển current check thành Variable
         if o.currentCheck == None:
             o.currentCheck = Variable()
             
         # check tên biến
-        if o.currentCheck is not Attribute(): #Variable hoặc Parameter
+        if type(o.currentCheck) is not Attribute: #Variable hoặc Parameter
+            o.mode = False
             self.visit(ast.variable,o)
         
         # check type
@@ -207,23 +257,75 @@ class StaticChecker(BaseVisitor, Utils):
         if ast.varInit is not None: #nếu có giá trị khởi tạo
             o.mode = True
             varInitType = self.visit(ast.varInit,o) #tìm type của giá trị khởi tạo
-            if o.compareType(varDeclType, varInitType) is True:
+            if o.compareTypes(varDeclType, varInitType.typ) is False:
                 raise TypeMismatchInDeclaration(ast)
-        #Assign to scope
-        if(not isinstance(o.cur_check,Attribute)):
-            o.scope[0][ast.variable.name] = Res(decl_typ,Id(ast.variable.name),VAR)
-        
             
-    def visitFor(self, ast: For, o: ClassManager):
-        o.loop = True
-        self.visit(ast.initStmt, o)
-        self.visit(ast.expr, o)
-        self.visit(ast.postStmt, o)
+        # thêm biến vào tầm vực hiện tại
+        if type(o.currentCheck) is not Attribute:
+            o.scope[0][ast.variable.name] = ConstVarLitEnv(id = Id(ast.variable.name), typ = varDeclType, isMutable = True)
+      
+    def visitMethodDecl(self, ast: MethodDecl, o: ClassManager):
+        o.scope = [{}] + o.scope #tạo thêm scope cho method
         
-        o.loop = False
-    
+        #visit Parameter
+        paramList = []
+        o.currentCheck = Parameter()
+        for x in ast.param:
+            paramList.append(self.visit(x, o))
+        o.currentCheck = None
+        
+        #gán kiểu trả về
+        o.returnType = ast.returnType
+        
+        #visit thân hàm
+        # self.visit(ast.body, o)
+        
+        #xóa scope & kiểu trả về khi ra khỏi hàm
+        o.scope.pop(0)
+        o.returnType = None
+        
+    def visitBinaryOp(self, ast: BinaryOp, o: ClassManager):
+        o.mode = True #kiểm tra liệu có undeclared hay không
+        leftExp = self.visit(ast.left, o)
+        rightExp = self.visit(ast.right, o)
+        
+        if ast.op in ['+', '-', '*']:
+            if type(leftExp.typ) is IntType and type(rightExp.typ) is IntType:
+                return ConstVarLitEnv(StringType())
+            elif type(leftExp.typ) is FloatType and type(rightExp.typ) is FloatType:
+                return ConstVarLitEnv(StringType())
+            else:
+                raise TypeMismatchInExpression(ast)
+        
+        elif ast.op == "^":
+            if type(leftExp.typ) is StringType and type(rightExp.typ) is StringType:
+                return ConstVarLitEnv(StringType())
+            else:
+                raise TypeMismatchInExpression(ast)
+            
+        elif ast.op in ['==', '!=']:
+            if type(leftExp.typ) is IntType and type(rightExp.typ) is IntType:
+                return ConstVarLitEnv(BoolType())
+            elif type(leftExp.typ) is BoolType and type(rightExp.typ) is BoolType:
+                return ConstVarLitEnv(BoolType())
+            else:
+                raise TypeMismatchInExpression(ast)
+            
     def visitId(self, ast: Id, o: ClassManager):
         return o.checkUndeclaredRedeclared(ast.name, o.currentCheck, o.mode)
+    
+    def visitBlock(self, ast: Block, o: ClassManager):
+        reduce(lambda _,stmt:self.visit(stmt, o), ast.stmt, [])
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     def visitIntType(self, ast: IntType, o):
         return IntType()
@@ -239,3 +341,16 @@ class StaticChecker(BaseVisitor, Utils):
         return ArrayType()
     def visitClassType(self, ast: ClassType, o):
         return ClassType()
+    
+    def visitIntLiteral(self, ast: IntLiteral, o):
+        return ConstVarLitEnv(IntType())
+    def visitFloatLiteral(self, ast: FloatLiteral, o):
+        return ConstVarLitEnv(FloatType())
+    def visitBooleanLiteral(self, ast: BooleanLiteral, o):
+        return ConstVarLitEnv(BoolType())
+    def visitStringLiteral(self, ast: StringLiteral, o):
+        return ConstVarLitEnv(StringType())
+    def visitNullLiteral(self, ast: NullLiteral, o):
+        return ConstVarLitEnv(VoidType())
+    def visitSelfLiteral(self, ast: SelfLiteral, o):
+        return ConstVarLitEnv(ClassType(Id(o.currentClass.class_name.name)))
