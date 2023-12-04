@@ -286,31 +286,77 @@ class StaticChecker(BaseVisitor, Utils):
         
     def visitBinaryOp(self, ast: BinaryOp, o: ClassManager):
         o.mode = True #kiểm tra liệu có undeclared hay không
-        leftExp = self.visit(ast.left, o)
-        rightExp = self.visit(ast.right, o)
+        leftExp: ConstVarLitEnv = self.visit(ast.left, o)
+        rightExp: ConstVarLitEnv = self.visit(ast.right, o)
         
         if ast.op in ['+', '-', '*']:
             if type(leftExp.typ) is IntType and type(rightExp.typ) is IntType:
-                return ConstVarLitEnv(StringType())
+                return ConstVarLitEnv(IntType())
             elif type(leftExp.typ) is FloatType and type(rightExp.typ) is FloatType:
-                return ConstVarLitEnv(StringType())
-            else:
-                raise TypeMismatchInExpression(ast)
+                return ConstVarLitEnv(FloatType())
+            raise TypeMismatchInExpression(ast)
         
         elif ast.op == "^":
             if type(leftExp.typ) is StringType and type(rightExp.typ) is StringType:
                 return ConstVarLitEnv(StringType())
-            else:
-                raise TypeMismatchInExpression(ast)
+            raise TypeMismatchInExpression(ast)
             
         elif ast.op in ['==', '!=']:
-            if type(leftExp.typ) is IntType and type(rightExp.typ) is IntType:
+            if type(leftExp.typ) in (IntType, BoolType) and type(rightExp.typ) in (IntType, BoolType):
                 return ConstVarLitEnv(BoolType())
-            elif type(leftExp.typ) is BoolType and type(rightExp.typ) is BoolType:
-                return ConstVarLitEnv(BoolType())
-            else:
-                raise TypeMismatchInExpression(ast)
+            raise TypeMismatchInExpression(ast)
             
+        elif ast.op in ["<", ">", "<=", ">="]:
+            if type(leftExp.typ) in (IntType, FloatType) and type(rightExp.typ) in (IntType, FloatType):
+                return ConstVarLitEnv(BoolType())
+            raise TypeMismatchInExpression(ast)
+            
+        elif ast.op in ["&&", "||"]:
+            if type(leftExp.typ) is BoolType and type(rightExp.typ) is BoolType:
+                return ConstVarLitEnv(BoolType())
+            raise TypeMismatchInExpression(ast)
+            
+        elif ast.op == "/":
+            if type(leftExp.typ) in (IntType, FloatType) and type(rightExp.typ) in (IntType, FloatType):
+                if type(leftExp.typ) is FloatType or type(rightExp.typ) is FloatType:
+                    return ConstVarLitEnv(FloatType())
+            raise TypeMismatchInExpression(ast)
+            
+        elif(ast.op in ["\\","%"]):
+            if type(leftExp.typ) is IntType and type(rightExp.typ) is IntType:
+                return ConstVarLitEnv(IntType())
+            raise TypeMismatchInExpression(ast)
+    
+    def visitUnaryOp(self, ast: UnaryOp, o: ClassManager):
+        o.mode = True #kiểm tra liệu có undeclared hay không
+        body: ConstVarLitEnv = self.visit(ast.body,o)
+
+        if ast.op == "!":
+            if type(body.typ) is BoolType:
+                return ConstVarLitEnv(BoolType())
+            raise TypeMismatchInExpression(ast)
+            
+        elif ast.op == "-":
+            if type(body.typ) in (IntType, FloatType):
+                return ConstVarLitEnv(body.typ)
+            raise TypeMismatchInExpression(ast)
+
+    def visitArrayCell(self, ast: ArrayCell, o: ClassManager):
+        arr = self.visit(ast.arr, o)
+        idx = self.visit(ast.idx, o)
+        if type(arr.typ) is ArrayType and type(idx) is IntType:
+            return ConstVarLitEnv(arr.typ.eleType)
+        raise TypeMismatchInExpression(ast)
+    
+    def visitFieldAccess(self, ast: FieldAccess, o: ClassManager):
+        obj = self.visit(ast.obj, o)
+        fieldname = ast.fieldname.name
+
+        #TH1: <obj>.<fieldname>
+        if type(obj) != None:
+            if type(obj) is not Id:
+                raise TypeMismatchInExpression(ast)
+
     def visitId(self, ast: Id, o: ClassManager):
         return o.checkUndeclaredRedeclared(ast.name, o.currentCheck, o.mode)
     
