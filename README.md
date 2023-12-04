@@ -7,5 +7,7 @@
 - Bài tập lớn 2: Cây sinh cú pháp trừu tượng AST
 
 - Bài tập lớn 3: Static Checker
+  
   Phần 1: 4 lỗi
+  
   Phần 2: Các lỗi còn lại
