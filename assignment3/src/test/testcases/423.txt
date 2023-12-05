@@ -1,0 +1,14 @@
+
+        class A {
+            func constructor(a: int, b: string) {}
+        }
+        class Program {
+            func @main(): void {
+                var i: int;
+                continue;
+                for i:= 0; i < 10; i:= i + 1 {
+                    break;
+                }
+            }
+        }
+        

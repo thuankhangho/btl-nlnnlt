@@ -7,10 +7,6 @@
 # Line 164 is the return statement of the entire file.
 # It is disabled to be submitted, but needs to be un-commented in order to function.
 
-from pickle import TRUE
-from turtle import left
-
-from numpy import size
 from AST import * 
 from Visitor import *
 from Utils import *
