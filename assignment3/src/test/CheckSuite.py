@@ -229,16 +229,32 @@ class CheckSuite(unittest.TestCase):
     #     expect = "Type Mismatch In Declaration: VarDecl(Id(b),IntType,StringLit(3.0))"
     #     self.assertTrue(TestChecker.test(input,expect,420))
 
-    def test_421(self):
+    # def test_421(self):
+    #     input = """
+    #     class A {
+    #         func constructor(a: int, b: string) {}
+    #     }
+    #     class Program {
+    #         func @main(): void {
+    #             var a: string = new A(1, "2");
+    #         }
+    #     }
+    #     """
+    #     expect = "Type Mismatch In Declaration: VarDecl(Id(b),IntType,StringLit(3.0))"
+    #     self.assertTrue(TestChecker.test(input,expect,421))
+
+    def test_422(self):
         input = """
         class A {
             func constructor(a: int, b: string) {}
         }
         class Program {
             func @main(): void {
-                var a: string = new A(1, "2");
+                var a: bool = true;
+                var b: int = 90;
+                var c: int = a*b;
             }
         }
         """
         expect = "Type Mismatch In Declaration: VarDecl(Id(b),IntType,StringLit(3.0))"
-        self.assertTrue(TestChecker.test(input,expect,421))
+        self.assertTrue(TestChecker.test(input,expect,422))

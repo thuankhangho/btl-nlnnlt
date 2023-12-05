@@ -8,6 +8,9 @@
 # It is disabled to be submitted, but needs to be un-commented in order to function.
 
 from pickle import TRUE
+from turtle import left
+
+from numpy import size
 from AST import * 
 from Visitor import *
 from Utils import *
@@ -198,6 +201,14 @@ class ClassManager:
         if type(inputType) == type(checkingType):
             return True
         return False
+    
+    def compareParams(self, leftParams: List[Type], rightParams: List[Type]):
+        if len(leftParams) != len(rightParams):
+            return False
+        for i in range(len(leftParams)):
+            if self.compareTypes(leftParams[i], rightParams[i]) == False:
+                return False
+        return True
 
 class StaticChecker(BaseVisitor, Utils):
     def __init__(self, ast):
@@ -244,7 +255,7 @@ class StaticChecker(BaseVisitor, Utils):
             
         # thêm biến vào tầm vực hiện tại
         if type(o.currentCheck) is not Attribute:
-            o.scope[0][ast.variable.name] = ConstVarLitEnv(id = Id(ast.variable.name), typ = constDeclType, isMutable = False)
+            o.scope[0][ast.constant.name] = ConstVarLitEnv(id = Id(ast.constant.name), typ = constDeclType, isMutable = False)
             
     def visitVarDecl(self, ast: VarDecl, o: ClassManager):
         # chuyển current check thành Variable
@@ -300,7 +311,7 @@ class StaticChecker(BaseVisitor, Utils):
         if ast.op in ['+', '-', '*']:
             if type(leftExp.typ) is IntType and type(rightExp.typ) is IntType:
                 return ConstVarLitEnv(IntType())
-            elif type(leftExp.typ) is FloatType and type(rightExp.typ) is FloatType:
+            elif type(leftExp.typ) is FloatType or type(rightExp.typ) is FloatType:
                 return ConstVarLitEnv(FloatType())
             raise TypeMismatchInExpression(ast)
         
@@ -310,7 +321,9 @@ class StaticChecker(BaseVisitor, Utils):
             raise TypeMismatchInExpression(ast)
             
         elif ast.op in ['==', '!=']:
-            if type(leftExp.typ) in (IntType, BoolType) and type(rightExp.typ) in (IntType, BoolType):
+            if type(leftExp.typ) is IntType and type(rightExp.typ) is IntType:
+                return ConstVarLitEnv(BoolType())
+            if type(leftExp.typ) is BoolType and type(rightExp.typ) is BoolType:
                 return ConstVarLitEnv(BoolType())
             raise TypeMismatchInExpression(ast)
             
