@@ -1,0 +1,8 @@
+
+        class Program{
+            var arr:[3]int = [2,5,3];
+            func @main():void{
+                var temp: string = true;
+            }
+        }
+        

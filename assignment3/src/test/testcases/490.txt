@@ -1,8 +1,7 @@
 
         class Program{
             func @main(): void {
-                var b: string = true;
+                var a, b: int = new Shape(), new Shape();
             }
-            var a: int = 1;
         }
         

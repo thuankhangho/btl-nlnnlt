@@ -1,0 +1,9 @@
+
+        class Program{
+            func test(temp1: int, temp2: int): int {
+                var b1: b;
+                var b2: b;
+            }
+            func @main():void{}
+        }
+        
