@@ -1,0 +1,17 @@
+
+        class Program {
+            func @main(): void {
+                var i: int;
+                const x: string = "Hello";
+                if {
+                    for i := 0; i < 10; i := i + 1 {
+                        break;
+                    }
+                }
+                i > 10
+                {
+                    x := "Hi";
+                }
+            }
+        }
+        

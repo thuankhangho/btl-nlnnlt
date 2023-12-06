@@ -1,7 +1,6 @@
 
-        class Program {
-            func @main(): void{}
-            var a: A;
+        class Program {}
+        class a <- Program {
+            func @main(): void
         }
-        class A {}
         

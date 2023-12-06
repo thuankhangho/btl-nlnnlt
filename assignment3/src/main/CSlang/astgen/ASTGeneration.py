@@ -420,7 +420,7 @@ class ASTGeneration(CSlangVisitor):
 
     # LSB INTLIT RSB typ;
     def visitArraydecl(self, ctx:CSlangParser.ArraydeclContext):
-        return ArrayType(IntLiteral(int(ctx.INTLIT().getText())), self.visit(ctx.typ()))
+        return ArrayType(int(ctx.INTLIT().getText()), self.visit(ctx.typ()))
     
     # BOOL | INT | FLOAT | STRING | ID | arraydecl;
     def visitTyp(self, ctx:CSlangParser.TypContext):
@@ -446,11 +446,25 @@ class ASTGeneration(CSlangVisitor):
     def visitArraylit(self, ctx:CSlangParser.ArraylitContext):
         return ArrayLiteral(self.visit(ctx.literallist()))
 
-    # (INTLIT | FLOATLIT | boolit | STRINGLIT | NULL) CM literallist | (INTLIT | FLOATLIT | boolit | STRINGLIT | NULL);
+    # literalnoarray: INTLIT | FLOATLIT | boolit | STRINGLIT  | SELF | NULL;
+    def visitLiteralnoarray(self, ctx:CSlangParser.LiteralnoarrayContext):
+        if ctx.INTLIT():
+            return IntLiteral(int(ctx.INTLIT().getText()))
+        elif ctx.FLOATLIT():
+            return FloatLiteral(float(ctx.FLOATLIT().getText()))
+        elif ctx.STRINGLIT():
+            return StringLiteral(ctx.STRINGLIT().getText())
+        elif ctx.boolit():
+            return BooleanLiteral(self.visit(ctx.boolit()))
+        elif ctx.NULL():
+            return NullLiteral()
+        return SelfLiteral()
+
+    # literalnoarray CM literallist | literalnoarray;
     def visitLiterallist(self, ctx:CSlangParser.LiterallistContext):
         if ctx.literallist():
-            return [self.visit(ctx.literal())] + self.visit(ctx.literallist())
-        return [self.visit(ctx.literal())]
+            return [self.visit(ctx.literalnoarray())] + self.visit(ctx.literallist())
+        return [self.visit(ctx.literalnoarray())]
 
     # INTLIT | FLOATLIT | boolit | STRINGLIT | arraylit | NULL | SELF;
     def visitLiteral(self, ctx:CSlangParser.LiteralContext):
@@ -464,6 +478,8 @@ class ASTGeneration(CSlangVisitor):
             return BooleanLiteral(self.visit(ctx.boolit()))
         elif ctx.NULL():
             return NullLiteral()
+        elif ctx.arraylit():
+            return self.visit(ctx.arraylit())
         return SelfLiteral()
     
     # ID '<-';

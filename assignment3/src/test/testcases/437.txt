@@ -1,0 +1,6 @@
+
+        class Program{
+            func @main(): void {}
+            const @a:int = 2.0;
+        }
+        

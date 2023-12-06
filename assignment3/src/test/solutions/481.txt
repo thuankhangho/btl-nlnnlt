@@ -1,0 +1,1 @@
+Type Mismatch In Declaration: VarDecl(Id(temp),BoolType,BinaryOp(*,IntLit(9),IntLit(5)))

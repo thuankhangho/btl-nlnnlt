@@ -1,0 +1,9 @@
+
+        class Program{
+            var a: int = 2;
+            func @main(): void {
+                self.a := 5;
+            }
+            const b: int;
+        }
+        

@@ -1,0 +1,10 @@
+
+        class A {
+            func constructor(a: float) {}
+        }
+        class Program {
+            var u, i, a, b, g, h: int;
+            var t: A = new A(null);
+            func @main(a: int, b:string): void {}
+        }
+        

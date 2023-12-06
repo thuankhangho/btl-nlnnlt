@@ -124,6 +124,11 @@ class CSlangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by CSlangParser#literalnoarray.
+    def visitLiteralnoarray(self, ctx:CSlangParser.LiteralnoarrayContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by CSlangParser#literallist.
     def visitLiterallist(self, ctx:CSlangParser.LiterallistContext):
         return self.visitChildren(ctx)

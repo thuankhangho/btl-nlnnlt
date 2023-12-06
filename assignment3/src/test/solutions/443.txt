@@ -1,0 +1,1 @@
+Type Mismatch In Declaration: VarDecl(Id(arr),ArrayType(IntLit(3),IntType),[IntLit(2),IntLit(5)])

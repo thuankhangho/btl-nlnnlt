@@ -1,0 +1,7 @@
+
+        class Program {
+            var u, i, a, b, g, h: int;
+            const c, d: bool;
+            func @main(a: int, b:string): void {}
+        }
+        

@@ -1,0 +1,11 @@
+
+        class A {
+            func constructor(a: int, b: string) {}
+        }
+        class Program {
+            func @main(): void {
+                const a: int = 5;
+                a := 10;
+            }
+        }
+        

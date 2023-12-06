@@ -1,0 +1,8 @@
+
+        class Program {
+            func @main():void {
+                var a: string = io.@readStr();
+            }
+            const temp: int;
+        }
+        

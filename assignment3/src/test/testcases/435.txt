@@ -1,0 +1,6 @@
+
+        class Program{
+            func @main(): void {}
+            var a:[1]int = [true];
+        }
+        

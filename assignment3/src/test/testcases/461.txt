@@ -1,0 +1,8 @@
+
+        class Program {
+            func @main():void {
+                var a: float = io.@readFloat();
+            }
+            const temp: int;
+        }
+        

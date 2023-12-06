@@ -1,0 +1,10 @@
+
+        class A {
+            func constructor(a: int, b: string) {}
+        }
+        class Program {
+            func @main(): void {
+                if {i := 15} i > 10 {i := 10}
+            }
+        }
+        

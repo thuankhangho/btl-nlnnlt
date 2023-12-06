@@ -1,0 +1,12 @@
+
+        class A{
+            var @test: int = 5;
+            var a: string;
+        }
+        class A <- Program{
+            func @main(): void{
+                @test := 10;
+            }
+            const test: int;
+        }
+        

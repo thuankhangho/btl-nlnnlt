@@ -1,0 +1,5 @@
+
+        class main {
+            var x, y, z, t: string;
+        }
+        

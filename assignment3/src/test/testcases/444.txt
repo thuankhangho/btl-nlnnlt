@@ -1,0 +1,8 @@
+
+        class Program{
+            func @main():void{
+                var arr: [1]int = [2, 5];
+            }
+            const temp: int = 2;
+        }
+        

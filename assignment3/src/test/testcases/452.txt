@@ -1,0 +1,8 @@
+
+        class Program {
+            func @main():void {
+                io.@writeFloat(3.0);
+            }
+            const temp: int;
+        }
+        

@@ -1,0 +1,6 @@
+
+        class main{
+            func @main():void{
+                I[5] := t[5];
+            }}
+        

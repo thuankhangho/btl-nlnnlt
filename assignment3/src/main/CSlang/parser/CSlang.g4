@@ -54,7 +54,9 @@ literal: INTLIT | FLOATLIT | boolit | STRINGLIT | arraylit | SELF | NULL;
 
 boolit: TRUE | FALSE;
 
-literallist: (INTLIT | FLOATLIT | boolit | STRINGLIT | NULL) CM literallist | (INTLIT | FLOATLIT | boolit | STRINGLIT | NULL);
+literalnoarray: INTLIT | FLOATLIT | boolit | STRINGLIT  | SELF | NULL;
+
+literallist: literalnoarray CM literallist | literalnoarray;
 
 arraydecl: LSB INTLIT RSB typ;
 
