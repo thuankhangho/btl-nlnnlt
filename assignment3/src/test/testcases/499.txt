@@ -1,8 +1,7 @@
 
         class Program{
             func @main(): void {
-                var b: string = true;
+                var thefinalcountdown:[3]string = [1, 2, 3];
             }
-            var a: int = 1;
         }
         

@@ -1,0 +1,1 @@
+Type Mismatch In Declaration: VarDecl(Id(temp),ArrayType(2,StringType),[BooleanLit(True),BooleanLit(True)])

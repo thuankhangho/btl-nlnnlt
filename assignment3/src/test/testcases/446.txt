@@ -2,7 +2,7 @@
         class Program{
             var @test: int = 5;
             func @main(): void{
-                Program.@test := 10;
+                A.@test := 10;
             }
         }
         

@@ -1,0 +1,1 @@
+Type Mismatch In Declaration: VarDecl(Id(thefinalcountdown),ArrayType(3,StringType),[IntLit(1),IntLit(2),IntLit(3)])

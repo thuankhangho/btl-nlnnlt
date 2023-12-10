@@ -1,8 +1,7 @@
 
         class Program{
             func @main(): void {
-                var b: string = true;
+                var temp:[2]bool = [2, 2];
             }
-            var a: int = 1;
         }
         

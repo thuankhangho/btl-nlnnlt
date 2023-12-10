@@ -1,1 +1,1 @@
-Type Mismatch In Declaration: VarDecl(Id(a),ArrayType(IntLit(1),IntType),Self())
+Type Mismatch In Declaration: VarDecl(Id(a),ArrayType(1,IntType),[BooleanLit(True)])

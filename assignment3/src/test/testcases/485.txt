@@ -1,0 +1,7 @@
+
+        class Program{
+            var arr:[3]int = [2,5,3];
+            var @test: bool = "main";
+            func @main():void{}
+        }
+        

@@ -1,7 +1,7 @@
 
         class Program {
             func @main():void {
-                io.@readInt(3);
+                io.@writeInt(Shape.@numOfShape);
             }
         }
         

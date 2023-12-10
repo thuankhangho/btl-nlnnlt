@@ -1,0 +1,7 @@
+
+        class Program{
+            const temp:int = self.test(new b(),new b(1));
+            func test(temp1: int, temp2: a):int{}
+            func @main():void{}
+        }
+        

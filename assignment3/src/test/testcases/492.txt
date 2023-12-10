@@ -1,8 +1,7 @@
 
         class Program{
             func @main(): void {
-                var b: string = true;
+                const temp:[2]int;
             }
-            var a: int = 1;
         }
         

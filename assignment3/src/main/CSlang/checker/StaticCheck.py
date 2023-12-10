@@ -7,7 +7,6 @@
 # Line 164 is the return statement of the entire file.
 # It is disabled to be submitted, but needs to be un-commented in order to function.
 
-from dataclasses import field
 from AST import * 
 from Visitor import *
 from Utils import *
@@ -252,7 +251,6 @@ class StaticChecker(BaseVisitor, Utils):
         manager = ClassManager(self.ast)
         manager.checkNoEntryPoint()
         self.visit(self.ast, manager)
-        return ""
         
     def visitProgram(self, ast: Program, o: ClassManager):
         reduce(lambda _, decl: self.visit(decl, o), ast.decl, [])
