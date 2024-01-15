@@ -1,1 +1,0 @@
-Program([ClassDecl(Id(Program),[MethodDecl(Id(main),[],VoidType,Block([]))]),ClassDecl(Id(Test),[MethodDecl(Id(test),[],VoidType,Block([]))])])
